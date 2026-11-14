@@ -432,7 +432,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="font-more" type="button" hidden>Voir plus</button></div>
 </div></section>
 <section class="band" id="photos" aria-labelledby="h-ph"><div class="wrap">
-  <div class="sec-head"><div><h2 id="h-ph">Les photos</h2><p>Photos libres issues d'Openverse (Wikimedia Commons, Flickr et autres). Par défaut, seules les images utilisables commercialement sont montrées ; la mention de l'auteur est à respecter quand la licence l'exige.</p></div></div>
+  <div class="sec-head"><div><h2 id="h-ph">Les photos</h2><p>Photos libres issues d'Unsplash, avec Openverse (Wikimedia Commons, Flickr et autres) en secours. Citez le photographe et Unsplash quand vous publiez une photo ; le bouton « Copier la mention » le fait pour vous.</p></div></div>
   <div class="toolbar"><div class="chips" role="group" aria-label="Thèmes"><button class="chip" type="button" data-pq="nature" aria-pressed="false">Nature</button><button class="chip" type="button" data-pq="business" aria-pressed="false">Entreprise</button><button class="chip" type="button" data-pq="technology" aria-pressed="false">Technologie</button><button class="chip" type="button" data-pq="people" aria-pressed="false">Personnes</button><button class="chip" type="button" data-pq="product" aria-pressed="false">Produits</button><button class="chip" type="button" data-pq="texture" aria-pressed="false">Textures</button><button class="chip" type="button" data-pq="landscape" aria-pressed="false">Paysages</button><button class="chip" type="button" data-pq="city" aria-pressed="false">Villes</button></div>
   <div class="tools"><form class="field" id="ph-form"><span class="sr">Rechercher une photo</span><input id="ph-q" type="search" placeholder="Rechercher (anglais conseillé)" autocomplete="off"></form>
   <label class="field"><span class="sr">Usage</span><select id="ph-lic"><option value="commercial">Usage commercial</option><option value="all">Tous usages</option></select></label></div></div>
@@ -1181,8 +1181,12 @@ var P={q:'nature',page:1,lic:'commercial',busy:false,by:{}};
 function pLoad(more){
   if(P.busy)return;P.busy=true;if(!more){P.page=1;$('#ph-grid').innerHTML='';}else P.page++;
   $('#ph-count').textContent='Chargement…';
-  var u='https://api.openverse.org/v1/images/?q='+encodeURIComponent(P.q)+'&page_size=24&page='+P.page+'&category=photograph'+(P.lic==='commercial'?'&license_type=commercial':'');
-  fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+  var UK=(window.PALEZZA_CONFIG&&window.PALEZZA_CONFIG.UNSPLASH_KEY)||'',UTM='?utm_source=palezza_studios&utm_medium=referral';
+  var ov='https://api.openverse.org/v1/images/?q='+encodeURIComponent(P.q)+'&page_size=24&page='+P.page+'&category=photograph'+(P.lic==='commercial'?'&license_type=commercial':'');
+  var req=UK?fetch('https://api.unsplash.com/search/photos?query='+encodeURIComponent(P.q)+'&per_page=24&page='+P.page+'&client_id='+encodeURIComponent(UK)).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    return {result_count:d.total||0,page_count:d.total_pages||0,results:(d.results||[]).map(function(x){var nm=(x.user&&x.user.name)||'inconnu';return {id:'un'+x.id,title:x.alt_description||x.description||'Photo Unsplash',thumbnail:x.urls.small,url:x.urls.full,creator:nm,license:'Unsplash',license_version:'',width:x.width,height:x.height,source:'Unsplash',foreign_landing_url:x.links.html+UTM,dl:x.links.download_location,attribution:'Photo de '+nm+' sur Unsplash ('+x.links.html+UTM+')'};})};
+  }).catch(function(){return fetch(ov).then(function(r){if(!r.ok)throw 0;return r.json();});}):fetch(ov).then(function(r){if(!r.ok)throw 0;return r.json();});
+  req.then(function(d){
     var rs=d.results||[];
     $('#ph-grid').insertAdjacentHTML('beforeend',rs.map(function(x){P.by[x.id]=x;return '<button class="ph-card" type="button" data-pid="'+esc(x.id)+'"><img loading="lazy" src="'+esc(x.thumbnail||x.url)+'" alt="'+esc(x.title||'Photo')+'"><span class="n"><b>'+esc(x.title||'Sans titre')+'</b><span>'+esc((x.license||'').toUpperCase())+'</span></span></button>';}).join(''));
     var tot=d.result_count||0;$('#ph-count').textContent=rs.length||more?(d.result_count?d.result_count.toLocaleString('fr-FR')+' photos trouvées pour « '+P.q+' »':''):'Aucune photo pour « '+P.q+' ». Essayez un mot en anglais.';
@@ -1194,6 +1198,7 @@ function pDetail(id){
   showDlg('<div class="det"><div class="lib-big"><img src="'+esc(x.thumbnail||x.url)+'" alt="'+esc(x.title||'Photo')+'"></div><div class="det-info"><div><span class="eyebrow" style="margin:0">Photo</span><h2>'+esc(x.title||'Sans titre')+'</h2></div>'
    +'<p class="lead" style="font-size:14px">Auteur : '+esc(x.creator||'inconnu')+' · Licence : '+esc(lic)+(x.width?' · '+x.width+' × '+x.height+' px':'')+' · Source : '+esc(x.source||x.provider||'Openverse')+'</p>'
    +'<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" target="_blank" rel="noopener" href="'+esc(x.url)+'">Image originale</a><a class="btn ghost" target="_blank" rel="noopener" href="'+esc(x.foreign_landing_url||x.url)+'">Page source</a><button class="btn ghost" type="button" data-pa="'+esc(x.id)+'">Copier la mention</button></div></div></div>');
+  if(x.dl){var a=$('#lib-detail-body a.btn');if(a)a.addEventListener('click',function(){var UK=(window.PALEZZA_CONFIG&&window.PALEZZA_CONFIG.UNSPLASH_KEY)||'';try{fetch(x.dl+(x.dl.indexOf('?')>-1?'&':'?')+'client_id='+encodeURIComponent(UK));}catch(e){}});}
 }
 /* ===== Outils ===== */
 function hex(r,g,b){return '#'+[r,g,b].map(function(v){return Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0');}).join('').toUpperCase();}
