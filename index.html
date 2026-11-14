@@ -332,7 +332,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   .lib-zone .chips::-webkit-scrollbar{display:none}
   .lib-zone .chip{flex:none;white-space:nowrap}
   #pl-grid,#lib-grid,#md-ic{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px}
-  #pl-grid[data-tab="anims"],#pl-grid[data-tab="videos"],#pl-grid[data-tab="psd"],#pl-grid[data-tab="fonts"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #pl-grid[data-tab="illus"],#pl-grid[data-tab="anims"],#pl-grid[data-tab="videos"],#pl-grid[data-tab="psd"],#pl-grid[data-tab="fonts"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .lib-card{padding:12px 4px 8px;gap:6px;border-radius:12px}
   .lib-card span.n{font-size:11.5px}
   .count{margin-bottom:10px}
@@ -444,7 +444,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
 </section>
 
 <section class="band" id="collection" aria-labelledby="h-pl"><div class="wrap">
-  <div class="sec-head"><div><h2 id="h-pl">Collection Palezza</h2><p>Plus de 3 400 logos de marques et d'entreprises, des icônes, des animations, des boucles vidéo, des modèles PSD et des polices libres. Chaque fiche indique le format, la licence et la source ; vos favoris et votre historique restent sur cet appareil.</p></div></div>
+  <div class="sec-head"><div><h2 id="h-pl">Collection Palezza</h2><p>Plus de 3 400 logos de marques et d'entreprises, des illustrations, des icônes, des animations, des boucles vidéo, des modèles PSD et des polices libres. Chaque fiche indique le format, la licence et la source ; vos favoris et votre historique restent sur cet appareil.</p></div></div>
   <div class="toolbar">
     <div class="chips" role="group" aria-label="Type de ressource" id="pl-tabs"></div>
     <div class="tools">
@@ -458,7 +458,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   <p class="lib-note" id="pl-empty" hidden>Aucun résultat. Essayez un autre mot ou retirez un filtre.</p>
   <div style="text-align:center;margin-top:18px"><button class="btn ghost" id="pl-more" type="button" hidden>Afficher plus</button></div>
   <p class="lib-note" id="pl-note"></p>
-  <p class="lib-note">Licences : <a href="assets/library/licenses/PACK_EXPANDED_LICENSES.txt" target="_blank" rel="noopener">pack Expanded</a> · <a href="assets/library/licenses/PACK_SECOND_LICENSE_NOTES.txt" target="_blank" rel="noopener">pack Second</a> · <a href="assets/library/licenses/source-and-license-catalogue.csv" target="_blank" rel="noopener">catalogue des sources</a> · <a href="assets/library/licenses/SIMPLE_ICONS_LICENSE.md" target="_blank" rel="noopener">Simple Icons (logos de marques)</a> · <a href="assets/library/licenses/SIMPLE_ICONS_DISCLAIMER.md" target="_blank" rel="noopener">avertissement sur les marques</a>. Les logos de marques appartiennent à leurs propriétaires : ils servent à désigner l'entreprise concernée.</p>
+  <p class="lib-note">Licences : <a href="assets/library/licenses/PACK_EXPANDED_LICENSES.txt" target="_blank" rel="noopener">pack Expanded</a> · <a href="assets/library/licenses/PACK_SECOND_LICENSE_NOTES.txt" target="_blank" rel="noopener">pack Second</a> · <a href="assets/library/licenses/source-and-license-catalogue.csv" target="_blank" rel="noopener">catalogue des sources</a> · <a href="assets/library/licenses/SIMPLE_ICONS_LICENSE.md" target="_blank" rel="noopener">Simple Icons (logos de marques)</a> · <a href="assets/library/licenses/SIMPLE_ICONS_DISCLAIMER.md" target="_blank" rel="noopener">avertissement sur les marques</a> · <a href="assets/library/licenses/ILLUSTRATIONS_NOTES.txt" target="_blank" rel="noopener">illustrations (Palezza, Open Doodles, Humaaans CC BY 4.0)</a>. Les logos de marques appartiennent à leurs propriétaires : ils servent à désigner l'entreprise concernée.</p>
 </div></section>
 
 <section class="band alt" id="polices" aria-labelledby="h-pol"><div class="wrap">
@@ -1545,6 +1545,9 @@ function norm(tab,r){
   var o={tab:tab,id:r[0],title:r[1],key:tab+':'+r[0],c1:'',c2:''};
   if(tab==='icons'){o.file=B+'icons/svg/'+r[0]+'.svg';o.png=B+'icons/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.rc=1;o.kind='Icône';}
   if(tab==='brands'){o.file=B+'brands/'+r[0]+'.svg';o.fmt='SVG, PNG';o.hex=r[2];o.rc=1;o.pk=3;o.kind='Logo de marque';o.lic='Dessin : CC0 (Simple Icons). Le logo reste une marque de son propriétaire : à utiliser pour désigner cette entreprise, sans laisser croire à un partenariat.';}
+  if(tab==='illus'){var st=r[0].split('/')[0];o.file=B+'illustrations/'+r[0]+'.svg';o.fmt='SVG, PNG';o.c1=r[3];o.c2=r[2];o.accent=r[4]||'';o.rc=r[4]?1:0;o.kind='Illustration';o.pk=4;
+    o.src=st==='doodles'?'Open Doodles par Pablo Stanley (opendoodles.com)':st==='humaaans'?'Humaaans par Pablo Stanley (humaaans.com)':'Création originale Palezza Studios';
+    o.lic=st==='doodles'?'CC0 (domaine public), mention non obligatoire':st==='humaaans'?'CC BY 4.0 : mention obligatoire « Humaaans par Pablo Stanley »':'Création Palezza Studios : usage libre, y compris commercial ; revente en pack interdite';}
   if(tab==='anims'){o.file=B+'animations/'+r[0]+'.svg';o.fmt='SVG animé';o.kind='Animation';}
   if(tab==='videos'){o.file=B+'videos/'+r[0]+'.mp4';o.fmt='MP4 · 160 × 90 · 1 s';o.kind='Vidéo';o.pk=2;}
   if(tab==='psd'){o.file=B+'psd/'+r[0]+'.psd';o.fmt='PSD';o.kind='Modèle PSD';o.pk=2;}
@@ -1566,7 +1569,7 @@ function card(x){
   if(x.tab==='videos'||x.tab==='psd')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:600;color:var(--brand);height:70px">'+(x.tab==='videos'?'▶ MP4':'PSD')+'</i>';
   else if(x.tab==='brands')pv='<i class="gl" style="--u:url('+esc(x.file)+');background:#'+esc(x.hex)+';width:56px;height:56px;margin:6px 0"></i>';
   else if(x.tab==='fonts')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:34px;height:70px;font-family:\'PL '+esc(x.id)+'\'">Aa</i>';
-  else pv='<img src="'+esc(x.file)+'" alt="" loading="lazy" decoding="async" style="height:'+(x.tab==='icons'?'64':'80')+'px;width:100%;object-fit:contain">';
+  else pv='<img src="'+esc(x.file)+'" alt="" loading="lazy" decoding="async" style="height:'+(x.tab==='icons'?'64':x.tab==='illus'?'92':'80')+'px;width:100%;object-fit:contain">';
   return '<button class="lib-card" type="button" data-plk="'+esc(x.key)+'" style="position:relative">'+fav+pv+'<span class="n">'+esc(x.title)+'</span></button>';
 }
 function render(more){
@@ -1576,7 +1579,7 @@ function render(more){
     tabs();
     var lt=P.tab==='logos';
     fill('#pl-c1','#pl-c1f',lt?'Toutes les régions':'Toutes les catégories',(P.tab==='logos'||P.tab==='illus')?uniq(list.map(function(x){return x.c1;})):[],P.c1);
-    fill('#pl-c2','#pl-c2f','Tous les secteurs',lt?uniq(list.map(function(x){return x.c2;})):[],P.c2);
+    fill('#pl-c2','#pl-c2f',P.tab==='illus'?'Tous les jeux':'Tous les secteurs',(lt||P.tab==='illus')?uniq(list.map(function(x){return x.c2;})):[],P.c2);
     P.n=PAGE;
   }
   var f=list.filter(function(x){return (!P.c1||x.c1===P.c1)&&(!P.c2||x.c2===P.c2)&&(!q||(x.title+' '+x.c1+' '+x.c2+' '+x.id).toLowerCase().indexOf(q)>-1);});
@@ -1603,14 +1606,14 @@ function open(key){
   else if(t==='fonts')big='<div style="padding:24px;font-family:\'PL '+esc(x.id)+'\';font-size:26px;line-height:1.4;overflow-wrap:anywhere">Palezza Studios<br>ABCDEFGHIJKLM<br>abcdefghijklm 0123456789</div>';
   else if(t==='brands')big='<i class="gl" id="pl-bigb" style="--u:url('+esc(x.file)+');background:#'+esc(x.hex)+';width:160px;height:160px;margin:20px auto"></i>';
   else big='<img id="pl-big" src="'+esc(x.file)+'" alt="'+esc(x.title)+'" style="max-width:100%;max-height:60vh;background:#fff;border-radius:12px;padding:8px">';
-  var isFav=FAV.indexOf(key)>-1,rows=[['Type',x.kind],['Format',x.fmt],['Catégorie',[x.c1,x.c2].filter(Boolean).join(' · ')||'—'],['Dimensions','<span id="pl-dim">'+(t==='videos'?'160 × 90 px':t==='fonts'||t==='psd'?'—':t==='brands'?'vectoriel (PNG 512 × 512)':'vectoriel')+'</span>'],['Accès','Gratuit'],['Licence',esc(x.lic||LIC)],['Source',x.pk===3?'Simple Icons (simpleicons.org), domaine public CC0':x.pk===2?PACK2:PACK]];
+  var isFav=FAV.indexOf(key)>-1,rows=[['Type',x.kind],['Format',x.fmt],['Catégorie',[x.c1,x.c2].filter(Boolean).join(' · ')||'—'],['Dimensions','<span id="pl-dim">'+(t==='videos'?'160 × 90 px':t==='fonts'||t==='psd'?'—':t==='brands'?'vectoriel (PNG 512 × 512)':t==='illus'?'vectoriel (PNG 1600 px)':'vectoriel')+'</span>'],['Accès','Gratuit'],['Licence',esc(x.lic||LIC)],['Source',x.src||(x.pk===3?'Simple Icons (simpleicons.org), domaine public CC0':x.pk===2?PACK2:PACK)]];
   if(t==='brands')rows.splice(3,0,['Couleur de marque','#'+x.hex]);
   var html='<div class="det"><div class="lib-big" style="flex-direction:column;overflow:auto">'+big+'</div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+esc(x.kind)+'</span><h2>'+esc(x.title)+'</h2></div>'
    +'<dl style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0">'+rows.map(function(r){return '<dt style="color:var(--muted)">'+r[0]+'</dt><dd style="margin:0">'+(r[0]==='Dimensions'?r[1]:esc(r[1]))+'</dd>';}).join('')+'</dl>';
-  if(x.rc)html+='<label style="display:flex;align-items:center;gap:10px;font-size:14px">Couleur <input type="color" id="pl-col" value="'+(x.hex?'#'+x.hex.toLowerCase():'#247C78')+'" aria-label="Couleur de l\'icône"></label>';
+  if(x.rc)html+='<label style="display:flex;align-items:center;gap:10px;font-size:14px">Couleur <input type="color" id="pl-col" value="'+(x.hex?'#'+x.hex.toLowerCase():x.accent?'#'+x.accent.toLowerCase():'#247C78')+'" aria-label="Couleur de l\'icône"></label>';
   html+='<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-plact="dl">Télécharger '+(t==='fonts'?'TTF':t==='videos'?'MP4':t==='psd'?'PSD':'SVG')+'</button>'
-   +((x.png||t==='brands')?'<button class="btn ghost" type="button" data-plact="png">Télécharger PNG</button>':'')
-   +(x.rc?'<button class="btn ghost" type="button" data-plact="rc">'+(t==='brands'?'SVG couleur choisie':'SVG recoloré')+'</button>':'')
+   +((x.png||t==='brands'||t==='illus')?'<button class="btn ghost" type="button" data-plact="png">Télécharger PNG</button>':'')
+   +(x.rc?'<button class="btn ghost" type="button" data-plact="rc">'+(t==='brands'||t==='illus'?'SVG couleur choisie':'SVG recoloré')+'</button>':'')
    +'<button class="btn ghost" type="button" data-plact="fav">'+(isFav?'Retirer des favoris':'Ajouter aux favoris')+'</button>'
    +(t==='fonts'?'<a class="btn ghost" href="'+B+'fonts/LICENSE_DejaVu.txt" target="_blank" rel="noopener">Licence</a>':'')+'</div></div></div>';
   var d=$('#lib-detail');$('#lib-detail-body').innerHTML=html;d.dataset.plk=key;if(!d.open)d.showModal();
@@ -1626,6 +1629,11 @@ document.addEventListener('click',function(e){
   if((b=t.closest('[data-plact]'))&&$('#lib-detail').dataset.plk){
     var x=cur(),a=b.getAttribute('data-plact');if(!x)return;
     var ext=x.file.split('.').pop();
+    if(x.tab==='illus'&&(a==='png'||a==='dl')){
+      var nm=x.id.split('/').pop();
+      if(a==='dl'){dl(x,x.file,nm+'.svg');return;}
+      var im2=new Image();im2.onload=function(){var k=1600/Math.max(im2.naturalWidth||800,im2.naturalHeight||600),cw=Math.round((im2.naturalWidth||800)*k),ch=Math.round((im2.naturalHeight||600)*k),cv=document.createElement('canvas');cv.width=cw;cv.height=ch;var cx=cv.getContext('2d');cx.drawImage(im2,0,0,cw,ch);cv.toBlob(function(b){var pu=URL.createObjectURL(b);dl(x,pu,nm+'.png');setTimeout(function(){URL.revokeObjectURL(pu);},4000);});};im2.onerror=function(){toast('PNG impossible ici, réessayez depuis le site en ligne');};im2.src=x.file;return;
+    }
     if(x.tab==='brands'){
       var bc=(a==='rc'?$('#pl-col').value:'#'+x.hex);
       var colored=function(){return fetch(x.file).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){return s.replace('<svg ','<svg fill="'+bc+'" ');});};
@@ -1635,6 +1643,7 @@ document.addEventListener('click',function(e){
     if(a==='dl'){dl(x,x.file,x.id+'.'+ext);return;}
     if(a==='png'){dl(x,x.png,x.id+'.png');return;}
     if(a==='fav'){var i=FAV.indexOf(x.key);if(i>-1)FAV.splice(i,1);else FAV.push(x.key);sv('ps_lib_favs',FAV);b.textContent=i>-1?'Ajouter aux favoris':'Retirer des favoris';toast(i>-1?'Retiré des favoris':'Ajouté aux favoris');render(true);return;}
+    if(a==='rc'&&x.accent){var col2=$('#pl-col').value;fetch(x.file).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){s=s.replace(new RegExp('#'+x.accent,'gi'),col2);var u=URL.createObjectURL(new Blob([s],{type:'image/svg+xml'}));dl(x,u,x.id.split('/').pop()+'-'+col2.slice(1)+'.svg');setTimeout(function(){URL.revokeObjectURL(u);},4000);}).catch(function(){toast('Recoloration impossible ici, réessayez depuis le site en ligne');});return;}
     if(a==='rc'){var col=$('#pl-col').value;fetch(x.file).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){
       s=s.replace(/#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g,function(m){var h=m.slice(1).toLowerCase();return (h==='ffffff'||h==='fff')?m:col;});
       var u=URL.createObjectURL(new Blob([s],{type:'image/svg+xml'}));dl(x,u,x.id+'-'+col.slice(1)+'.svg');setTimeout(function(){URL.revokeObjectURL(u);},4000);}).catch(function(){toast('Recoloration impossible ici, réessayez depuis le site en ligne');});return;}
@@ -1664,7 +1673,7 @@ if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es)
 /* Bibliothèque unifiée : une seule barre d'onglets, défilement infini */
 (function(){
 var Z=document.getElementById('biblio');if(!Z)return;
-var H=[['brands','Logos','collection','[data-pltab="brands"]'],['icons','Icônes','bibliotheque','[data-libtab="icons"]'],['photos','Photos','photos',''],['vector','Vecteurs','medias','[data-mtab="vector"]'],['illus','Illustrations','medias','[data-mtab="illus"]'],['video','Vidéos','medias','[data-mtab="video"]'],['fonts','Polices','polices',''],['psd','PSD','medias','[data-mtab="psd"]'],['own','Modèles Palezza','medias','[data-mtab="own"]'],['pack','Packs Palezza','collection','']];
+var H=[['brands','Logos','collection','[data-pltab="brands"]'],['icons','Icônes','bibliotheque','[data-libtab="icons"]'],['photos','Photos','photos',''],['vector','Vecteurs','medias','[data-mtab="vector"]'],['illus','Illustrations','collection',''],['illus2','Illustrations web','medias','[data-mtab="illus"]'],['video','Vidéos','medias','[data-mtab="video"]'],['fonts','Polices','polices',''],['psd','PSD','medias','[data-mtab="psd"]'],['own','Modèles Palezza','medias','[data-mtab="own"]'],['pack','Packs Palezza','collection','']];
 var bar=document.createElement('nav');bar.className='libhub';bar.setAttribute('aria-label','Types de ressources');
 bar.innerHTML='<div class="libhub-in" role="group">'+H.map(function(x){return '<button class="chip" type="button" data-hub="'+x[0]+'" aria-pressed="false">'+x[1]+'</button>';}).join('')+'</div>';
 Z.insertBefore(bar,Z.firstChild);Z.classList.add('js');
@@ -1676,7 +1685,7 @@ function hub(k,keepQ){
   Array.prototype.forEach.call(Z.children,function(s){if(s.tagName==='SECTION')s.classList.toggle('hub-on',s.id===h[2]);});
   var inn=bar.firstChild;
   Array.prototype.forEach.call(bar.querySelectorAll('[data-hub]'),function(b){var on=b.getAttribute('data-hub')===h[0];b.setAttribute('aria-pressed',on?'true':'false');if(on)inn.scrollTo({left:b.offsetLeft-(inn.clientWidth-b.offsetWidth)/2,behavior:'smooth'});});
-  if(h[2]==='collection'&&window.PL_setTab)window.PL_setTab(h[0]==='pack'?'icons':'brands',keepQ);
+  if(h[2]==='collection'&&window.PL_setTab)window.PL_setTab(h[0]==='pack'?'icons':h[0]==='illus'?'illus':'brands',keepQ);
   else if(h[3]){var e=Z.querySelector(h[3]);if(e)e.click();}
   window.dispatchEvent(new Event('scroll'));
 }

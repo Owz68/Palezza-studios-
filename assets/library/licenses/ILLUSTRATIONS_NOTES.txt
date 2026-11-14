@@ -1,0 +1,18 @@
+Illustrations de la bibliothèque Palezza Studios
+
+1) Palezza Studios (20 scènes, dossier illustrations/palezza)
+   Créations originales de Palezza Studios. Utilisation libre, personnelle ou commerciale, y compris modifiée.
+   Interdit : les revendre ou les redistribuer telles quelles comme pack ou collection concurrente.
+   La couleur d'accent (#247C78) se change avec le bouton « SVG couleur choisie ».
+
+2) Open Doodles (33 doodles, dossier illustrations/doodles)
+   Auteur : Pablo Stanley, https://www.opendoodles.com
+   Licence : CC0 1.0 (domaine public), sans mention obligatoire. Les SVG ont été extraits du paquet react-open-doodles (MIT).
+   La couleur d'accent (#FF5678) se change avec le bouton « SVG couleur choisie ».
+
+3) Humaaans (36 figures et scènes, dossier illustrations/humaaans)
+   Auteur : Pablo Stanley, https://www.humaaans.com
+   Licence : Creative Commons Attribution 4.0 (CC BY 4.0), voir HUMAAANS_CC-BY-4.0.md.
+   Mention obligatoire : « Humaaans par Pablo Stanley, licence CC BY 4.0 ».
+
+Non incluses volontairement : les illustrations unDraw, dont la licence interdit de les redistribuer en bibliothèque ou en packs.
