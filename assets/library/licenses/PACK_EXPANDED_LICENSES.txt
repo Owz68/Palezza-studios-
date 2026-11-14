@@ -1,0 +1,10 @@
+PALEZZA DIGITAL LIBRARY — LICENSE & ATTRIBUTION
+Pack-generated original assets:
+- The SVG/PNG icons, generic logo concepts, abstract illustrations, geometric patterns, and animated SVG samples in this pack were generated specifically for this pack.
+- They are provided for use in the Palezza Digital Library project. They are not official logos of any real company and must not be presented as such.
+- This pack does not grant rights to third-party trademarks, fonts, photographs, videos, PSD files, or other external content.
+
+Third-party assets:
+- No third-party stock photos, video files, font binaries, PSD files, or official brand logo binaries are included.
+- Before importing any external asset, check its exact license and confirm it permits hosting and redistribution of the original downloadable file to library members.
+- Keep the license text, source URL, creator, download date, attribution, and any restrictions with every imported asset.

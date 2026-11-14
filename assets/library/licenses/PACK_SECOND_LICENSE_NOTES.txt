@@ -1,0 +1,6 @@
+NOTES DE LICENCE
+Pexels : usage gratuit dans des projets, mais redistribution autonome de fichiers comme plateforme de stock interdite.
+Pixabay : interdit la distribution du contenu sur une base autonome.
+Mixkit : chaque vidéo porte une licence Free ou Restricted; vérifier chaque item.
+Google Fonts : les polices sont redistribuables sous les licences propres à chaque famille; inclure les licences.
+Logos : droits de marque distincts du droit d'auteur sur le fichier.

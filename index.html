@@ -1,0 +1,1611 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Palezza Studios</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600&display=swap">
+<style>
+/* Mise en page : bandeau sticky, hero asymétrique avec collage, catalogue en colonnes (type mosaïque), effets de texte en deux colonnes, offres en trois cartes.
+   Identité : palette Palezza (vert pétrole, pétrole nuit, or doux, ivoire, menthe, terracotta). */
+:root{
+  --bg:#FFFDF8; --bg2:#F3EBDD; --surface:#FFFFFF; --ink:#10302F; --muted:#4C6361; --line:#E4D9C6;
+  --brand:#247C78; --brand-hover:#1B5D5A; --brand-ink:#FFFFFF; --link:#1B5D5A;
+  --gold:#D6A64F; --gold-ink:#10302F; --terra:#C76B50; --mint:#7DBDB7; --night:#10302F;
+  --shadow:0 1px 2px rgba(16,48,47,.08),0 10px 28px rgba(16,48,47,.10);
+  --scrim:rgba(16,48,47,.58);
+  --show-light:block; --show-dark:none;
+  --f-display:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1F1F; --bg2:#10302F; --surface:#153836; --ink:#F3EBDD; --muted:#A3BBB6; --line:#27504D;
+    --link:#7DBDB7; --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 28px rgba(0,0,0,.4);
+    --scrim:rgba(4,12,12,.7); --show-light:none; --show-dark:block; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1F1F; --bg2:#10302F; --surface:#153836; --ink:#F3EBDD; --muted:#A3BBB6; --line:#27504D;
+  --link:#7DBDB7; --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 28px rgba(0,0,0,.4);
+  --scrim:rgba(4,12,12,.7); --show-light:none; --show-dark:block; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:84px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img,svg{max-width:100%}
+a{color:var(--link)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.lg-light{display:var(--show-light)} .lg-dark{display:var(--show-dark)}
+.ic{width:1.15em;height:1.15em;flex:none;vertical-align:-.2em}
+
+/* Boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border:0;border-radius:999px;background:var(--brand);color:var(--brand-ink);font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:var(--brand-hover)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.gold{background:var(--gold);color:var(--gold-ink)} .btn.gold:hover{background:#E2B661}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)} .btn.ghost:hover{background:var(--bg2)}
+.btn.sm{min-height:38px;padding:0 16px;font-size:14px}
+.icon-btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px;border:0;border-radius:999px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;font-weight:500;font-size:14px}
+.icon-btn:hover{background:var(--bg2)}
+
+/* En-tête */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;min-height:68px;padding-block:8px}
+.brand{display:block;height:52px;flex:none}
+.brand svg{height:52px;width:auto;display:block}
+.brand .lg-light{display:var(--show-light)} .brand .lg-dark{display:var(--show-dark)}
+.nav{display:flex;gap:4px;margin-left:8px}
+.nav a{padding:8px 12px;border-radius:999px;color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+.nav a:hover{background:var(--bg2)}
+.top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+@media (max-width:860px){
+  .nav{order:3;width:100%;margin:0;overflow-x:auto;padding-bottom:4px}
+  .nav a{white-space:nowrap}
+}
+
+/* Hero */
+.hero{padding-block:clamp(36px,6vw,80px) clamp(32px,5vw,64px);background:var(--bg)}
+.hero-in{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero-copy{min-width:0}
+.eyebrow{margin:0 0 16px;font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--link)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-weight:300;font-size:clamp(2.3rem,5.2vw,4.3rem);line-height:1.05;letter-spacing:-.015em}
+h1 em{font-style:normal;font-weight:600;color:var(--link)}
+.lead{margin:20px 0 0;max-width:52ch;color:var(--muted);font-size:1.08rem}
+.search{display:flex;align-items:center;gap:8px;margin-top:28px;max-width:560px;padding:6px 6px 6px 18px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;box-shadow:var(--shadow)}
+.search:focus-within{border-color:var(--brand)}
+.search input{flex:1;min-width:0;border:0;background:transparent;outline:0;padding:10px 4px;font-size:16px}
+.search .ic{color:var(--muted)}
+.quick{margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--muted);font-size:14px}
+.chip-link{border:0;background:var(--bg2);color:var(--ink);padding:6px 12px;border-radius:999px;font-size:13.5px;cursor:pointer}
+.chip-link:hover{background:var(--line)}
+.collage{position:relative;aspect-ratio:1/.92;min-width:0}
+.collage figure{position:absolute;margin:0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:var(--bg2)}
+.collage svg{display:block;width:100%;height:auto}
+.collage .c1{left:2%;top:4%;width:46%;transform:rotate(-4deg)}
+.collage .c2{right:0;top:0;width:48%;transform:rotate(3deg)}
+.collage .c3{right:6%;bottom:2%;width:44%;transform:rotate(-2deg)}
+.collage .c4{left:10%;bottom:0;width:36%;transform:rotate(2deg);z-index:2}
+@media (max-width:880px){.hero-in{grid-template-columns:1fr}.collage{max-width:520px}}
+
+/* Sections */
+section{scroll-margin-top:84px}
+.band{padding-block:clamp(40px,6vw,80px)}
+.band.alt{background:var(--bg2)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:28px}
+.sec-head h2{font-weight:400;font-size:clamp(1.7rem,3.4vw,2.5rem);line-height:1.1}
+.sec-head p{margin:8px 0 0;color:var(--muted);max-width:60ch}
+
+/* Catalogue */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px;border:0;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;font-weight:500;font-size:14px;color:var(--ink);text-decoration:none}
+.chip:hover{background:var(--bg2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);box-shadow:none}
+.chip small{opacity:.65;font-size:12px;font-variant-numeric:tabular-nums}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.field{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px}
+.field:focus-within{border-color:var(--brand)}
+.field input,.field select{border:0;background:transparent;outline:0;min-width:0;font-size:14.5px}
+.field select{cursor:pointer;padding-right:4px}
+.count{margin:0 0 16px;color:var(--muted);font-size:14px}
+.grid{column-count:4;column-gap:16px}
+@media (max-width:1100px){.grid{column-count:3}}
+@media (max-width:760px){.grid{column-count:2;column-gap:12px}}
+.tile{position:relative;break-inside:avoid;margin-bottom:16px}
+@media (max-width:760px){.tile{margin-bottom:12px}}
+.tile-open{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer}
+.tile-art{border-radius:14px;overflow:hidden;background:var(--bg2);border:1px solid var(--line);transition:transform .2s,box-shadow .2s}
+.tile-art svg{display:block;width:100%;height:auto}
+@media (prefers-reduced-motion:no-preference){.tile-open:hover .tile-art{transform:translateY(-3px);box-shadow:var(--shadow)}}
+.tile-meta{display:flex;justify-content:space-between;gap:8px;padding:8px 2px 0;font-size:14px}
+.tile-meta b{font-weight:500;min-width:0}
+.tile-meta span{color:var(--muted);font-size:12.5px;white-space:nowrap}
+.fav{position:absolute;top:10px;right:10px;width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--surface);color:var(--ink);box-shadow:var(--shadow);cursor:pointer}
+.fav[aria-pressed="true"]{background:var(--terra);color:#fff}
+.fav[aria-pressed="true"] .ic{fill:currentColor}
+.badge{position:absolute;top:10px;left:10px;display:inline-flex;gap:5px;align-items:center;padding:4px 10px;border-radius:999px;background:var(--gold);color:var(--gold-ink);font-size:12px;font-weight:600}
+.empty{padding:48px 16px;text-align:center;color:var(--muted)}
+.empty .btn{margin-top:14px}
+
+/* Effets de texte */
+.fx{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:28px;align-items:start}
+@media (max-width:900px){.fx{grid-template-columns:minmax(0,1fr)}}
+.fx>*{min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.panel h3{font-size:1.05rem;font-weight:500;margin-bottom:14px}
+.ctl{display:grid;gap:8px;margin-bottom:18px}
+.ctl>label,.ctl>span.lab{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.ctl input[type="text"]{width:100%;min-height:44px;padding:0 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
+.ctl input[type="text"]:focus{outline:0;border-color:var(--brand)}
+.ctl input[type="range"]{width:100%;accent-color:var(--brand)}
+.ctl-row{display:flex;gap:14px;flex-wrap:wrap}
+.color{display:flex;align-items:center;gap:8px;font-size:14px}
+.color input{width:44px;height:36px;padding:0;border:1.5px solid var(--line);border-radius:10px;background:none;cursor:pointer}
+.color input:disabled{opacity:.35;cursor:not-allowed}
+.preview{display:grid;place-items:center;min-height:300px;padding:40px 24px;border-radius:18px;overflow:hidden;text-align:center;transition:background .2s}
+.preview span{display:block;max-width:100%;line-height:1.1;overflow-wrap:anywhere;font-family:var(--f-display);font-weight:600}
+.code{margin:14px 0 0;padding:16px;border-radius:14px;background:var(--night);color:#F3EBDD;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:auto;max-height:220px;white-space:pre}
+.fx-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.hint{font-size:13.5px;color:var(--muted);margin:0}
+
+/* Licence */
+.lic{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.lic h3{font-size:1.1rem;font-weight:500;margin:10px 0 6px}
+.lic p{margin:0;color:var(--muted);font-size:15px}
+.lic .mark{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--brand);color:#fff}
+.note{margin:24px 0 0;font-size:13.5px;color:var(--muted)}
+
+/* Offres */
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;align-items:stretch}
+.plan{display:flex;flex-direction:column;gap:14px;padding:26px;background:var(--surface);border:1.5px solid var(--line);border-radius:20px}
+.plan.hl{border-color:var(--brand);box-shadow:var(--shadow)}
+.plan h3{font-size:1.25rem;font-weight:500}
+.plan .tag{align-self:flex-start;padding:3px 10px;border-radius:999px;background:var(--gold);color:var(--gold-ink);font-size:12px;font-weight:600}
+.price{font-family:var(--f-display);font-size:2.4rem;font-weight:300;line-height:1;font-variant-numeric:tabular-nums}
+.price small{font-size:.95rem;color:var(--muted);font-family:var(--f-body)}
+.plan ul{list-style:none;margin:4px 0 8px;padding:0;display:grid;gap:10px;font-size:15px}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li .ic{color:var(--brand);margin-top:3px}
+.plan li.soon{color:var(--muted)}
+.plan li em{font-style:normal;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--bg2);color:var(--muted);margin-left:4px;white-space:nowrap}
+.plan .btn{margin-top:auto}
+
+/* Pied de page */
+.foot{padding-block:48px 40px;background:var(--bg2);border-top:1px solid var(--line)}
+.foot-in{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+@media (max-width:760px){.foot-in{grid-template-columns:1fr}}
+.foot svg.lg{height:48px;width:auto}
+.foot svg.lg.lg-light{display:var(--show-light)} .foot svg.lg.lg-dark{display:var(--show-dark)}
+.foot h3{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:12px;font-family:var(--f-body)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
+.foot a{color:var(--ink);text-decoration:none}.foot a:hover{text-decoration:underline}
+.foot p{margin:12px 0 0;color:var(--muted);font-size:14px;max-width:42ch}
+.legal{margin-top:32px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+/* Fenêtres */
+dialog{border:0;padding:0;border-radius:22px;background:var(--bg);color:var(--ink);width:min(1040px,calc(100vw - 24px));max-height:calc(100dvh - 24px);box-shadow:0 24px 80px rgba(0,0,0,.35);overflow:auto}
+dialog::backdrop{background:var(--scrim)}
+dialog.narrow{width:min(520px,calc(100vw - 24px))}
+.x{position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);cursor:pointer}
+.dlg{position:relative;padding:20px}
+.det{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px}
+@media (max-width:820px){.det{grid-template-columns:1fr}}
+.det-art{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);align-self:start}
+.det-art svg{display:block;width:100%;height:auto;max-height:70vh}
+.det-info{display:flex;flex-direction:column;gap:14px;min-width:0;padding-top:8px}
+.det-info h2{font-size:1.7rem;font-weight:400;padding-right:44px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:14.5px}
+.meta dt{color:var(--muted)} .meta dd{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{padding:3px 10px;border-radius:999px;background:var(--bg2);font-size:12.5px}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.sw button{display:inline-flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border:0;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;font-size:12.5px}
+.sw i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.callout{margin:0;padding:12px 14px;border-radius:12px;background:var(--bg2);font-size:13.5px;color:var(--muted)}
+.callout b{color:var(--ink)}
+.tabs{display:flex;gap:8px;margin:18px 0 14px}
+.tabs button{flex:1;min-height:44px;border:0;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;font-weight:600;font-size:14.5px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);box-shadow:none}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:0;padding:0;margin:0 0 14px}
+.ops legend{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px;padding:0}
+.op input{position:absolute;opacity:0}
+.op span{display:block;padding:12px;border-radius:12px;text-align:center;font-weight:600;font-size:14.5px;cursor:pointer;box-shadow:inset 0 0 0 1.5px var(--line);background:var(--surface)}
+.op input:checked+span{box-shadow:inset 0 0 0 2.5px var(--brand)}
+.op input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.phone{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);overflow:hidden}
+.phone:focus-within{border-color:var(--brand)}
+.phone b{padding:0 12px;color:var(--muted);font-weight:600;border-right:1.5px solid var(--line);align-self:stretch;display:grid;place-items:center}
+.phone input{flex:1;min-width:0;min-height:46px;border:0;background:transparent;outline:0;padding:0 12px;font-size:17px;letter-spacing:.04em}
+.err{margin:8px 0 0;min-height:1.3em;color:var(--terra);font-size:14px;font-weight:500}
+.demo{margin:0 0 4px;padding:10px 14px;border-radius:12px;background:var(--gold);color:var(--gold-ink);font-size:13.5px;font-weight:500}
+.sum{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-block:1px solid var(--line);margin:16px 0;font-weight:500}
+.ok{display:grid;gap:12px;text-align:center;padding:12px 0}
+.ok .mark{margin:0 auto;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--brand);color:#fff;font-size:26px}
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom,0px));transform:translate(-50%,24px);z-index:100;max-width:calc(100vw - 32px);padding:12px 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:14.5px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:var(--shadow)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---- Refonte : recherche d'en-tête, bibliothèque, navigation mobile ---- */
+.hsearch{display:flex;align-items:center;flex:1;min-width:160px;max-width:520px;margin-left:8px;padding:2px 4px 2px 16px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px}
+.hsearch:focus-within{border-color:var(--brand)}
+.hsearch input{flex:1;min-width:0;border:0;background:transparent;outline:0;padding:9px 4px;font-size:15px}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer}
+.hbtn:hover{background:var(--bg2);color:var(--ink)} .hbtn.on{background:var(--terra);color:#fff}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+.lib-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px 8px 10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;cursor:pointer;color:var(--ink);font:inherit;transition:transform .2s,box-shadow .2s}
+.lib-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.lib-card .gl{width:44px;height:44px;background:currentColor;-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat}
+.lib-card img{width:100%;height:44px;object-fit:contain}
+.lib-card span.n{font-size:12.5px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lib-note{margin:16px 0 0;font-size:13px;color:var(--muted);max-width:75ch}
+.lib-big{display:flex;align-items:center;justify-content:center;min-height:220px;padding:24px;background:var(--bg2);border-radius:14px}
+.lib-big .gl{width:140px;height:140px;background:currentColor;-webkit-mask:var(--u) center/contain no-repeat;mask:var(--u) center/contain no-repeat}
+.lib-big img{max-width:100%;max-height:200px}
+.bnav{display:none}
+@media (max-width:720px){
+  .nav{display:none}
+  .hsearch{order:3;width:100%;max-width:none;margin:0;flex-basis:100%}
+  .top-actions{margin-left:auto}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  .bnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;padding-bottom:env(safe-area-inset-bottom,0px);background:var(--bg);border-top:1px solid var(--line)}
+  .bnav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 8px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:500}
+  .bnav a:active,.bnav a:hover{color:var(--brand)}
+  .bnav svg{width:22px;height:22px}
+  #toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+
+.font-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.font-card{display:flex;flex-direction:column;gap:8px;padding:16px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;cursor:pointer;color:var(--ink);font:inherit;transition:transform .2s,box-shadow .2s}
+.font-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.font-card .fp{font-size:28px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.font-card .n{font-size:12.5px;color:var(--muted)}
+.ph-grid{column-count:4;column-gap:14px}
+.ph-card{display:block;width:100%;margin:0 0 14px;padding:0;border:0;background:none;text-align:left;cursor:pointer;break-inside:avoid;color:var(--ink);font:inherit}
+.ph-card img{display:block;width:100%;height:auto;border-radius:12px;background:var(--bg2);border:1px solid var(--line)}
+.ph-card .n{display:flex;justify-content:space-between;gap:8px;padding:6px 2px 0;font-size:12.5px;color:var(--muted)}
+.ph-card .n b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tool-in{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+.tool h3{font-weight:500;font-size:1.2rem;margin:0 0 6px}
+.tool-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+.pal-out{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;align-content:start}
+.sw{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:var(--surface);color:var(--ink);padding:0;font:inherit}
+.sw i{display:block;height:64px}.sw span{padding:6px;font-size:12.5px;font-variant-numeric:tabular-nums}
+.qr-box{display:flex;justify-content:center;align-items:center;min-height:200px;background:var(--bg2);border-radius:14px;padding:16px}
+.qr-box canvas{max-width:100%;height:auto;border-radius:8px}
+.field input[type=color]{width:34px;height:28px;padding:0;border:0;background:none;cursor:pointer}
+@media (max-width:900px){.ph-grid{column-count:3}.tool-in{grid-template-columns:1fr}}
+@media (max-width:720px){.ph-grid{column-count:2}.bnav a{font-size:10.5px}}
+
+.brand img{height:52px;width:auto;display:block}
+.foot img.lg{height:48px;width:auto}
+.foot img.lg.lg-light{display:var(--show-light)} .foot img.lg.lg-dark{display:var(--show-dark)}
+@media (min-width:1100px){.top-in{flex-wrap:nowrap;gap:8px 14px}.nav{margin-left:0;gap:0}.nav a{padding:8px 9px;font-size:14px;white-space:nowrap}.hsearch{min-width:150px}}
+[hidden]{display:none!important}
+.sw i{width:100%;border-radius:0;font-style:normal}
+.sw{align-items:stretch}
+
+.pr-new{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}.pr-new .field{flex:1;min-width:200px}
+.pr-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.pr-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.pr-card h3{margin:0 0 4px;font-weight:500;font-size:1.05rem}.pr-card small{color:var(--muted)}
+.pr-card ul{list-style:none;margin:12px 0;padding:0;display:grid;gap:6px;font-size:14px}
+.pr-card li{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pr-card li a{color:var(--link);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pr-x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1}
+.pr-add{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+</style>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#top" aria-label="Palezza Studios, retour en haut"><img class="lg lg-light" src="logos/svg/obturateur_horizontal_clair_transparent.svg" alt="Palezza Studios" width="1493" height="716"><img class="lg lg-dark" src="logos/svg/obturateur_horizontal_sombre_transparent.svg" alt="Palezza Studios" width="1493" height="716"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#bibliotheque">Bibliothèque</a>
+      <a href="#polices">Polices</a>
+      <a href="#photos">Photos</a>
+      <a href="#medias">Médias</a>
+      <a href="#outils">Outils</a>
+      <a href="#ressources">Ressources</a>
+      <a href="#effets">Effets de texte</a>
+      <a href="#licence">Licence</a>
+      <a href="#offres">Offres</a>
+    </nav>
+    <form class="hsearch" id="hsearch" role="search">
+      <label class="sr" for="hq">Rechercher dans tout le site</label>
+      <input id="hq" type="search" placeholder="Rechercher icônes, logos, flyers, motifs…" autocomplete="off">
+      <button class="hbtn" id="hmic" type="button" aria-label="Recherche vocale" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+      <button class="hbtn" type="submit" aria-label="Rechercher"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    </form>
+    <div class="top-actions">
+      <button class="icon-btn" id="acc-btn" type="button">Compte</button>
+      <button class="icon-btn" id="favs-btn" type="button" aria-label="Voir mes favoris"><span data-icon="heart"></span><span id="favs-count">0</span></button>
+      <a class="btn gold sm" href="#offres">S'abonner</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">Ressources créatives · Brazzaville</p>
+      <h1>Créez plus vite avec des ressources <em>prêtes à l'emploi</em></h1>
+      <p class="lead">Fonds, motifs, flyers, cartes de visite, bannières et mockups conçus par Palezza Studios. Modifiez-les, utilisez-les dans vos projets commerciaux, payez en Mobile Money.</p>
+      <form class="search" id="hero-search" role="search">
+        <span data-icon="search"></span>
+        <label class="sr" for="q-hero">Rechercher une ressource</label>
+        <input id="q-hero" type="search" placeholder="Flyer, promo, motif, carte de visite…" autocomplete="off">
+        <button class="btn" type="submit">Rechercher</button>
+      </form>
+      <p class="quick">Essayez :
+        <button type="button" class="chip-link" data-q="promo">promo</button>
+        <button type="button" class="chip-link" data-q="restaurant">restaurant</button>
+        <button type="button" class="chip-link" data-q="réseaux sociaux">réseaux sociaux</button>
+        <button type="button" class="chip-link" data-q="hexagone">hexagone</button>
+       <a class="chip-link" href="#collection" style="text-decoration:none">Collection Palezza (2 000+ fichiers)</a></p>
+    </div>
+    <div class="collage" id="collage" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="band alt" id="ressources" aria-labelledby="h-res">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-res">Le catalogue</h2>
+        <p>Chaque ressource indique son format, ses dimensions et sa licence. Ouvrez-en une pour copier le code SVG ou la palette.</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="cats" role="group" aria-label="Catégories"></div>
+      <div class="tools">
+        <label class="field"><span data-icon="search"></span><span class="sr">Rechercher dans le catalogue</span><input id="q" type="search" placeholder="Rechercher" autocomplete="off"></label>
+        <label class="field"><span class="sr">Trier par</span><select id="sort"><option value="new">Nouveautés</option><option value="az">Nom A → Z</option></select></label>
+      </div>
+    </div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden>
+      <p>Aucune ressource ne correspond à votre recherche. Essayez « flyer », « promo » ou « motif ».</p>
+      <button class="btn ghost" id="reset" type="button">Tout afficher</button>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="bibliotheque" aria-labelledby="h-lib">
+  <div class="wrap">
+    <div class="sec-head"><div>
+      <h2 id="h-lib">La bibliothèque</h2>
+      <p>Des milliers d'icônes et de logos de marques, chargés à la demande depuis des collections ouvertes. Chaque fiche indique la licence de sa collection.</p>
+    </div></div>
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Type de ressource">
+        <button class="chip" type="button" data-libtab="icons" aria-pressed="true">Icônes</button>
+        <button class="chip" type="button" data-libtab="brands" aria-pressed="false">Logos de marques</button>
+      </div>
+      <div class="tools">
+        <label class="field"><span class="sr">Rechercher dans la bibliothèque</span><input id="lib-q" type="search" placeholder="Rechercher" autocomplete="off"></label>
+        <label class="field" id="lib-setf"><span class="sr">Collection</span><select id="lib-set"></select></label>
+      </div>
+    </div>
+    <p class="count" id="lib-count" aria-live="polite"></p>
+    <div class="lib-grid" id="lib-grid"></div>
+    <p class="lib-note" id="lib-note"></p>
+    <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="lib-more" type="button" hidden>Voir plus</button></div>
+  </div>
+</section>
+
+<section class="band" id="collection" aria-labelledby="h-pl"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-pl">Collection Palezza</h2><p>Les ressources originales de Palezza Studios : icônes, concepts de logos, illustrations, motifs, animations, boucles vidéo, modèles PSD et polices libres. Chaque fiche indique le format, la licence et la source ; vos favoris et votre historique restent sur cet appareil.</p></div></div>
+  <div class="toolbar">
+    <div class="chips" role="group" aria-label="Type de ressource" id="pl-tabs"></div>
+    <div class="tools">
+      <form class="field" id="pl-form"><span class="sr">Rechercher dans la collection</span><input id="pl-q" type="search" placeholder="Rechercher (ex. home, Afrique, santé)" autocomplete="off"></form>
+      <label class="field" id="pl-c1f" hidden><span class="sr">Filtre</span><select id="pl-c1"></select></label>
+      <label class="field" id="pl-c2f" hidden><span class="sr">Secteur</span><select id="pl-c2"></select></label>
+    </div>
+  </div>
+  <p class="count" id="pl-count" aria-live="polite"></p>
+  <div class="lib-grid" id="pl-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))"></div>
+  <p class="lib-note" id="pl-empty" hidden>Aucun résultat. Essayez un autre mot ou retirez un filtre.</p>
+  <div style="text-align:center;margin-top:18px"><button class="btn ghost" id="pl-more" type="button" hidden>Afficher plus</button></div>
+  <p class="lib-note" id="pl-note"></p>
+  <p class="lib-note">Licences : <a href="assets/library/licenses/PACK_EXPANDED_LICENSES.txt" target="_blank" rel="noopener">pack Expanded</a> · <a href="assets/library/licenses/PACK_SECOND_LICENSE_NOTES.txt" target="_blank" rel="noopener">pack Second</a> · <a href="assets/library/licenses/source-and-license-catalogue.csv" target="_blank" rel="noopener">catalogue des sources</a>. Les concepts de logos sont génériques : ils ne représentent aucune entreprise réelle.</p>
+</div></section>
+
+<section class="band alt" id="polices" aria-labelledby="h-pol"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-pol">Les polices</h2><p>Plus de mille polices libres de la collection Google Fonts, aperçues avec votre propre texte. Chaque fiche donne la licence et le code à copier.</p></div></div>
+  <div class="toolbar"><div class="chips" role="group" aria-label="Catégories de polices"><button class="chip" type="button" data-fcat="all" aria-pressed="true">Toutes</button><button class="chip" type="button" data-fcat="sans-serif" aria-pressed="false">Sans Serif</button><button class="chip" type="button" data-fcat="serif" aria-pressed="false">Serif</button><button class="chip" type="button" data-fcat="handwriting" aria-pressed="false">Manuscrites</button><button class="chip" type="button" data-fcat="display" aria-pressed="false">Décoratives</button><button class="chip" type="button" data-fcat="monospace" aria-pressed="false">Monospace</button></div>
+  <div class="tools"><label class="field"><span class="sr">Rechercher une police</span><input id="font-q" type="search" placeholder="Nom de la police" autocomplete="off"></label>
+  <label class="field"><span class="sr">Texte d'aperçu</span><input id="font-txt" type="text" value="Palezza Studios" maxlength="40"></label></div></div>
+  <p class="count" id="font-count" aria-live="polite"></p><div class="font-grid" id="font-grid"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="font-more" type="button" hidden>Voir plus</button></div>
+</div></section>
+<section class="band" id="photos" aria-labelledby="h-ph"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-ph">Les photos</h2><p>Photos libres issues d'Openverse (Wikimedia Commons, Flickr et autres). Par défaut, seules les images utilisables commercialement sont montrées ; la mention de l'auteur est à respecter quand la licence l'exige.</p></div></div>
+  <div class="toolbar"><div class="chips" role="group" aria-label="Thèmes"><button class="chip" type="button" data-pq="nature" aria-pressed="false">Nature</button><button class="chip" type="button" data-pq="business" aria-pressed="false">Entreprise</button><button class="chip" type="button" data-pq="technology" aria-pressed="false">Technologie</button><button class="chip" type="button" data-pq="people" aria-pressed="false">Personnes</button><button class="chip" type="button" data-pq="product" aria-pressed="false">Produits</button><button class="chip" type="button" data-pq="texture" aria-pressed="false">Textures</button><button class="chip" type="button" data-pq="landscape" aria-pressed="false">Paysages</button><button class="chip" type="button" data-pq="city" aria-pressed="false">Villes</button></div>
+  <div class="tools"><form class="field" id="ph-form"><span class="sr">Rechercher une photo</span><input id="ph-q" type="search" placeholder="Rechercher (anglais conseillé)" autocomplete="off"></form>
+  <label class="field"><span class="sr">Usage</span><select id="ph-lic"><option value="commercial">Usage commercial</option><option value="all">Tous usages</option></select></label></div></div>
+  <p class="count" id="ph-count" aria-live="polite"></p><div class="ph-grid" id="ph-grid"></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="ph-more" type="button" hidden>Voir plus</button></div>
+</div></section>
+<section class="band" id="medias" aria-labelledby="h-md"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-md">Vecteurs, vidéos et plus</h2><p>Images vectorielles, illustrations, courtes vidéos, icônes et logos supplémentaires, plus une sélection de sites fiables pour les fichiers PSD, les modèles et les mockups. Chaque fiche affiche l'auteur et la licence.</p></div></div>
+  <div class="toolbar">
+    <div class="chips" role="group" aria-label="Type de média">
+      <button class="chip" type="button" data-mtab="vector" aria-pressed="true">Vecteurs</button>
+      <button class="chip" type="button" data-mtab="illus" aria-pressed="false">Illustrations</button>
+      <button class="chip" type="button" data-mtab="video" aria-pressed="false">Vidéos courtes</button>
+      <button class="chip" type="button" data-mtab="icons" aria-pressed="false">Icônes et logos +</button>
+      <button class="chip" type="button" data-mtab="own" aria-pressed="false">Fichiers Palezza</button>
+      <button class="chip" type="button" data-mtab="psd" aria-pressed="false">PSD et sources</button>
+    </div>
+    <div class="tools" id="md-tools">
+      <form class="field" id="md-form"><span class="sr">Rechercher un média</span><input id="md-q" type="search" placeholder="Rechercher (anglais conseillé)" autocomplete="off"></form>
+      <label class="field" id="md-srcf"><span class="sr">Source</span><select id="md-src"></select></label>
+    </div>
+  </div>
+  <form class="field" id="md-keyrow" hidden style="margin-bottom:14px;border-radius:14px;flex-wrap:wrap;padding:10px 14px">
+    <span class="lib-note" style="margin:0">Pixabay demande une clé gratuite (pixabay.com/api/docs, après connexion) :</span>
+    <input id="md-key" type="text" placeholder="Votre clé API Pixabay" autocomplete="off" style="flex:1;min-width:200px">
+    <button class="btn sm" type="submit">Enregistrer</button>
+  </form>
+  <div class="chips" id="md-sets" role="group" aria-label="Collections" style="margin-bottom:14px" hidden></div>
+  <p class="count" id="md-count" aria-live="polite"></p>
+  <div class="ph-grid" id="md-grid"></div>
+  <div class="lib-grid" id="md-ic" hidden></div>
+  <div id="md-links" hidden></div>
+  <p class="lib-note" id="md-note"></p>
+  <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="md-more" type="button" hidden>Voir plus</button></div>
+</div></section>
+
+<section class="band alt" id="outils" aria-labelledby="h-out"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-out">Les outils</h2><p>Ils fonctionnent dans votre navigateur : vos images ne sont envoyées nulle part.</p></div>
+  <a class="btn ghost" href="#effets">Effets de texte</a></div>
+  <div class="chips" role="group" aria-label="Outils" style="margin-bottom:20px"><button class="chip" type="button" data-tool="palette" aria-pressed="true">Palette</button><button class="chip" type="button" data-tool="qr" aria-pressed="false">QR code</button><button class="chip" type="button" data-tool="image" aria-pressed="false">Image</button></div>
+  <div class="tool" data-panel="palette"><div class="tool-in">
+    <div><h3>Palette de couleurs</h3><p class="lead" style="font-size:14px">Importez une image pour en extraire les couleurs, ou choisissez une couleur de base pour obtenir des harmonies.</p>
+    <div class="tool-row"><label class="btn ghost sm" for="pal-file">Choisir une image</label><input id="pal-file" type="file" accept="image/*" hidden>
+    <label class="field"><span class="sr">Couleur de base</span><input id="pal-base" type="color" value="#247C78"></label></div></div>
+    <div id="pal-out" class="pal-out"></div></div></div>
+  <div class="tool" data-panel="qr" hidden><div class="tool-in">
+    <div><h3>Générateur de QR code</h3><p class="lead" style="font-size:14px">Lien, texte, numéro WhatsApp (https://wa.me/242…). Téléchargement en PNG ou SVG.</p>
+    <div class="tool-row"><label class="field" style="flex:1"><span class="sr">Contenu</span><input id="qr-text" type="text" placeholder="https://…" value="https://palezza.studio" style="width:100%"></label></div>
+    <div class="tool-row"><label class="field">Avant <input id="qr-fg" type="color" value="#10302F"></label><label class="field">Fond <input id="qr-bg" type="color" value="#FFFFFF"></label>
+    <label class="field"><select id="qr-ec"><option value="L">Correction faible</option><option value="M" selected>Correction moyenne</option><option value="H">Correction forte</option></select></label></div>
+    <div class="tool-row"><button class="btn sm" id="qr-png" type="button">Télécharger PNG</button><button class="btn ghost sm" id="qr-svg" type="button">Télécharger SVG</button></div>
+    <p class="lib-note" id="qr-err"></p></div><div class="qr-box"><canvas id="qr-cv" width="300" height="300"></canvas></div></div></div>
+  <div class="tool" data-panel="image" hidden><div class="tool-in">
+    <div><h3>Image : recadrer, redimensionner, convertir, compresser</h3>
+    <div class="tool-row"><label class="btn ghost sm" for="im-file">Choisir une image</label><input id="im-file" type="file" accept="image/*" hidden><span id="im-name" class="lib-note" style="margin:0"></span></div>
+    <div class="tool-row"><label class="field">Largeur max <input id="im-w" type="number" min="16" max="8000" placeholder="auto" style="width:80px"></label>
+    <label class="field"><select id="im-crop"><option value="0">Sans recadrage</option><option value="1">Carré 1:1</option><option value="1.3333">4:3</option><option value="1.7778">16:9</option><option value="0.75">3:4</option><option value="0.5625">9:16</option></select></label></div>
+    <div class="tool-row"><label class="field"><select id="im-fmt"><option value="image/webp">WebP</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option></select></label>
+    <label class="field">Qualité <input id="im-q" type="range" min="30" max="100" value="80"></label></div>
+    <p class="lib-note" id="im-info">Choisissez une image pour commencer.</p>
+    <button class="btn sm" id="im-dl" type="button" disabled>Télécharger</button></div>
+    <div class="qr-box"><img id="im-prev" alt="Aperçu du résultat" hidden style="max-width:100%;max-height:320px;border-radius:10px"></div></div></div>
+</div></section>
+
+<section class="band" id="projets" aria-labelledby="h-pr"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-pr">Mes projets</h2><p>Votre espace de travail : créez des projets et enregistrez-y les icônes, polices et photos qui vous servent.</p></div></div>
+  <div id="pr-body"></div>
+</div></section>
+<dialog id="auth-dlg" aria-label="Connexion"><div class="dlg"><button class="x" type="button" data-close aria-label="Fermer">×</button>
+  <h2 style="font-size:1.5rem;font-weight:400;padding-right:44px">Votre compte</h2>
+  <form id="auth-form" style="display:grid;gap:12px;margin-top:16px"><label class="field"><span class="sr">E-mail</span><input id="au-mail" type="email" placeholder="E-mail" autocomplete="email" required style="width:100%"></label>
+  <label class="field"><span class="sr">Mot de passe</span><input id="au-pass" type="password" placeholder="Mot de passe (8 caractères minimum)" autocomplete="current-password" minlength="8" required style="width:100%"></label>
+  <p class="lib-note" id="au-msg" style="margin:0" aria-live="polite"></p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit" id="au-in">Se connecter</button><button class="btn ghost" type="button" id="au-up">Créer un compte</button></div></form></div></dialog>
+
+<section class="band" id="effets" aria-labelledby="h-fx">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-fx">Effets de texte</h2>
+        <p>Écrivez votre mot, choisissez un effet, copiez le code CSS. Tout se règle en direct.</p>
+      </div>
+    </div>
+    <div class="fx">
+      <div class="panel">
+        <h3>Réglages</h3>
+        <div class="ctl"><label for="fx-text">Votre texte</label><input id="fx-text" type="text" value="Palezza" maxlength="24"></div>
+        <div class="ctl"><span class="lab" id="fx-lab">Effet</span><div class="chips" id="fx-list" role="group" aria-labelledby="fx-lab"></div></div>
+        <div class="ctl"><span class="lab">Couleurs</span>
+          <div class="ctl-row">
+            <label class="color"><input type="color" id="fx-c1" value="#7DBDB7"> Couleur 1</label>
+            <label class="color"><input type="color" id="fx-c2" value="#247C78"> Couleur 2</label>
+          </div>
+        </div>
+        <div class="ctl"><label for="fx-size">Taille : <output id="fx-size-out">96</output> px</label><input id="fx-size" type="range" min="48" max="160" value="96"></div>
+        <div class="ctl"><span class="lab" id="fx-bg-lab">Fond</span><div class="chips" id="fx-bg" role="group" aria-labelledby="fx-bg-lab"></div></div>
+      </div>
+      <div>
+        <div class="preview" id="fx-preview"><span id="fx-out"></span></div>
+        <pre class="code" id="fx-code" tabindex="0" aria-label="Code CSS de l'effet"></pre>
+        <div class="fx-actions">
+          <button class="btn" id="fx-copy" type="button"><span data-icon="copy"></span> Copier le CSS</button>
+          <p class="hint">Police : Outfit (Google Fonts). Ajoutez-la à votre page pour le même rendu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="licence" aria-labelledby="h-lic">
+  <div class="wrap">
+    <div class="sec-head"><div><h2 id="h-lic">Une licence écrite en clair</h2></div></div>
+    <div class="lic">
+      <div><span class="mark" data-icon="check"></span><h3>Usage commercial autorisé</h3><p>Flyers, cartes, bannières, réseaux sociaux, sites : utilisez les ressources dans vos projets personnels et dans ceux de vos clients.</p></div>
+      <div><span class="mark" data-icon="lock"></span><h3>Pas de revente en l'état</h3><p>Il est interdit de republier ou de revendre un fichier tel quel, seul ou dans un pack. Les modifier et les intégrer à une création est permis.</p></div>
+      <div><span class="mark" data-icon="copy"></span><h3>Aucune mention demandée</h3><p>Les ressources de Palezza Studios n'exigent pas de crédit. Les modèles utilisent Outfit et Inter (Google Fonts, licence SIL Open Font).</p></div>
+    </div>
+    <p class="note">Texte de licence provisoire : à faire relire par un juriste avant l'ouverture au public.</p>
+  </div>
+</section>
+
+<section class="band" id="offres" aria-labelledby="h-off">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2 id="h-off">Les offres</h2>
+        <p>Tarifs indicatifs en FCFA, à confirmer avant le lancement. Paiement par Mobile Money (MTN, Airtel).</p>
+      </div>
+    </div>
+    <div class="plans" id="plans"></div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <img class="lg lg-light" src="logos/svg/obturateur_horizontal_clair_transparent.svg" alt="Palezza Studios" width="1493" height="716"><img class="lg lg-dark" src="logos/svg/obturateur_horizontal_sombre_transparent.svg" alt="Palezza Studios" width="1493" height="716">
+        <p>Ressources créatives, modèles et outils pour designers, entrepreneurs et studios.</p>
+      </div>
+      <div><h3>Explorer</h3><ul id="foot-cats"></ul></div>
+      <div><h3>Plateforme</h3><ul><li><a href="#collection">Collection Palezza</a></li><li><a href="#effets">Effets de texte</a></li><li><a href="#licence">Licence</a></li><li><a href="#offres">Offres et paiement</a></li></ul></div>
+    </div>
+    <div class="legal"><span>Palezza Studios (PS)</span><span>© 2026 Palezza Networks</span></div>
+  </div>
+</footer>
+
+<dialog id="detail" aria-label="Détail de la ressource"><div class="dlg"><button class="x" type="button" data-close aria-label="Fermer"><span data-icon="x"></span></button><div id="detail-body"></div></div></dialog>
+
+<dialog id="checkout" class="narrow" aria-label="Abonnement">
+  <div class="dlg">
+    <button class="x" type="button" data-close aria-label="Fermer"><span data-icon="x"></span></button>
+    <div id="co-main">
+      <h2 id="co-title" style="font-size:1.5rem;font-weight:400;padding-right:44px"></h2>
+      <p class="demo">Mode démonstration : aucun paiement réel n'est effectué.</p>
+      <div class="tabs" role="tablist" aria-label="Moyen de paiement">
+        <button type="button" role="tab" id="tab-momo" aria-selected="true" aria-controls="pane-momo">Mobile Money</button>
+        <button type="button" role="tab" id="tab-card" aria-selected="false" aria-controls="pane-card">Carte bancaire</button>
+      </div>
+      <form id="pane-momo" role="tabpanel" aria-labelledby="tab-momo" novalidate>
+        <fieldset class="ops"><legend>Opérateur</legend>
+          <label class="op"><input type="radio" name="op" value="MTN MoMo" checked><span>MTN MoMo</span></label>
+          <label class="op"><input type="radio" name="op" value="Airtel Money"><span>Airtel Money</span></label>
+        </fieldset>
+        <div class="ctl" style="margin-bottom:0"><label for="phone">Numéro Mobile Money</label>
+          <div class="phone"><b>+242</b><input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="06 123 45 67"></div>
+        </div>
+        <p class="err" id="co-err" role="alert"></p>
+        <div class="sum"><span id="co-plan"></span><span id="co-price"></span></div>
+        <button class="btn" style="width:100%" type="submit" id="co-pay">Payer</button>
+      </form>
+      <div id="pane-card" role="tabpanel" aria-labelledby="tab-card" hidden>
+        <p class="callout"><b>Prévu en version 1.</b> Le paiement par carte ouvrira la page sécurisée du prestataire (Stripe, ou une plateforme qui joue le rôle de vendeur officiel). Aucune donnée de carte ne passera par ce site.</p>
+        <div class="sum"><span id="co-plan2"></span><span id="co-price2"></span></div>
+        <button class="btn" style="width:100%" type="button" disabled>Bientôt disponible</button>
+      </div>
+    </div>
+    <div id="co-done" class="ok" hidden>
+      <span class="mark" data-icon="check"></span>
+      <h2 style="font-size:1.5rem;font-weight:400">Démonstration terminée</h2>
+      <p id="co-done-text" class="hint"></p>
+      <button class="btn" type="button" data-close>Fermer</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+/* ---------- Icônes ---------- */
+var ICONS={
+ search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+ heart:'<path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>',
+ copy:'<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+ download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+ lock:'<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>'
+};
+function icon(n){return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICONS[n]+'</svg>';}
+function paintIcons(root){$$('[data-icon]',root).forEach(function(e){if(!e.firstChild)e.innerHTML=icon(e.getAttribute('data-icon'));});}
+
+/* ---------- Outils ---------- */
+var embedded=false;try{embedded=window.top!==window.self;}catch(e){embedded=true;}
+var toastT;
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on');},2600);}
+function copyText(t){
+  var fallback=function(){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();return ok;};
+  if(navigator.clipboard&&navigator.clipboard.writeText){return navigator.clipboard.writeText(t).then(function(){return true;},function(){return fallback();});}
+  return Promise.resolve(fallback());
+}
+function save(name,text,type){var b=new Blob([text],{type:type});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1500);}
+var norm=function(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');};
+var fcfa=function(n){return n===0?'Gratuit':new Intl.NumberFormat('fr-FR').format(n)+' FCFA';};
+
+/* ---------- Palette et générateurs SVG (ressources originales) ---------- */
+var C={teal:'#247C78',dteal:'#1B5D5A',night:'#10302F',deep:'#0B1F1F',gold:'#D6A64F',ivory:'#FFFDF8',sand:'#F3EBDD',mint:'#7DBDB7',terra:'#C76B50'};
+var COLOR_NAMES={'#247C78':'Vert pétrole','#1B5D5A':'Vert profond','#10302F':'Pétrole nuit','#0B1F1F':'Nuit profonde','#D6A64F':'Or doux','#FFFDF8':'Ivoire clair','#F3EBDD':'Sable','#7DBDB7':'Menthe','#C76B50':'Terracotta'};
+var FONT='Outfit, Inter, sans-serif';
+function rng(seed){var s=seed>>>0;return function(){s=(Math.imul(s,1664525)+1013904223)>>>0;return s/4294967296;};}
+function pt(cx,cy,r,a){return (cx+r*Math.cos(a*Math.PI/180)).toFixed(1)+','+(cy+r*Math.sin(a*Math.PI/180)).toFixed(1);}
+function hex(cx,cy,r,rot){var o=[];for(var i=0;i<6;i++)o.push(pt(cx,cy,r,(rot||30)+60*i));return o.join(' ');}
+function aperture(cx,cy,R,cols){var s='';for(var k=0;k<6;k++){var a=-150+60*k;s+='<polygon points="'+pt(cx,cy,R,a)+' '+pt(cx,cy,R,a+60)+' '+pt(cx,cy,R*.345,a+102.6)+'" fill="'+cols[k%cols.length]+'"/>';}return s;}
+function wrap(w,h,inner,defs){return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'" width="'+w+'" height="'+h+'">'+(defs?'<defs>'+defs+'</defs>':'')+inner+'</svg>';}
+function rect(x,y,w,h,f,extra){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+f+'" '+(extra||'')+'/>';}
+function txt(x,y,size,fill,str,extra){return '<text x="'+x+'" y="'+y+'" font-family="'+FONT+'" font-size="'+size+'" fill="'+fill+'" '+(extra||'')+'>'+str+'</text>';}
+function pattern(u,bg,w,h,tile,extra){return wrap(800,800,rect(0,0,800,800,bg)+rect(0,0,800,800,'url(#'+u+'p)'),'<pattern id="'+u+'p" width="'+w+'" height="'+h+'" patternUnits="userSpaceOnUse" '+(extra||'')+'>'+tile+'</pattern>');}
+
+/* Fonds 1200 x 800 */
+function fObturateur(u){var hs=[[220,210,260,C.teal,.55],[640,430,300,C.dteal,.8],[1000,170,200,C.gold,.38],[1010,650,240,C.teal,.45],[380,660,150,C.mint,.28]];
+  return wrap(1200,800,rect(0,0,1200,800,C.night)+hs.map(function(h){return '<polygon points="'+hex(h[0],h[1],h[2],30)+'" fill="'+h[3]+'" opacity="'+h[4]+'"/>';}).join(''));}
+function fDegrade(u){return wrap(1200,800,rect(0,0,1200,800,'url(#'+u+'a)')+'<circle cx="900" cy="230" r="380" fill="url(#'+u+'b)"/><circle cx="190" cy="700" r="300" fill="'+C.mint+'" opacity=".14"/>',
+  '<linearGradient id="'+u+'a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+C.deep+'"/><stop offset=".55" stop-color="'+C.night+'"/><stop offset="1" stop-color="'+C.teal+'"/></linearGradient><radialGradient id="'+u+'b"><stop offset="0" stop-color="'+C.gold+'" stop-opacity=".8"/><stop offset="1" stop-color="'+C.gold+'" stop-opacity="0"/></radialGradient>');}
+function fVagues(u){var cols=[C.mint,C.teal,C.dteal,C.night],o='';cols.forEach(function(c,i){var y=380+i*110;o+='<path d="M0 '+y+' C 250 '+(y-110)+', 480 '+(y+90)+', 720 '+(y-10)+' S 1080 '+(y-110)+', 1200 '+(y-40)+' V800 H0Z" fill="'+c+'" opacity="'+(i===0?.55:1)+'"/>';});
+  return wrap(1200,800,rect(0,0,1200,800,C.sand)+o);}
+function fFacettes(u){var r=rng(7),cols=11,rows=8,dx=1200/(cols-1),dy=800/(rows-1),P=[],i,j,o='';
+  for(j=0;j<rows;j++){P.push([]);for(i=0;i<cols;i++){var jx=(i===0||i===cols-1)?0:(r()-.5)*dx*.7,jy=(j===0||j===rows-1)?0:(r()-.5)*dy*.7;P[j].push([i*dx+jx,j*dy+jy]);}}
+  var pal=[C.dteal,C.teal,C.night,'#2C8A85',C.deep,C.dteal];
+  function tri(a,b,c){var col=pal[Math.floor(r()*pal.length)];if(r()>.965)col=C.gold;o+='<polygon points="'+a[0].toFixed(0)+','+a[1].toFixed(0)+' '+b[0].toFixed(0)+','+b[1].toFixed(0)+' '+c[0].toFixed(0)+','+c[1].toFixed(0)+'" fill="'+col+'" stroke="'+col+'" stroke-width="1"/>';}
+  for(j=0;j<rows-1;j++)for(i=0;i<cols-1;i++){tri(P[j][i],P[j][i+1],P[j+1][i]);tri(P[j][i+1],P[j+1][i+1],P[j+1][i]);}
+  return wrap(1200,800,o);}
+function fAurore(u){return wrap(1200,800,rect(0,0,1200,800,C.ivory)+'<circle cx="260" cy="260" r="460" fill="url(#'+u+'a)"/><circle cx="900" cy="540" r="480" fill="url(#'+u+'b)"/><circle cx="1000" cy="120" r="300" fill="url(#'+u+'c)"/>',
+  '<radialGradient id="'+u+'a"><stop offset="0" stop-color="'+C.terra+'" stop-opacity=".85"/><stop offset="1" stop-color="'+C.terra+'" stop-opacity="0"/></radialGradient><radialGradient id="'+u+'b"><stop offset="0" stop-color="'+C.gold+'" stop-opacity=".9"/><stop offset="1" stop-color="'+C.gold+'" stop-opacity="0"/></radialGradient><radialGradient id="'+u+'c"><stop offset="0" stop-color="'+C.mint+'" stop-opacity=".9"/><stop offset="1" stop-color="'+C.mint+'" stop-opacity="0"/></radialGradient>');}
+function fLignes(u){var o='';for(var i=1;i<=24;i++)o+='<circle cx="1200" cy="0" r="'+(i*52)+'" fill="none" stroke="'+C.gold+'" stroke-width="2" opacity="'+(0.7-i*.026).toFixed(2)+'"/>';
+  return wrap(1200,800,rect(0,0,1200,800,C.night)+o);}
+
+/* Motifs 800 x 800 */
+function mHexa(u){var t='',p=[[34.64,40],[0,100],[69.28,100],[0,-20],[69.28,-20]];p.forEach(function(c){t+='<polygon points="'+hex(c[0],c[1],40,30)+'" fill="none" stroke="'+C.teal+'" stroke-width="3"/>';});return pattern(u,C.ivory,69.28,120,t);}
+function mPointilles(u){return pattern(u,C.night,60,60,'<circle cx="15" cy="15" r="5" fill="'+C.gold+'"/><circle cx="45" cy="45" r="5" fill="'+C.mint+'" opacity=".8"/>');}
+function mChevrons(u){return pattern(u,C.sand,80,44,'<path d="M0 34 L40 10 L80 34" fill="none" stroke="'+C.terra+'" stroke-width="7" stroke-linejoin="miter"/>');}
+function mObturateurs(u){var t='',p=[[25.98,30],[0,75],[51.96,75],[0,-15],[51.96,-15]];p.forEach(function(c){t+=aperture(c[0],c[1],24,[C.gold,C.teal,C.dteal,C.teal,C.dteal,C.teal]);});return pattern(u,C.night,51.96,90,t);}
+function mBandes(u){return pattern(u,C.ivory,48,48,'<rect width="22" height="48" fill="'+C.teal+'"/><rect x="26" width="6" height="48" fill="'+C.mint+'"/>','patternTransform="rotate(45)"');}
+
+/* Flyers 900 x 1200 */
+function flyer(u,o){var deco='',i;
+  if(o.shape==='circle')deco='<circle cx="640" cy="320" r="320" fill="'+o.ac+'"/><circle cx="640" cy="320" r="200" fill="none" stroke="'+o.bg+'" stroke-width="3" opacity=".5"/><circle cx="130" cy="560" r="64" fill="'+o.fg+'" opacity=".12"/>';
+  if(o.shape==='hex')deco='<polygon points="'+hex(620,340,330,30)+'" fill="'+o.ac+'"/><polygon points="'+hex(620,340,220,30)+'" fill="'+o.sh+'"/><polygon points="'+hex(620,340,110,30)+'" fill="'+o.ac+'" opacity=".9"/>';
+  if(o.shape==='stripes'){for(i=0;i<8;i++)deco+='<rect x="'+(-60+i*130)+'" y="-200" width="64" height="1100" fill="'+o.ac+'" opacity="'+(.95-i*.1).toFixed(2)+'" transform="rotate(18 450 400)"/>';}
+  if(o.shape==='blades')deco=aperture(520,330,330,[C.gold,C.teal,C.dteal,C.teal,C.dteal,C.teal]);
+  var s=rect(0,0,900,1200,o.bg)+deco;
+  s+=rect(70,664,64,6,o.ac)+txt(70,716,30,o.fg,o.kicker,'font-weight="500" letter-spacing="7" opacity=".78"');
+  o.lines.forEach(function(l,k){s+=txt(66,826+k*112,108,k===o.lines.length-1?o.tc:o.fg,l,'font-weight="600" letter-spacing="-2"');});
+  var y=826+(o.lines.length-1)*112+66;
+  s+=txt(70,y,34,o.fg,o.sub,'opacity=".88"');
+  var w=o.cta.length*19+70;
+  s+='<rect x="70" y="'+(y+34)+'" width="'+w+'" height="64" rx="32" fill="'+o.ac+'"/>'+txt(70+w/2,y+76,27,o.ci,o.cta,'font-weight="600" text-anchor="middle" letter-spacing="2"');
+  s+=txt(70,1156,26,o.fg,o.info,'opacity=".7"');
+  return wrap(900,1200,s);}
+
+/* Cartes de visite 1050 x 600 */
+function cNuit(u){var s=rect(0,0,1050,600,C.night)+'<polygon points="'+hex(880,300,270,30)+'" fill="none" stroke="'+C.gold+'" stroke-width="3" opacity=".85"/><polygon points="'+hex(880,300,190,30)+'" fill="none" stroke="'+C.teal+'" stroke-width="3"/>';
+  s+=txt(80,250,68,C.sand,'Prénom NOM','font-weight="600"')+txt(80,306,28,C.gold,'FONCTION · ENTREPRISE','letter-spacing="5"')+rect(80,350,70,4,C.gold)+txt(80,428,27,C.sand,'+242 06 000 00 00','opacity=".88"')+txt(80,470,27,C.sand,'nom@domaine.com','opacity=".88"')+txt(80,512,27,C.sand,'Brazzaville, Congo','opacity=".88"');return wrap(1050,600,s);}
+function cIvoire(u){var s=rect(0,0,1050,600,C.ivory)+rect(0,0,30,600,C.teal);
+  [[860,470],[935,513],[860,556]].forEach(function(c){s+='<polygon points="'+hex(c[0],c[1],44,30)+'" fill="none" stroke="'+C.teal+'" stroke-width="3"/>';});
+  s+='<circle cx="940" cy="90" r="16" fill="'+C.terra+'"/>'+txt(90,240,68,C.night,'Prénom NOM','font-weight="600"')+txt(90,296,28,C.teal,'FONCTION · ENTREPRISE','letter-spacing="5" font-weight="500"')+rect(90,340,70,4,C.terra)+txt(90,420,27,C.night,'+242 06 000 00 00','opacity=".8"')+txt(90,462,27,C.night,'nom@domaine.com','opacity=".8"')+txt(90,504,27,C.night,'Brazzaville, Congo','opacity=".8"');return wrap(1050,600,s);}
+function cVert(u){var s=rect(0,0,1050,600,C.teal)+'<polygon points="1050,0 1050,320 730,0" fill="'+C.gold+'"/><polygon points="1050,600 1050,400 850,600" fill="'+C.dteal+'"/>';
+  s+=txt(80,250,68,C.ivory,'Prénom NOM','font-weight="600"')+txt(80,306,28,C.gold,'FONCTION · ENTREPRISE','letter-spacing="5" font-weight="500"')+rect(80,350,70,4,C.ivory)+txt(80,428,27,C.ivory,'+242 06 000 00 00')+txt(80,470,27,C.ivory,'nom@domaine.com')+txt(80,512,27,C.ivory,'Brazzaville, Congo');return wrap(1050,600,s);}
+function cDuo(u){var s=rect(0,0,1050,600,C.ivory)+rect(0,0,380,600,C.night)+'<polygon points="'+hex(190,270,96,30)+'" fill="none" stroke="'+C.gold+'" stroke-width="4"/>'+txt(190,420,24,C.sand,'VOTRE LOGO','text-anchor="middle" letter-spacing="6" opacity=".8"');
+  s+=txt(450,240,62,C.night,'Prénom NOM','font-weight="600"')+txt(450,294,28,C.terra,'FONCTION','letter-spacing="6" font-weight="500"')+rect(450,334,70,4,C.terra)+txt(450,412,27,C.night,'+242 06 000 00 00','opacity=".82"')+txt(450,454,27,C.night,'nom@domaine.com','opacity=".82"')+txt(450,496,27,C.night,'www.votre-site.com','opacity=".82"');return wrap(1050,600,s);}
+
+/* Bannières 1500 x 500 */
+function bPromo(u){var s=rect(0,0,1500,500,C.night)+'<circle cx="1260" cy="250" r="340" fill="'+C.gold+'"/><circle cx="1260" cy="250" r="230" fill="none" stroke="'+C.night+'" stroke-width="3" opacity=".45"/>';
+  s+=txt(100,120,26,C.gold,'OFFRE DE FIN D\'ANNÉE','letter-spacing="7" font-weight="500"')+txt(100,222,84,C.sand,'Jusqu\'à -40 %','font-weight="600" letter-spacing="-2"')+txt(100,312,60,C.sand,'sur la collection','font-weight="300"')+'<rect x="100" y="364" width="300" height="64" rx="32" fill="'+C.gold+'"/>'+txt(250,406,26,C.night,'Voir l\'offre','text-anchor="middle" font-weight="600"');return wrap(1500,500,s);}
+function bCouv(u){var s=rect(0,0,1500,500,'url(#'+u+'g)')+aperture(1240,250,300,[C.gold,C.mint,C.ivory,C.mint,C.ivory,C.mint]).replace(/<polygon /g,'<polygon opacity=".92" ');
+  s+=txt(100,226,88,C.ivory,'Votre marque,','font-weight="300" letter-spacing="-2"')+txt(100,326,88,C.ivory,'votre univers.','font-weight="600" letter-spacing="-2"')+txt(104,402,30,C.mint,'@votre.compte · Brazzaville','letter-spacing="2"');
+  return wrap(1500,500,s,'<linearGradient id="'+u+'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+C.teal+'"/><stop offset="1" stop-color="'+C.night+'"/></linearGradient>');}
+function bAnnonce(u){var s=rect(0,0,1500,500,C.ivory)+'<polygon points="0,0 660,0 540,500 0,500" fill="'+C.terra+'"/>'+txt(80,130,26,C.ivory,'NOUVEAU','letter-spacing="9" font-weight="500"')+txt(80,250,86,C.ivory,'Livraison','font-weight="600" letter-spacing="-2"')+txt(80,350,86,C.ivory,'offerte','font-weight="300" letter-spacing="-2"')
+  +txt(760,230,60,C.night,'Ce week-end,','font-weight="600"')+txt(760,306,60,C.night,'sans minimum d\'achat','font-weight="300"')+txt(762,380,28,C.terra,'Valable dans toute la ville','font-weight="500" letter-spacing="1"');return wrap(1500,500,s);}
+function bBlog(u){var s=rect(0,0,1500,500,C.sand)
+  +'<path d="M0 400 C 250 330, 480 450, 760 390 S 1260 340, 1500 400 V500 H0Z" fill="'+C.mint+'" opacity=".7"/><path d="M0 430 C 300 380, 520 480, 800 430 S 1260 400, 1500 440 V500 H0Z" fill="'+C.teal+'"/><path d="M0 468 C 320 440, 600 500, 900 466 S 1300 450, 1500 474 V500 H0Z" fill="'+C.night+'"/>'
+  +txt(100,130,26,C.terra,'JOURNAL','letter-spacing="9" font-weight="500"')+txt(96,250,104,C.night,'Le blog créatif','font-weight="300" letter-spacing="-3"')+txt(100,316,34,C.dteal,'Conseils, inspirations et ressources','font-weight="400"');return wrap(1500,500,s);}
+
+/* Mockups 1200 x 900 */
+function shadowDefs(u){return '<filter id="'+u+'s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000" flood-opacity=".28"/></filter>';}
+function kTel(u){var s=rect(0,0,1200,900,C.sand)+'<ellipse cx="600" cy="840" rx="190" ry="22" fill="#000" opacity=".12"/>'
+  +'<g filter="url(#'+u+'s)"><rect x="440" y="70" width="320" height="760" rx="52" fill="'+C.night+'"/></g><rect x="456" y="86" width="288" height="728" rx="38" fill="url(#'+u+'g)"/><rect x="552" y="104" width="96" height="26" rx="13" fill="'+C.night+'"/>'
+  +txt(486,196,34,C.ivory,'Votre appli','font-weight="600"')+txt(486,228,17,C.mint,'Sous-titre ou slogan')
+  +'<rect x="486" y="262" width="228" height="150" rx="18" fill="'+C.ivory+'" opacity=".95"/><polygon points="'+hex(600,337,44,30)+'" fill="'+C.teal+'"/>'
+  +'<rect x="486" y="432" width="106" height="92" rx="16" fill="'+C.gold+'"/><rect x="608" y="432" width="106" height="92" rx="16" fill="'+C.ivory+'" opacity=".16"/>'
+  +'<rect x="486" y="544" width="228" height="16" rx="8" fill="'+C.ivory+'" opacity=".3"/><rect x="486" y="574" width="170" height="16" rx="8" fill="'+C.ivory+'" opacity=".2"/>'
+  +'<rect x="486" y="716" width="228" height="56" rx="28" fill="'+C.gold+'"/>'+txt(600,752,20,C.night,'Commencer','text-anchor="middle" font-weight="600"');
+  return wrap(1200,900,s,shadowDefs(u)+'<linearGradient id="'+u+'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+C.teal+'"/><stop offset="1" stop-color="'+C.night+'"/></linearGradient>');}
+function kAffiche(u){var s=rect(0,0,1200,900,C.sand)+rect(0,700,1200,200,'#E6DAC3')
+  +'<g filter="url(#'+u+'s)"><rect x="380" y="110" width="440" height="580" fill="'+C.night+'"/></g><rect x="410" y="140" width="380" height="520" fill="'+C.ivory+'"/>'
+  +rect(436,166,328,330,C.teal)+'<circle cx="640" cy="290" r="96" fill="'+C.gold+'"/><polygon points="'+hex(560,400,70,30)+'" fill="'+C.dteal+'"/>'
+  +txt(436,560,40,C.night,'Titre de l\'affiche','font-weight="600"')+txt(436,600,20,C.dteal,'Sous-titre · Date · Lieu')+rect(436,624,60,4,C.terra);
+  return wrap(1200,900,s,shadowDefs(u));}
+function kCartes(u){var s=rect(0,0,1200,900,C.teal)
+  +'<g transform="rotate(-9 520 420)" filter="url(#'+u+'s)"><rect x="250" y="250" width="560" height="320" rx="20" fill="'+C.ivory+'"/>'+rect(250,250,26,320,C.gold,'rx="0"')+txt(320,360,46,C.night,'Prénom NOM','font-weight="600"')+txt(320,404,20,C.teal,'FONCTION','letter-spacing="5"')+txt(320,500,20,C.night,'+242 06 000 00 00','opacity=".75"')+'</g>'
+  +'<g transform="rotate(7 700 520)" filter="url(#'+u+'s)"><rect x="420" y="360" width="560" height="320" rx="20" fill="'+C.night+'"/><polygon points="'+hex(840,520,92,30)+'" fill="none" stroke="'+C.gold+'" stroke-width="3"/>'+txt(490,490,46,C.sand,'Prénom NOM','font-weight="600"')+txt(490,534,20,C.gold,'FONCTION','letter-spacing="5"')+txt(490,630,20,C.sand,'nom@domaine.com','opacity=".8"')+'</g>';
+  return wrap(1200,900,s,shadowDefs(u));}
+function kOrdi(u){var s=rect(0,0,1200,900,C.ivory)+'<rect x="0" y="640" width="1200" height="260" fill="'+C.mint+'" opacity=".35"/>'
+  +'<g filter="url(#'+u+'s)"><rect x="220" y="150" width="760" height="480" rx="26" fill="'+C.night+'"/></g><rect x="244" y="174" width="712" height="432" rx="12" fill="url(#'+u+'g)"/>'
+  +'<rect x="244" y="174" width="712" height="44" rx="12" fill="'+C.deep+'" opacity=".6"/><circle cx="272" cy="196" r="7" fill="'+C.terra+'"/><circle cx="296" cy="196" r="7" fill="'+C.gold+'"/><circle cx="320" cy="196" r="7" fill="'+C.mint+'"/>'
+  +txt(290,330,58,C.ivory,'Votre site web','font-weight="600"')+txt(292,376,24,C.mint,'Un titre clair, une action évidente')+'<rect x="290" y="410" width="220" height="56" rx="28" fill="'+C.gold+'"/>'+txt(400,446,21,C.night,'En savoir plus','text-anchor="middle" font-weight="600"')
+  +'<polygon points="'+hex(790,400,120,30)+'" fill="'+C.ivory+'" opacity=".14"/><polygon points="'+hex(790,400,66,30)+'" fill="'+C.gold+'" opacity=".9"/>'
+  +'<path d="M130 636 H1070 L1030 676 H170 Z" fill="'+C.sand+'" stroke="#CFC3AB"/><rect x="520" y="636" width="160" height="12" rx="6" fill="#CFC3AB"/>';
+  return wrap(1200,900,s,shadowDefs(u)+'<linearGradient id="'+u+'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+C.teal+'"/><stop offset="1" stop-color="'+C.night+'"/></linearGradient>');}
+
+/* ---------- Catalogue ---------- */
+var CATS=[{id:'fond',label:'Fonds',dim:[1200,800]},{id:'motif',label:'Motifs',dim:[800,800]},{id:'flyer',label:'Flyers',dim:[900,1200]},{id:'carte',label:'Cartes de visite',dim:[1050,600]},{id:'banniere',label:'Bannières',dim:[1500,500]},{id:'mockup',label:'Mockups',dim:[1200,900]}];
+var CAT={};CATS.forEach(function(c){CAT[c.id]=c;});
+function mk(id,title,cat,prem,tags,fn){return {id:id,title:title,cat:cat,prem:prem,tags:tags,svg:fn};}
+var ITEMS=[
+ mk('flyer-concert','Flyer concert, soirée live','flyer',true,['concert','musique','soirée','événement','affiche','or'],function(u){return flyer(u,{bg:C.night,fg:C.sand,ac:C.gold,tc:C.gold,ci:C.night,shape:'circle',kicker:'CONCERT EN DIRECT',lines:['SOIRÉE','LIVE'],sub:'Samedi · 19 h · Brazzaville',cta:'ENTRÉE LIBRE',info:'Réservations : +242 06 000 00 00'});}),
+ mk('fond-obturateur','Fond hexagones pétrole','fond',false,['hexagone','obturateur','sombre','géométrique','pétrole'],fObturateur),
+ mk('carte-nuit','Carte de visite Nuit et or','carte',false,['carte de visite','sombre','hexagone','or','professionnel'],cNuit),
+ mk('flyer-promo','Flyer promotion -30 %','flyer',false,['promo','soldes','boutique','commerce','offre','réduction'],function(u){return flyer(u,{bg:C.ivory,fg:C.night,ac:C.terra,tc:C.terra,ci:C.ivory,shape:'stripes',kicker:'OFFRE LIMITÉE',lines:['-30 %','SUR TOUT'],sub:'Jusqu\'à dimanche soir',cta:'J\'EN PROFITE',info:'Boutique · Centre-ville'});}),
+ mk('motif-hexa','Motif nid d\'abeille','motif',false,['hexagone','grille','géométrique','vert','fond répétable'],mHexa),
+ mk('banniere-promo','Bannière promo web','banniere',false,['promo','soldes','site web','réseaux sociaux','or','offre'],bPromo),
+ mk('mockup-telephone','Mockup téléphone, écran d\'appli','mockup',true,['téléphone','application','mobile','écran','présentation'],kTel),
+ mk('flyer-ouverture','Flyer grande ouverture','flyer',true,['ouverture','inauguration','commerce','restaurant','nouveau','hexagone'],function(u){return flyer(u,{bg:C.teal,fg:C.ivory,ac:C.gold,tc:C.gold,ci:C.night,shape:'hex',sh:C.dteal,kicker:'NOUVEAU',lines:['GRANDE','OUVERTURE'],sub:'Venez nous rencontrer',cta:'CE SAMEDI',info:'Adresse · Quartier · Brazzaville'});}),
+ mk('fond-degrade','Fond dégradé nuit et soleil','fond',false,['dégradé','sombre','or','lumière','pétrole'],fDegrade),
+ mk('carte-ivoire','Carte de visite Ivoire minimale','carte',false,['carte de visite','clair','minimal','professionnel','hexagone'],cIvoire),
+ mk('banniere-couverture','Couverture réseaux sociaux','banniere',true,['réseaux sociaux','couverture','facebook','linkedin','marque','obturateur'],bCouv),
+ mk('motif-pointilles','Motif pointillé or et menthe','motif',false,['points','pois','sombre','or','fond répétable'],mPointilles),
+ mk('flyer-atelier','Flyer atelier photo','flyer',false,['atelier','formation','photo','studio','inscription','obturateur'],function(u){return flyer(u,{bg:C.sand,fg:C.night,ac:C.teal,tc:C.teal,ci:C.ivory,shape:'blades',kicker:'ATELIER PRATIQUE',lines:['ATELIER','PHOTO'],sub:'Initiation en studio · 12 places',cta:'S\'INSCRIRE',info:'Inscription : nom@domaine.com'});}),
+ mk('fond-vagues','Fond vagues vert et menthe','fond',false,['vagues','courbes','clair','vert','nature'],fVagues),
+ mk('mockup-affiche','Mockup affiche encadrée','mockup',false,['affiche','cadre','mur','poster','présentation'],kAffiche),
+ mk('carte-vert','Carte de visite Vert et or','carte',false,['carte de visite','vert','or','professionnel','coloré'],cVert),
+ mk('motif-chevrons','Motif chevrons terracotta','motif',false,['chevron','zigzag','terracotta','chaud','fond répétable'],mChevrons),
+ mk('flyer-menu','Flyer menu du jour','flyer',false,['menu','restaurant','cuisine','plat du jour','food','café'],function(u){return flyer(u,{bg:C.night,fg:C.sand,ac:C.terra,tc:C.mint,ci:C.ivory,shape:'circle',kicker:'AU MENU CE MIDI',lines:['MENU','DU JOUR'],sub:'Entrée · Plat · Dessert',cta:'SUR PLACE OU À EMPORTER',info:'Ouvert de 11 h à 22 h'});}),
+ mk('fond-facettes','Fond facettes low-poly','fond',true,['facettes','triangles','low poly','vert','abstrait','pétrole'],fFacettes),
+ mk('banniere-annonce','Bannière annonce livraison','banniere',false,['livraison','annonce','boutique','promo','terracotta','site web'],bAnnonce),
+ mk('mockup-cartes','Mockup cartes de visite empilées','mockup',false,['cartes de visite','présentation','marque','papeterie'],kCartes),
+ mk('flyer-recrutement','Flyer recrutement','flyer',false,['recrutement','emploi','équipe','entreprise','offre d\'emploi','hexagone'],function(u){return flyer(u,{bg:C.ivory,fg:C.night,ac:C.gold,tc:C.teal,ci:C.night,shape:'hex',sh:C.night,kicker:'ON RECRUTE',lines:['REJOIGNEZ','L\'ÉQUIPE'],sub:'Postes à pourvoir',cta:'POSTULER',info:'CV : nom@domaine.com'});}),
+ mk('motif-obturateurs','Motif obturateurs','motif',true,['obturateur','photo','diaphragme','hexagone','sombre','fond répétable'],mObturateurs),
+ mk('carte-duo','Carte de visite Duo logo','carte',true,['carte de visite','logo','deux tons','élégant','professionnel'],cDuo),
+ mk('fond-aurore','Fond aurore terracotta','fond',true,['aurore','dégradé','chaud','clair','doux','terracotta'],fAurore),
+ mk('banniere-blog','Bannière en-tête de blog','banniere',false,['blog','en-tête','vagues','clair','site web'],bBlog),
+ mk('mockup-ordinateur','Mockup ordinateur, page web','mockup',true,['ordinateur','site web','écran','laptop','présentation'],kOrdi),
+ mk('motif-bandes','Motif bandes diagonales','motif',false,['rayures','diagonales','vert','clair','fond répétable'],mBandes),
+ mk('fond-lignes','Fond cercles concentriques','fond',false,['cercles','lignes','or','sombre','élégant'],fLignes)
+];
+var BY={};ITEMS.forEach(function(it,i){it.i=i;BY[it.id]=it;});
+
+/* Favoris (stockage local, facultatif) */
+var favs={};
+try{var raw=localStorage.getItem('palezza:favoris');if(raw)JSON.parse(raw).forEach(function(k){favs[k]=1;});}catch(e){}
+function saveFavs(){try{localStorage.setItem('palezza:favoris',JSON.stringify(Object.keys(favs)));}catch(e){}}
+function favCount(){return Object.keys(favs).length;}
+
+var state={cat:'tous',q:'',sort:'new'};
+var grid=$('#grid'),catsEl=$('#cats');
+
+function renderCats(){
+  var h='<button class="chip" type="button" data-cat="tous" aria-pressed="'+(state.cat==='tous')+'">Tous <small>'+ITEMS.length+'</small></button>';
+  CATS.forEach(function(c){var n=ITEMS.filter(function(i){return i.cat===c.id;}).length;h+='<button class="chip" type="button" data-cat="'+c.id+'" aria-pressed="'+(state.cat===c.id)+'">'+c.label+' <small>'+n+'</small></button>';});
+  h+='<button class="chip" type="button" data-cat="favoris" aria-pressed="'+(state.cat==='favoris')+'">'+icon('heart')+' Favoris <small>'+favCount()+'</small></button>';
+  h+='<a class="chip" href="#effets">Effets de texte</a>';
+  catsEl.innerHTML=h;
+}
+function tileHTML(it){
+  var d=CAT[it.cat].dim;
+  return '<article class="tile"><button class="tile-open" type="button" data-open="'+it.id+'" aria-label="Ouvrir : '+it.title+'"><div class="tile-art" style="aspect-ratio:'+d[0]+'/'+d[1]+'">'+it.svg('g-'+it.id)+'</div></button>'
+   +(it.prem?'<span class="badge">'+icon('lock')+' Premium</span>':'')
+   +'<button class="fav" type="button" data-fav="'+it.id+'" aria-pressed="'+(!!favs[it.id])+'" aria-label="Ajouter aux favoris : '+it.title+'">'+icon('heart')+'</button>'
+   +'<div class="tile-meta"><b>'+it.title+'</b><span>'+CAT[it.cat].label.replace(/s$/,'')+'</span></div></article>';
+}
+function render(){
+  var q=norm(state.q.trim());
+  var list=ITEMS.filter(function(it){
+    var okCat=state.cat==='tous'||(state.cat==='favoris'?!!favs[it.id]:it.cat===state.cat);
+    var okQ=!q||norm([it.title,CAT[it.cat].label].concat(it.tags).join(' ')).indexOf(q)>-1;
+    return okCat&&okQ;});
+  list.sort(state.sort==='az'?function(a,b){return a.title.localeCompare(b.title,'fr');}:function(a,b){return a.i-b.i;});
+  grid.innerHTML=list.map(tileHTML).join('');
+  $('#empty').hidden=list.length>0;
+  var lab=state.cat==='favoris'?'dans vos favoris':(state.cat==='tous'?'':'dans « '+CAT[state.cat].label+' »');
+  $('#count').textContent=list.length+(list.length>1?' ressources ':' ressource ')+lab+(q?' pour « '+state.q.trim()+' »':'');
+  $('#q').value=state.q;$('#q-hero').value=state.q;
+  $('#favs-count').textContent=favCount();
+  renderCats();
+}
+
+/* Détail d'une ressource */
+var detailEl=$('#detail');
+function palette(svg){var seen={},out=[];(svg.match(/#[0-9A-Fa-f]{6}\b/g)||[]).forEach(function(c){c=c.toUpperCase();if(!seen[c]){seen[c]=1;out.push(c);}});return out;}
+function openDetail(id){
+  var it=BY[id],d=CAT[it.cat].dim,svg=it.svg('d-'+id),pal=palette(svg);
+  var h='<div class="det"><div class="det-art">'+svg+'</div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+CAT[it.cat].label+'</span><h2>'+it.title+'</h2></div>'
+   +'<dl class="meta"><dt>Format</dt><dd>SVG (vectoriel)</dd><dt>Dimensions</dt><dd>'+d[0]+' × '+d[1]+' px, redimensionnable</dd><dt>Licence</dt><dd>'+(it.prem?'Premium, usage commercial':'Gratuite, usage commercial')+'</dd></dl>'
+   +'<div><div class="lab" style="font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px">Palette</div><div class="sw">'+pal.map(function(c){return '<button type="button" data-hex="'+c+'" aria-label="Copier '+c+'"><i style="background:'+c+'"></i>'+(COLOR_NAMES[c]?COLOR_NAMES[c]+' · ':'')+c+'</button>';}).join('')+'</div></div>'
+   +'<div class="tags">'+it.tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div>';
+  if(it.prem){
+    h+='<p class="callout"><b>Ressource Premium.</b> Incluse dans les offres Créateur et Studio.</p><div class="acts"><button class="btn gold" type="button" data-plan="createur">'+icon('lock')+' Débloquer avec Créateur</button><button class="btn ghost" type="button" data-fav="'+id+'" aria-pressed="'+(!!favs[id])+'">'+icon('heart')+' Favori</button></div>';
+  }else{
+    h+='<div class="acts"><button class="btn" type="button" data-copy="'+id+'">'+icon('copy')+' Copier le code SVG</button>'+(embedded?'':'<button class="btn ghost" type="button" data-dl="'+id+'">'+icon('download')+' Télécharger</button>')+'<button class="btn ghost" type="button" data-fav="'+id+'" aria-pressed="'+(!!favs[id])+'">'+icon('heart')+' Favori</button></div>'
+     +(embedded?'<p class="hint">Dans cet aperçu intégré, le téléchargement direct est désactivé. Copiez le code SVG, ou ouvrez le site dans son propre onglet.</p>':'');
+  }
+  h+='</div></div>';
+  $('#detail-body').innerHTML=h;
+  detailEl.showModal();
+}
+
+/* ---------- Effets de texte ---------- */
+var FX=[
+ {id:'neon',label:'Néon',c1:'#7DBDB7',c2:'#247C78',uses:2},
+ {id:'relief',label:'Relief 3D',c1:'#F3EBDD',c2:'#1B5D5A',uses:2},
+ {id:'contour',label:'Contour',c1:'#D6A64F',c2:'#247C78',uses:2},
+ {id:'degrade',label:'Dégradé',c1:'#D6A64F',c2:'#C76B50',uses:2},
+ {id:'ombre',label:'Ombre longue',c1:'#F3EBDD',c2:'#C76B50',uses:2},
+ {id:'glitch',label:'Glitch',c1:'#7DBDB7',c2:'#C76B50',uses:2},
+ {id:'or',label:'Métal doré',c1:'#D6A64F',c2:'#D6A64F',uses:0}
+];
+var BGS=[{id:'night',label:'Nuit',v:'#10302F'},{id:'teal',label:'Pétrole',v:'#247C78'},{id:'ivory',label:'Ivoire',v:'#FFFDF8'},{id:'sand',label:'Sable',v:'#F3EBDD'}];
+var fx={text:'Palezza',id:'neon',c1:'#7DBDB7',c2:'#247C78',size:96,bg:'night'};
+function fxDecls(){
+  var s=fx.size,a=fx.c1,b=fx.c2,d=[],i,sh=[];
+  d.push("font-family: 'Outfit', sans-serif");d.push('font-size: '+s+'px');d.push('font-weight: 600');
+  if(fx.id==='neon'){d.push('color: #FFFDF8');d.push('text-shadow: 0 0 6px '+a+', 0 0 18px '+a+', 0 0 40px '+a+', 0 0 80px '+b);}
+  if(fx.id==='relief'){d.push('color: '+a);for(i=1;i<=12;i++)sh.push(i+'px '+i+'px 0 '+b);sh.push('0 22px 30px rgba(0,0,0,.35)');d.push('text-shadow: '+sh.join(', '));}
+  if(fx.id==='contour'){d.push('color: transparent');d.push('-webkit-text-stroke: 3px '+a);d.push('text-shadow: 7px 7px 0 '+b);}
+  if(fx.id==='degrade'){d.push('background: linear-gradient(90deg, '+a+', '+b+')');d.push('-webkit-background-clip: text');d.push('background-clip: text');d.push('color: transparent');}
+  if(fx.id==='ombre'){d.push('color: '+a);for(i=1;i<=48;i++)sh.push(i+'px '+i+'px 0 '+b);d.push('text-shadow: '+sh.join(', '));}
+  if(fx.id==='glitch'){d.push('color: #FFFDF8');d.push('text-shadow: 4px 0 '+b+', -4px 0 '+a+', 0 0 2px rgba(255,255,255,.4)');}
+  if(fx.id==='or'){d.push('background: linear-gradient(180deg, #F6E3A8 0%, #D6A64F 45%, #8A6420 55%, #E9C97A 100%)');d.push('-webkit-background-clip: text');d.push('background-clip: text');d.push('color: transparent');d.push('filter: drop-shadow(0 4px 6px rgba(0,0,0,.35))');}
+  return d;
+}
+function fxRender(){
+  var d=fxDecls(),out=$('#fx-out');
+  out.textContent=fx.text||'Palezza';
+  out.style.cssText=d.join(';');
+  var bg=BGS.filter(function(b){return b.id===fx.bg;})[0];
+  $('#fx-preview').style.background=bg.v;
+  $('#fx-code').textContent='.effet-texte {\n  '+d.join(';\n  ')+';\n}';
+  var cur=FX.filter(function(f){return f.id===fx.id;})[0];
+  $('#fx-c1').disabled=!cur.uses;$('#fx-c2').disabled=!cur.uses;
+  $('#fx-c1').value=fx.c1;$('#fx-c2').value=fx.c2;
+  $('#fx-size-out').textContent=fx.size;
+  $$('#fx-list .chip').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-fx')===fx.id);});
+  $$('#fx-bg .chip').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-bg')===fx.bg);});
+}
+function fxInit(){
+  $('#fx-list').innerHTML=FX.map(function(f){return '<button class="chip" type="button" data-fx="'+f.id+'" aria-pressed="false">'+f.label+'</button>';}).join('');
+  $('#fx-bg').innerHTML=BGS.map(function(b){return '<button class="chip" type="button" data-bg="'+b.id+'" aria-pressed="false">'+b.label+'</button>';}).join('');
+  $('#fx-list').addEventListener('click',function(e){var b=e.target.closest('[data-fx]');if(!b)return;var f=FX.filter(function(x){return x.id===b.getAttribute('data-fx');})[0];fx.id=f.id;fx.c1=f.c1;fx.c2=f.c2;fxRender();});
+  $('#fx-bg').addEventListener('click',function(e){var b=e.target.closest('[data-bg]');if(!b)return;fx.bg=b.getAttribute('data-bg');fxRender();});
+  $('#fx-text').addEventListener('input',function(e){fx.text=e.target.value;fxRender();});
+  $('#fx-c1').addEventListener('input',function(e){fx.c1=e.target.value;fxRender();});
+  $('#fx-c2').addEventListener('input',function(e){fx.c2=e.target.value;fxRender();});
+  $('#fx-size').addEventListener('input',function(e){fx.size=+e.target.value;fxRender();});
+  $('#fx-copy').addEventListener('click',function(){copyText($('#fx-code').textContent).then(function(ok){toast(ok?'CSS copié':'Copie impossible : sélectionnez le code à la main');});});
+  fxRender();
+}
+
+/* ---------- Offres et paiement ---------- */
+var PLANS=[
+ {id:'gratuit',name:'Découverte',price:0,desc:'Pour essayer la plateforme.',feats:[['Toutes les ressources gratuites'],['5 téléchargements par mois'],['Effets de texte et copie du CSS']]},
+ {id:'createur',name:'Créateur',price:5000,hl:true,tag:'Pour freelances',desc:'Pour créer régulièrement.',feats:[['Toutes les ressources, Premium comprises'],['50 téléchargements par mois'],['Éditeur en ligne','bientôt'],['Licence commerciale complète']]},
+ {id:'studio',name:'Studio',price:15000,desc:'Pour les équipes et les agences.',feats:[['Téléchargements illimités'],['Outils IA : agrandir, détourer, générer','bientôt'],['Plusieurs utilisateurs'],['Support prioritaire']]}
+];
+var PLAN={};PLANS.forEach(function(p){PLAN[p.id]=p;});
+function renderPlans(){
+  $('#plans').innerHTML=PLANS.map(function(p){
+    return '<article class="plan'+(p.hl?' hl':'')+'">'+(p.tag?'<span class="tag">'+p.tag+'</span>':'')+'<h3>'+p.name+'</h3><div class="price">'+(p.price?new Intl.NumberFormat('fr-FR').format(p.price)+' <small>FCFA / mois</small>':'0 <small>FCFA</small>')+'</div><p class="hint">'+p.desc+'</p><ul>'
+     +p.feats.map(function(f){return '<li'+(f[1]?' class="soon"':'')+'>'+icon('check')+'<span>'+f[0]+(f[1]?' <em>'+f[1]+'</em>':'')+'</span></li>';}).join('')+'</ul>'
+     +(p.price?'<button class="btn'+(p.hl?'':' ghost')+'" type="button" data-plan="'+p.id+'">Choisir '+p.name+'</button>':'<a class="btn ghost" href="#ressources">Commencer gratuitement</a>')+'</article>';
+  }).join('');
+}
+
+/* Branchement du vrai paiement : voir PAIEMENT.mobileMoney. Pour l'instant, mode démonstration. */
+var PAIEMENT={
+  mobileMoney:function(order){
+    /* À brancher : appeler votre serveur, qui contacte l'agrégateur Mobile Money retenu
+       (Flutterwave, CinetPay, PawaPay, PayDunya…), puis attend la confirmation de l'abonné.
+       Ne jamais appeler l'agrégateur depuis le navigateur : les clés restent côté serveur. */
+    return Promise.resolve({demo:true,order:order});
+  }
+};
+var checkoutEl=$('#checkout'),curPlan=null;
+function setTab(which){
+  var momo=which==='momo';
+  $('#tab-momo').setAttribute('aria-selected',momo);$('#tab-card').setAttribute('aria-selected',!momo);
+  $('#pane-momo').hidden=!momo;$('#pane-card').hidden=momo;
+}
+function openCheckout(id){
+  curPlan=PLAN[id];
+  $('#co-title').textContent='Abonnement '+curPlan.name;
+  $('#co-plan').textContent=$('#co-plan2').textContent='Formule '+curPlan.name+' · 1 mois';
+  $('#co-price').textContent=$('#co-price2').textContent=fcfa(curPlan.price);
+  $('#co-pay').textContent='Payer '+fcfa(curPlan.price);
+  $('#co-err').textContent='';$('#phone').value='';
+  $('#co-main').hidden=false;$('#co-done').hidden=true;setTab('momo');
+  if(detailEl.open)detailEl.close();
+  checkoutEl.showModal();
+}
+function phoneFmt(v){var d=v.replace(/\D/g,'').slice(0,9);return d.replace(/^(\d{2})(\d{0,3})(\d{0,2})(\d{0,2}).*$/,function(_,a,b,c,e){return [a,b,c,e].filter(Boolean).join(' ');});}
+
+/* ---------- Événements ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target;
+  var fv=t.closest('[data-fav]');
+  if(fv){var id=fv.getAttribute('data-fav');if(favs[id])delete favs[id];else favs[id]=1;saveFavs();
+    var on=!!favs[id];$$('[data-fav="'+id+'"]').forEach(function(b){b.setAttribute('aria-pressed',on);});
+    $('#favs-count').textContent=favCount();renderCats();if(state.cat==='favoris'&&!on&&!detailEl.open)render();
+    toast(on?'Ajouté aux favoris':'Retiré des favoris');return;}
+  var op=t.closest('[data-open]');if(op){openDetail(op.getAttribute('data-open'));return;}
+  var cp=t.closest('[data-copy]');if(cp){var it=BY[cp.getAttribute('data-copy')];copyText(it.svg('x-'+it.id)).then(function(ok){toast(ok?'Code SVG copié':'Copie impossible ici');});return;}
+  var dl=t.closest('[data-dl]');if(dl){var it2=BY[dl.getAttribute('data-dl')];save('palezza-'+it2.id+'.svg',it2.svg('x-'+it2.id),'image/svg+xml');toast('Téléchargement lancé');return;}
+  var hx=t.closest('[data-hex]');if(hx){copyText(hx.getAttribute('data-hex')).then(function(ok){toast(ok?hx.getAttribute('data-hex')+' copié':'Copie impossible ici');});return;}
+  var pl=t.closest('[data-plan]');if(pl){openCheckout(pl.getAttribute('data-plan'));return;}
+  var ct=t.closest('[data-cat]');if(ct){state.cat=ct.getAttribute('data-cat');render();return;}
+  var qk=t.closest('[data-q]');if(qk){state.q=qk.getAttribute('data-q');state.cat='tous';render();$('#ressources').scrollIntoView();return;}
+  if(t.closest('[data-close]')){var dlg=t.closest('dialog');if(dlg)dlg.close();return;}
+  if(t.id==='reset'){state.q='';state.cat='tous';render();return;}
+  if(t.closest('#favs-btn')){state.cat='favoris';render();$('#ressources').scrollIntoView();return;}
+  if(t.id==='tab-momo'){setTab('momo');return;}
+  if(t.id==='tab-card'){setTab('card');return;}
+});
+[detailEl,checkoutEl].forEach(function(dlg){dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});});
+detailEl.addEventListener('close',function(){if(state.cat==='favoris')render();});
+$('#q').addEventListener('input',function(e){state.q=e.target.value;render();$('#q').focus();});
+$('#q-hero').addEventListener('input',function(e){state.q=e.target.value;});
+$('#hero-search').addEventListener('submit',function(e){e.preventDefault();state.cat='tous';render();$('#ressources').scrollIntoView();});
+$('#sort').addEventListener('change',function(e){state.sort=e.target.value;render();});
+$('#phone').addEventListener('input',function(e){e.target.value=phoneFmt(e.target.value);});
+$('#pane-momo').addEventListener('submit',function(e){
+  e.preventDefault();
+  var digits=$('#phone').value.replace(/\D/g,'');
+  if(digits.length!==9){$('#co-err').textContent='Entrez votre numéro à 9 chiffres, par exemple 06 123 45 67.';$('#phone').focus();return;}
+  $('#co-err').textContent='';
+  var opName=$('input[name="op"]:checked').value;
+  $('#co-pay').disabled=true;
+  PAIEMENT.mobileMoney({plan:curPlan.id,amount:curPlan.price,currency:'XAF',operator:opName,phone:'+242'+digits}).then(function(){
+    $('#co-main').hidden=true;$('#co-done').hidden=false;
+    $('#co-done-text').textContent='Avec le vrai paiement branché, une demande de '+fcfa(curPlan.price)+' serait envoyée au +242 '+phoneFmt(digits)+' via '+opName+'. Ici, rien n\'a été envoyé ni débité.';
+    $('#co-pay').disabled=false;
+  });
+});
+
+/* ---------- Démarrage ---------- */
+var CO=[['flyer-atelier','c1'],['carte-nuit','c2'],['banniere-promo','c3'],['mockup-telephone','c4']];
+$('#collage').innerHTML=CO.map(function(c){return '<figure class="'+c[1]+'">'+BY[c[0]].svg('h-'+c[0])+'</figure>';}).join('');
+$('#foot-cats').innerHTML=CATS.map(function(c){return '<li><a href="#ressources" data-cat="'+c.id+'">'+c.label+'</a></li>';}).join('');
+paintIcons(document);
+renderPlans();fxInit();render();
+})();
+</script>
+
+<nav class="bnav" aria-label="Navigation mobile">
+  <a href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8v10H3z"/></svg> Accueil</a>
+  <a href="#bibliotheque"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Biblio</a>
+  <a href="#photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg> Photos</a>
+  <a href="#outils"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.5 2.5-2.2-.7-.7-2.2z"/></svg> Outils</a>
+  <a href="#ressources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Catalogue</a>
+  <a href="#offres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12 12 20 4 12V4h8z"/><circle cx="8.5" cy="8.5" r="1"/></svg> Offres</a>
+</nav>
+<dialog id="lib-detail" aria-label="Détail de la ressource"><div class="dlg"><button class="x" type="button" data-close aria-label="Fermer">×</button><div id="lib-detail-body"></div></div></dialog>
+
+<script>
+(function(){
+'use strict';
+var $=function(q,r){return (r||document).querySelector(q);};
+var API='https://api.iconify.design/';
+var SETS={icons:[['lucide','Lucide'],['tabler','Tabler'],['mdi','Material Design'],['ph','Phosphor'],['bi','Bootstrap Icons']],brands:[['simple-icons','Simple Icons']]};
+var PALEZZA=[
+ ['Palezza Studios · horizontal clair','logos/svg/obturateur_horizontal_clair_fond.svg','Palezza Studios'],
+ ['Palezza Studios · horizontal sombre','logos/svg/obturateur_horizontal_sombre_fond.svg','Palezza Studios'],
+ ['Palezza Studios · icône vert','logos/svg/obturateur_icone_vert_transparent.svg','Palezza Studios'],
+ ['Palezza Studios · icône sombre','logos/svg/obturateur_icone_sombre_transparent.svg','Palezza Studios'],
+ ['Palezza Networks · logo','logos/networks/palezza-networks-logo.png','Palezza Networks'],
+ ['Palezza Networks · symbole','logos/networks/palezza-networks-symbole.png','Palezza Networks'],
+ ['Palezza Networks · monogramme PN','logos/networks/palezza-networks-monogramme-PN.png','Palezza Networks']
+];
+var S={tab:'icons',set:'lucide',q:'',shown:0,list:[],info:null},cache={},PAGE=96,tt;
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},2600);}
+function nice(n){return n.replace(/-/g,' ');}
+function load(prefix){
+  if(cache[prefix])return Promise.resolve(cache[prefix]);
+  return fetch(API+'collection?prefix='+prefix).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
+    var names=(d.uncategorized||[]).slice();
+    Object.keys(d.categories||{}).forEach(function(k){names=names.concat(d.categories[k]);});
+    names=names.filter(function(n,i){return names.indexOf(n)===i;}).sort();
+    return cache[prefix]={names:names,info:d.info||{}};
+  });
+}
+function filtered(){
+  var q=S.q.trim().toLowerCase().replace(/\s+/g,'-');
+  var l=S.list;
+  if(q)l=l.filter(function(n){return n.indexOf(q)>-1;});
+  return l;
+}
+function cardHTML(prefix,n){return '<button class="lib-card" type="button" data-lib="'+prefix+':'+n+'" style="--u:url('+API+prefix+'/'+n+'.svg)"><i class="gl" aria-hidden="true"></i><span class="n">'+esc(nice(n))+'</span></button>';}
+function palCards(){
+  var q=S.q.trim().toLowerCase();
+  return PALEZZA.map(function(p,i){return [p,i];}).filter(function(x){return !q||(x[0][0].toLowerCase().indexOf(q)>-1)||'palezza'.indexOf(q)>-1;}).map(function(x){
+    return '<button class="lib-card" type="button" data-pal="'+x[1]+'"><img src="'+x[0][1]+'" alt="" loading="lazy"><span class="n">'+esc(x[0][0])+'</span></button>';}).join('');
+}
+function paint(more){
+  var g=$('#lib-grid'),items=filtered(),prefix=S.set;
+  var pal=(S.tab==='brands')?palCards():'';
+  var npal=(S.tab==='brands')?(pal.match(/data-pal/g)||[]).length:0;
+  if(!more)S.shown=PAGE;else S.shown+=PAGE;
+  g.innerHTML=pal+items.slice(0,S.shown).map(function(n){return cardHTML(prefix,n);}).join('');
+  var total=items.length+npal;
+  $('#lib-count').textContent=total?total.toLocaleString('fr-FR')+' résultat'+(total>1?'s':'')+(S.tab==='brands'?' (dont '+npal+' logos Palezza)':'')+' · '+Math.min(S.shown,items.length).toLocaleString('fr-FR')+' affichés':'Aucun résultat. Essayez un autre mot, en anglais pour les icônes (home, user, arrow).';
+  $('#lib-more').hidden=S.shown>=items.length;
+  var lic=S.info&&S.info.license&&S.info.license.title;
+  $('#lib-note').textContent=(lic?'Licence de la collection : '+lic+'. ':'')+(S.tab==='brands'?'Les logos de marques sont des marques déposées de leurs propriétaires : ils servent à désigner ces marques, pas à suggérer un partenariat. Les logos Palezza sont les vôtres.':'');
+}
+function open(tab,keep){
+  S.tab=tab;S.set=SETS[tab][0][0];
+  document.querySelectorAll('[data-libtab]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-libtab')===tab);});
+  var sel=$('#lib-set');sel.innerHTML=SETS[tab].map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>';}).join('');
+  $('#lib-setf').hidden=SETS[tab].length<2;
+  setSet(keep);
+}
+function setSet(){
+  $('#lib-count').textContent='Chargement…';$('#lib-grid').innerHTML='';
+  load(S.set).then(function(c){S.list=c.names;S.info=c.info;paint(false);}).catch(function(){
+    S.list=[];$('#lib-grid').innerHTML=(S.tab==='brands'?palCards():'');
+    $('#lib-count').innerHTML='Impossible de charger cette collection (connexion). <button class="chip-link" type="button" id="lib-retry">Réessayer</button>';$('#lib-more').hidden=true;});
+}
+function copy(t){return (navigator.clipboard?navigator.clipboard.writeText(t).then(function(){return true;}):Promise.reject()).catch(function(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}a.remove();return ok;});}
+function save(name,text,type){var u=URL.createObjectURL(new Blob([text],{type:type}));var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1000);}
+function detail(id){
+  var i=id.indexOf(':'),prefix=id.slice(0,i),n=id.slice(i+1),url=API+prefix+'/'+n+'.svg';
+  var info=(cache[prefix]&&cache[prefix].info)||{},lic=info.license&&info.license.title||'voir la collection';
+  var brand=prefix==='simple-icons';
+  $('#lib-detail-body').innerHTML='<div class="det"><div class="lib-big" style="--u:url('+url+')"><i class="gl" aria-hidden="true"></i></div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+(brand?'Logo de marque':'Icône')+'</span><h2>'+esc(nice(n))+'</h2></div>'
+   +'<p class="lead" style="font-size:14px">Format : SVG · Collection : '+esc(info.name||prefix)+' · Licence : '+esc(lic)+(info.author&&info.author.name?' · Auteur : '+esc(info.author.name):'')+'</p>'
+   +(brand?'<p class="lead" style="font-size:13.5px">Marque déposée de son propriétaire : utilisez-la seulement pour désigner la marque.</p>':'')
+   +'<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-act="copy" data-u="'+url+'">Copier le SVG</button><button class="btn ghost" type="button" data-act="dl" data-u="'+url+'" data-n="'+esc(n)+'">Télécharger</button><a class="btn ghost" href="https://icon-sets.iconify.design/'+prefix+'/'+esc(n)+'/" target="_blank" rel="noopener">Source</a></div></div></div>';
+  $('#lib-detail').showModal();
+}
+function palDetail(i){
+  var p=PALEZZA[i],ext=p[1].split('.').pop();
+  $('#lib-detail-body').innerHTML='<div class="det"><div class="lib-big"><img src="'+p[1]+'" alt="'+esc(p[0])+'"></div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+esc(p[2])+'</span><h2>'+esc(p[0])+'</h2></div><p class="lead" style="font-size:14px">Format : '+ext.toUpperCase()+' · Logo officiel de votre marque, fourni sans modification.</p><div style="display:flex;gap:10px"><a class="btn" href="'+p[1]+'" download>Télécharger</a></div></div></div>';
+  $('#lib-detail').showModal();
+}
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if((b=t.closest('[data-libtab]'))){S.q='';$('#lib-q').value='';open(b.getAttribute('data-libtab'));return;}
+  if((b=t.closest('[data-lib]'))){detail(b.getAttribute('data-lib'));return;}
+  if((b=t.closest('[data-pal]'))){palDetail(+b.getAttribute('data-pal'));return;}
+  if(t.id==='lib-more'){paint(true);return;}
+  if(t.id==='lib-retry'){setSet();return;}
+  if((b=t.closest('[data-act]'))){
+    var u=b.getAttribute('data-u'),a=b.getAttribute('data-act');
+    fetch(u).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(svg){
+      if(a==='copy')copy(svg).then(function(ok){toast(ok?'Code SVG copié':'Copie impossible ici');});
+      else{save(b.getAttribute('data-n')+'.svg',svg,'image/svg+xml');toast('Téléchargement lancé');}
+    }).catch(function(){toast('Chargement impossible, réessayez');});return;}
+});
+$('#lib-detail').addEventListener('click',function(e){if(e.target===this)this.close();});
+$('#lib-set').addEventListener('change',function(e){S.set=e.target.value;setSet();});
+var dt;$('#lib-q').addEventListener('input',function(e){S.q=e.target.value;clearTimeout(dt);dt=setTimeout(function(){paint(false);},150);});
+/* Recherche d'en-tête : filtre le catalogue et la bibliothèque */
+function fire(el,v){el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));}
+$('#hsearch').addEventListener('submit',function(e){
+  e.preventDefault();var v=$('#hq').value.trim();
+  fire($('#q'),v);fire($('#lib-q'),v);
+  $('#bibliotheque').scrollIntoView({behavior:'smooth'});
+  $('#hq').blur();
+});
+/* Recherche vocale : seulement si le navigateur la propose */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,mic=$('#hmic');
+if(SR){mic.hidden=false;mic.addEventListener('click',function(){
+  var r=new SR();r.lang='fr-FR';r.interimResults=false;mic.classList.add('on');
+  r.onresult=function(ev){$('#hq').value=ev.results[0][0].transcript;$('#hsearch').requestSubmit();};
+  r.onerror=function(){toast('Micro indisponible ou refusé');};
+  r.onend=function(){mic.classList.remove('on');};
+  try{r.start();}catch(x){mic.classList.remove('on');}
+});}
+open('icons');
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+var $=function(q){return document.querySelector(q);},$$=function(q){return Array.prototype.slice.call(document.querySelectorAll(q));},tt;
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},2600);}
+function copy(t){return (navigator.clipboard?navigator.clipboard.writeText(t).then(function(){return true;}):Promise.reject()).catch(function(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}a.remove();return ok;});}
+function saveBlob(name,b){var u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u);},1500);}
+function chips(attr,val){$$('['+attr+']').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val);});}
+function showDlg(html){$('#lib-detail-body').innerHTML=html;$('#lib-detail').showModal();}
+var deb=function(f){var t;return function(){clearTimeout(t);t=setTimeout(f,180);};};
+
+/* ===== Polices (Fontsource : polices Google Fonts, libres) ===== */
+var F={all:[],by:{},cat:'all',q:'',n:0,txt:'Palezza Studios',loaded:false},PG=48;
+var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);loadFont(e.target.getAttribute('data-fid'));}});},{rootMargin:'250px'}):null;
+function wOf(f){return f.weights&&f.weights.indexOf(400)>-1?400:(f.weights&&f.weights[0])||400;}
+function fontUrl(id,w){return 'https://cdn.jsdelivr.net/fontsource/fonts/'+id+'@latest/latin-'+w+'-normal.woff2';}
+var done={};
+function loadFont(id){
+  if(done[id])return Promise.resolve();var f=F.by[id];if(!f)return Promise.resolve();var w=wOf(f);
+  done[id]=new FontFace('fs-'+id,'url('+fontUrl(id,w)+')',{weight:String(w)}).load().then(function(x){document.fonts.add(x);
+    $$('[data-fid="'+id+'"] .fp').forEach(function(e){e.style.fontFamily="'fs-"+id+"',serif";e.style.fontWeight=w;});},function(){});
+  return done[id];
+}
+function fList(){var q=F.q.trim().toLowerCase();return F.all.filter(function(f){return (F.cat==='all'||f.category===F.cat)&&(!q||f.family.toLowerCase().indexOf(q)>-1);});}
+function fPaint(more){
+  var l=fList();F.n=more?F.n+PG:PG;
+  var g=$('#font-grid');var html=l.slice(more?F.n-PG:0,F.n).map(function(f){return '<button class="font-card" type="button" data-fid="'+f.id+'"><span class="fp">'+esc(F.txt)+'</span><span class="n">'+esc(f.family)+' · '+esc(f.category)+'</span></button>';}).join('');
+  if(more)g.insertAdjacentHTML('beforeend',html);else g.innerHTML=html;
+  if(io)$$('#font-grid [data-fid]').forEach(function(e){if(!e.getAttribute('data-o')){e.setAttribute('data-o',1);io.observe(e);}});
+  $('#font-count').textContent=l.length?l.length.toLocaleString('fr-FR')+' polices':'Aucune police ne correspond.';
+  $('#font-more').hidden=F.n>=l.length;
+}
+function fLoadList(){
+  $('#font-count').textContent='Chargement…';
+  fetch('https://api.fontsource.org/v1/fonts').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    F.all=d.filter(function(f){return (!f.type||f.type==='google')&&f.subsets&&f.subsets.indexOf('latin')>-1;}).sort(function(a,b){return a.family<b.family?-1:1;});
+    F.all.forEach(function(f){F.by[f.id]=f;});fPaint(false);
+  }).catch(function(){$('#font-count').innerHTML='Impossible de charger les polices (connexion). <button class="chip-link" type="button" id="font-retry">Réessayer</button>';});
+}
+function fDetail(id){
+  var f=F.by[id];if(!f)return;var w=wOf(f),fam=f.family;
+  showDlg('<div class="det"><div class="lib-big" style="flex-direction:column;align-items:flex-start;gap:8px"><div id="fd-prev" style="font-family:\'fs-'+id+'\',serif;font-weight:'+w+';font-size:44px;line-height:1.15;word-break:break-word">'+esc(F.txt)+'</div><div style="font-family:\'fs-'+id+'\',serif;font-weight:'+w+';font-size:20px">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz 0123456789</div></div>'
+   +'<div class="det-info"><div><span class="eyebrow" style="margin:0">'+esc(f.category)+'</span><h2>'+esc(fam)+'</h2></div><p class="lead" style="font-size:14px" id="fd-lic">Format : WOFF2 · Source : Google Fonts · Licence : chargement…</p>'
+   +'<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-fa="css" data-id="'+id+'">Copier le CSS</button><button class="btn ghost" type="button" data-fa="dl" data-id="'+id+'">Télécharger .woff2</button><a class="btn ghost" target="_blank" rel="noopener" href="https://fonts.google.com/specimen/'+encodeURIComponent(fam).replace(/%20/g,'+')+'">Google Fonts</a></div></div></div>');
+  fetch('https://api.fontsource.org/v1/fonts/'+id).then(function(r){return r.json();}).then(function(d){var l=d.license&&d.license.type;$('#fd-lic').textContent='Format : WOFF2 · Source : Google Fonts · Licence : '+(l||'libre, voir la source')+(d.defSubset?'':'');}).catch(function(){$('#fd-lic').textContent='Format : WOFF2 · Source : Google Fonts · Licence : libre (voir la page Google Fonts)';});
+}
+/* ===== Photos (Openverse) ===== */
+var P={q:'nature',page:1,lic:'commercial',busy:false,by:{}};
+function pLoad(more){
+  if(P.busy)return;P.busy=true;if(!more){P.page=1;$('#ph-grid').innerHTML='';}else P.page++;
+  $('#ph-count').textContent='Chargement…';
+  var u='https://api.openverse.org/v1/images/?q='+encodeURIComponent(P.q)+'&page_size=24&page='+P.page+'&category=photograph'+(P.lic==='commercial'?'&license_type=commercial':'');
+  fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    var rs=d.results||[];
+    $('#ph-grid').insertAdjacentHTML('beforeend',rs.map(function(x){P.by[x.id]=x;return '<button class="ph-card" type="button" data-pid="'+esc(x.id)+'"><img loading="lazy" src="'+esc(x.thumbnail||x.url)+'" alt="'+esc(x.title||'Photo')+'"><span class="n"><b>'+esc(x.title||'Sans titre')+'</b><span>'+esc((x.license||'').toUpperCase())+'</span></span></button>';}).join(''));
+    var tot=d.result_count||0;$('#ph-count').textContent=rs.length||more?(d.result_count?d.result_count.toLocaleString('fr-FR')+' photos trouvées pour « '+P.q+' »':''):'Aucune photo pour « '+P.q+' ». Essayez un mot en anglais.';
+    $('#ph-more').hidden=!(d.page_count&&P.page<d.page_count);P.busy=false;
+  }).catch(function(){P.busy=false;$('#ph-count').innerHTML='Impossible de charger les photos (connexion ou limite du service). <button class="chip-link" type="button" id="ph-retry">Réessayer</button>';});
+}
+function pDetail(id){
+  var x=P.by[id];if(!x)return;var lic=(x.license||'').toUpperCase()+(x.license_version?' '+x.license_version:'');
+  showDlg('<div class="det"><div class="lib-big"><img src="'+esc(x.thumbnail||x.url)+'" alt="'+esc(x.title||'Photo')+'"></div><div class="det-info"><div><span class="eyebrow" style="margin:0">Photo</span><h2>'+esc(x.title||'Sans titre')+'</h2></div>'
+   +'<p class="lead" style="font-size:14px">Auteur : '+esc(x.creator||'inconnu')+' · Licence : '+esc(lic)+(x.width?' · '+x.width+' × '+x.height+' px':'')+' · Source : '+esc(x.source||x.provider||'Openverse')+'</p>'
+   +'<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" target="_blank" rel="noopener" href="'+esc(x.url)+'">Image originale</a><a class="btn ghost" target="_blank" rel="noopener" href="'+esc(x.foreign_landing_url||x.url)+'">Page source</a><button class="btn ghost" type="button" data-pa="'+esc(x.id)+'">Copier la mention</button></div></div></div>');
+}
+/* ===== Outils ===== */
+function hex(r,g,b){return '#'+[r,g,b].map(function(v){return Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0');}).join('').toUpperCase();}
+function hsl2hex(h,s,l){h=((h%360)+360)%360;s/=100;l/=100;var a=s*Math.min(l,1-l),f=function(n){var k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1));};return hex(f(0)*255,f(8)*255,f(4)*255);}
+function hex2hsl(c){var r=parseInt(c.substr(1,2),16)/255,g=parseInt(c.substr(3,2),16)/255,b=parseInt(c.substr(5,2),16)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,h=0,s=0;if(mx!==mn){var d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;}return [h,s*100,l*100];}
+function swatches(cols){$('#pal-out').innerHTML=cols.map(function(c){return '<button class="sw" type="button" data-hexc="'+c+'"><i style="background:'+c+'"></i><span>'+c+'</span></button>';}).join('');}
+function harmony(c){var x=hex2hsl(c),h=x[0],s=x[1],l=x[2];swatches([c,hsl2hex(h+180,s,l),hsl2hex(h+30,s,l),hsl2hex(h-30,s,l),hsl2hex(h+120,s,l),hsl2hex(h+240,s,l),hsl2hex(h,s,Math.min(92,l+30)),hsl2hex(h,s,Math.max(12,l-25))]);}
+function loadImg(file){return new Promise(function(ok,ko){var i=new Image(),u=URL.createObjectURL(file);i.onload=function(){ok(i);};i.onerror=ko;i.src=u;});}
+function fromImage(img){var c=document.createElement('canvas');c.width=c.height=48;var x=c.getContext('2d');x.drawImage(img,0,0,48,48);var d=x.getImageData(0,0,48,48).data,m={},i;
+  for(i=0;i<d.length;i+=4){if(d[i+3]<128)continue;var k=((d[i]>>4)<<8)|((d[i+1]>>4)<<4)|(d[i+2]>>4);m[k]=(m[k]||0)+1;}
+  var arr=Object.keys(m).map(function(k){return [+k,m[k]];}).sort(function(a,b){return b[1]-a[1];}),out=[];
+  arr.forEach(function(a){if(out.length>=8)return;var r=((a[0]>>8)&15)*16+8,g=((a[0]>>4)&15)*16+8,b=(a[0]&15)*16+8;if(out.every(function(o){return Math.abs(o[0]-r)+Math.abs(o[1]-g)+Math.abs(o[2]-b)>80;}))out.push([r,g,b]);});
+  swatches(out.map(function(o){return hex(o[0],o[1],o[2]);}));}
+var QR={lib:null,mods:null};
+function qrLib(){if(window.qrcode)return Promise.resolve();return new Promise(function(ok,ko){var s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';s.onload=ok;s.onerror=ko;document.head.appendChild(s);});}
+function qrDraw(){
+  var t=$('#qr-text').value;$('#qr-err').textContent='';if(!t){var c0=$('#qr-cv');c0.getContext('2d').clearRect(0,0,c0.width,c0.height);QR.mods=null;return;}
+  qrLib().then(function(){var q=window.qrcode(0,$('#qr-ec').value);q.addData(t);q.make();var n=q.getModuleCount(),m=[],r,c;for(r=0;r<n;r++){m[r]=[];for(c=0;c<n;c++)m[r][c]=q.isDark(r,c);}QR.mods=m;
+    var cv=$('#qr-cv'),size=600,pad=4,cell=Math.floor(size/(n+pad*2)),tot=cell*(n+pad*2);cv.width=cv.height=tot;var x=cv.getContext('2d');x.fillStyle=$('#qr-bg').value;x.fillRect(0,0,tot,tot);x.fillStyle=$('#qr-fg').value;
+    for(r=0;r<n;r++)for(c=0;c<n;c++)if(m[r][c])x.fillRect((c+pad)*cell,(r+pad)*cell,cell,cell);
+  }).catch(function(){$('#qr-err').textContent='Le texte est trop long pour ce niveau de correction, ou la bibliothèque n\'a pas pu se charger.';});
+}
+var qrt=deb(qrDraw);
+function qrSvg(){var m=QR.mods,n=m.length,pad=4,d='';m.forEach(function(row,r){row.forEach(function(v,c){if(v)d+='M'+(c+pad)+' '+(r+pad)+'h1v1h-1z';});});var T=n+pad*2;return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+T+' '+T+'" shape-rendering="crispEdges"><rect width="'+T+'" height="'+T+'" fill="'+$('#qr-bg').value+'"/><path d="'+d+'" fill="'+$('#qr-fg').value+'"/></svg>';}
+var IM={img:null,blob:null,name:'image'};
+function imRun(){
+  if(!IM.img)return;var img=IM.img,sw=img.naturalWidth,sh=img.naturalHeight,sx=0,sy=0,ar=+$('#im-crop').value;
+  if(ar){var r=sw/sh;if(r>ar){var nw=sh*ar;sx=(sw-nw)/2;sw=nw;}else{var nh=sw/ar;sy=(sh-nh)/2;sh=nh;}}
+  var mw=+$('#im-w').value||sw,tw=Math.round(Math.min(mw,sw)),th=Math.round(sh*tw/sw),cv=document.createElement('canvas');cv.width=tw;cv.height=th;var x=cv.getContext('2d'),mime=$('#im-fmt').value;
+  if(mime==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,tw,th);}x.drawImage(img,sx,sy,sw,sh,0,0,tw,th);
+  cv.toBlob(function(b){if(!b){$('#im-info').textContent='Ce format n\'est pas pris en charge par votre navigateur.';return;}
+    IM.blob=b;IM.ext=mime.split('/')[1].replace('jpeg','jpg');var p=$('#im-prev');if(p.src)URL.revokeObjectURL(p.src);p.src=URL.createObjectURL(b);p.hidden=false;
+    $('#im-info').textContent=tw+' × '+th+' px · avant '+Math.round(IM.size/1024)+' Ko → après '+Math.round(b.size/1024)+' Ko';$('#im-dl').disabled=false;},mime,(+$('#im-q').value)/100);
+}
+var imt=deb(imRun);
+/* ===== Événements ===== */
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if((b=t.closest('[data-fcat]'))){F.cat=b.getAttribute('data-fcat');chips('data-fcat',F.cat);fPaint(false);return;}
+  if((b=t.closest('[data-fid]'))){loadFont(b.getAttribute('data-fid')).then(function(){});fDetail(b.getAttribute('data-fid'));return;}
+  if(t.id==='font-more'){fPaint(true);return;}
+  if(t.id==='font-retry'){fLoadList();return;}
+  if((b=t.closest('[data-fa]'))){var id=b.getAttribute('data-id'),f=F.by[id];
+    if(b.getAttribute('data-fa')==='css'){var fam=f.family;copy("@import url('https://fonts.googleapis.com/css2?family="+encodeURIComponent(fam).replace(/%20/g,'+')+"&display=swap');\nfont-family: '"+fam+"', "+(f.category==='display'||f.category==='handwriting'?'cursive':f.category)+";").then(function(ok){toast(ok?'CSS copié':'Copie impossible ici');});}
+    else fetch(fontUrl(id,wOf(f))).then(function(r){if(!r.ok)throw 0;return r.blob();}).then(function(bl){saveBlob(id+'.woff2',bl);toast('Téléchargement lancé');}).catch(function(){toast('Téléchargement impossible, utilisez Google Fonts');});
+    return;}
+  if((b=t.closest('[data-pq]'))){P.q=b.getAttribute('data-pq');$('#ph-q').value='';chips('data-pq',P.q);pLoad(false);return;}
+  if((b=t.closest('[data-pid]'))){pDetail(b.getAttribute('data-pid'));return;}
+  if((b=t.closest('[data-pa]'))){var x=P.by[b.getAttribute('data-pa')];copy(x.attribution||('"'+(x.title||'Photo')+'" par '+(x.creator||'inconnu')+', licence '+(x.license||'').toUpperCase()+' '+(x.license_version||''))).then(function(ok){toast(ok?'Mention copiée':'Copie impossible ici');});return;}
+  if(t.id==='ph-more'){pLoad(true);return;}
+  if(t.id==='ph-retry'){pLoad(P.page>1&&$('#ph-grid').children.length>0);return;}
+  if((b=t.closest('[data-tool]'))){var k=b.getAttribute('data-tool');chips('data-tool',k);$$('.tool').forEach(function(p){p.hidden=p.getAttribute('data-panel')!==k;});if(k==='qr'&&!QR.mods)qrDraw();return;}
+  if((b=t.closest('[data-hexc]'))){copy(b.getAttribute('data-hexc')).then(function(ok){toast(ok?b.getAttribute('data-hexc')+' copié':'Copie impossible ici');});return;}
+  if(t.id==='qr-png'){if(!QR.mods){toast('Entrez d\'abord un contenu');return;}$('#qr-cv').toBlob(function(bl){saveBlob('qr-palezza.png',bl);});return;}
+  if(t.id==='qr-svg'){if(!QR.mods){toast('Entrez d\'abord un contenu');return;}saveBlob('qr-palezza.svg',new Blob([qrSvg()],{type:'image/svg+xml'}));return;}
+  if(t.id==='im-dl'&&IM.blob){saveBlob(IM.name+'-palezza.'+IM.ext,IM.blob);toast('Téléchargement lancé');return;}
+});
+$('#font-q').addEventListener('input',deb(function(){F.q=$('#font-q').value;fPaint(false);}));
+$('#font-txt').addEventListener('input',function(e){F.txt=e.target.value||'Palezza Studios';$$('#font-grid .fp').forEach(function(p){p.textContent=F.txt;});});
+$('#ph-form').addEventListener('submit',function(e){e.preventDefault();var v=$('#ph-q').value.trim();if(!v)return;P.q=v;chips('data-pq','');pLoad(false);});
+$('#ph-lic').addEventListener('change',function(e){P.lic=e.target.value;pLoad(false);});
+$('#pal-base').addEventListener('input',function(e){harmony(e.target.value.toUpperCase());});
+$('#pal-file').addEventListener('change',function(e){var f=e.target.files[0];if(f)loadImg(f).then(fromImage).catch(function(){toast('Image illisible');});});
+['qr-text','qr-fg','qr-bg','qr-ec'].forEach(function(id){$('#'+id).addEventListener('input',qrt);$('#'+id).addEventListener('change',qrt);});
+$('#im-file').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;IM.size=f.size;IM.name=(f.name||'image').replace(/\.[^.]+$/,'');$('#im-name').textContent=f.name;loadImg(f).then(function(i){IM.img=i;imRun();}).catch(function(){toast('Image illisible');});});
+['im-w','im-crop','im-fmt','im-q'].forEach(function(id){$('#'+id).addEventListener('input',imt);$('#'+id).addEventListener('change',imt);});
+/* La recherche de l'en-tête alimente aussi les polices */
+$('#hsearch').addEventListener('submit',function(){var v=$('#hq').value.trim();$('#font-q').value=v;F.q=v;if(F.all.length)fPaint(false);});
+/* Chargement paresseux : au premier passage près de la section */
+function lazy(sel,fn){var el=$(sel),go=function(){if(go.d)return;go.d=1;fn();};if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();go();}},{rootMargin:'400px'});o.observe(el);}else go();}
+lazy('#polices',fLoadList);lazy('#photos',function(){chips('data-pq','nature');pLoad(false);});
+harmony('#247C78');
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+var $=function(q){return document.querySelector(q);},$$=function(q){return Array.prototype.slice.call(document.querySelectorAll(q));},tt;
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},2600);}
+function copy(t){return (navigator.clipboard?navigator.clipboard.writeText(t).then(function(){return true;}):Promise.reject()).catch(function(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}a.remove();return ok;});}
+function showDlg(html){$('#lib-detail-body').innerHTML=html;$('#lib-detail').showModal();}
+function strip(h){var d=document.createElement('div');d.innerHTML=h||'';return (d.textContent||'').trim();}
+function getKey(){var k='';try{k=localStorage.getItem('ps_pixabay_key')||'';}catch(e){}return k||(window.PALEZZA_CONFIG&&window.PALEZZA_CONFIG.PIXABAY_KEY)||'';}
+var ICO='https://api.iconify.design/';
+var SRC={
+  vector:[['openverse','Openverse (SVG)'],['commons','Wikimedia Commons'],['pixabay','Pixabay (clé)']],
+  illus:[['openverse','Openverse'],['pixabay','Pixabay (clé)']],
+  video:[['commons','Wikimedia Commons'],['pixabay','Pixabay (clé)']]
+};
+var ICSETS={icons:[['heroicons','Heroicons'],['fluent','Fluent'],['ri','Remix'],['carbon','Carbon'],['solar','Solar'],['iconoir','Iconoir']],brands:[['logos','SVG Logos'],['devicon','Devicon'],['fa6-brands','Font Awesome marques']]};
+var SOURCES=[
+ ['PSD, mockups et modèles',[['PSDRepo','https://psdrepo.com','Fichiers PSD gratuits'],['Mockup World','https://www.mockupworld.co','Mockups PSD'],['Pixeden','https://www.pixeden.com','Mockups, modèles et interfaces'],['GraphicBurger','https://graphicburger.com','Mockups et ressources PSD'],['Freepik (PSD)','https://www.freepik.com/psd','PSD gratuits, attribution requise en offre gratuite']]],
+ ['Vecteurs et illustrations',[['SVG Repo','https://www.svgrepo.com','Des centaines de milliers de SVG'],['unDraw','https://undraw.co','Illustrations SVG modifiables'],['Openclipart','https://openclipart.org','Cliparts du domaine public'],['Storyset','https://storyset.com','Illustrations animables']]],
+ ['Photos et vidéos',[['Pixabay','https://pixabay.com','Photos, vecteurs et vidéos'],['Pexels','https://www.pexels.com','Photos et vidéos'],['Unsplash','https://unsplash.com','Photos'],['Mixkit','https://mixkit.co','Vidéos et musiques'],['Coverr','https://coverr.co','Vidéos d\'arrière-plan']]],
+ ['Polices et icônes',[['Fontshare','https://www.fontshare.com','Polices libres de qualité'],['Font Squirrel','https://www.fontsquirrel.com','Polices libres pour usage commercial'],['Iconify','https://icon-sets.iconify.design','Plus de 200 000 icônes ouvertes'],['Flaticon','https://www.flaticon.com','Icônes, attribution selon l\'offre']]]
+];
+var OWN=[
+ ['Vecteurs',[['vagues-vertes','Vagues vertes','vectors/vagues-vertes.svg'],['motif-hexagones','Motif hexagones','vectors/motif-hexagones.svg'],['bulles-abstraites','Bulles abstraites','vectors/bulles-abstraites.svg'],['rayures-diagonales','Rayures diagonales','vectors/rayures-diagonales.svg'],['grille-points','Grille de points','vectors/grille-points.svg'],['montagnes','Montagnes','vectors/montagnes.svg'],['obturateur-camera','Obturateur','vectors/obturateur-camera.svg'],['etoiles-confettis','Étoiles et confettis','vectors/etoiles-confettis.svg'],['banniere-promo','Bannière promo','vectors/banniere-promo.svg'],['feuillage','Feuillage','vectors/feuillage.svg']]],
+ ['Icônes',[['icone-appareil-photo','Appareil photo','vectors/icone-appareil-photo.svg'],['icone-palette','Palette','vectors/icone-palette.svg'],['icone-telechargement','Téléchargement','vectors/icone-telechargement.svg'],['icone-etoile','Étoile','vectors/icone-etoile.svg'],['icone-video','Vidéo','vectors/icone-video.svg']]],
+ ['Images de fond (JPG, 1920 × 1080)',[['fd-vert','Dégradé vert','images/fond-degrade-vert.jpg'],['fd-dore','Dégradé doré','images/fond-degrade-dore.jpg'],['fd-clair','Dégradé clair','images/fond-degrade-clair.jpg']]],
+ ['Vidéos (MP4, 6 s, 1280 × 720)',[['v-vagues','Boucle vagues vertes','videos/boucle-vagues-vertes.mp4'],['v-dore','Boucle dégradé doré','videos/boucle-degrade-dore.mp4']]],
+ ['PSD (fond à plat, sans calques)',[['p-rs','Réseaux sociaux 1080 × 1080','psd/fond-reseaux-1080x1080-vert.psd'],['p-ban','Bannière 1920 × 1080','psd/fond-banniere-1920x1080-dore.psd'],['p-aff','Affiche 1080 × 1350','psd/fond-affiche-1080x1350-clair.psd']]]
+];
+function paintOwn(){
+  $('#md-links').innerHTML=OWN.map(function(g){return '<h3 style="font-weight:500;margin:22px 0 10px;font-size:1.05rem">'+esc(g[0])+'</h3><div class="lib-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">'+g[1].map(function(f){var u='assets/'+f[2],ext=f[2].split('.').pop(),prev=/svg|jpg/.test(ext)?'<img src="'+u+'" alt="" loading="lazy" style="height:70px">':'<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:600;color:var(--brand)">'+ext.toUpperCase()+'</i>';return '<a class="lib-card" href="'+u+'" download style="text-decoration:none">'+prev+'<span class="n">'+esc(f[1])+'</span><span class="n" style="font-size:11px">'+ext.toUpperCase()+' · télécharger</span></a>';}).join('')+'</div>';}).join('');
+  $('#md-note').textContent='Fichiers créés par Palezza Studios, libres d\'usage dans vos projets. Les PSD sont des fonds à plat (sans calques) : ouvrez-les dans Photoshop ou GIMP et ajoutez vos éléments.';
+}
+var M={tab:'vector',src:'openverse',q:'',next:0,items:{},busy:false,isets:'icons',iset:'heroicons',loaded:false};
+
+function lic(x){return x.lic||'voir la source';}
+/* ---------- Normalisation des sources ---------- */
+function openverse(kind,more){
+  var u='https://api.openverse.org/v1/images/?q='+encodeURIComponent(M.q||'abstract')+'&page_size=24&page='+(M.next||1)+'&license_type=commercial'+(kind==='vector'?'&extension=svg':'&category=illustration');
+  return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    return {total:d.result_count||0,more:!!(d.page_count&&(M.next||1)<d.page_count),next:(M.next||1)+1,list:(d.results||[]).map(function(x){return {id:'ov'+x.id,title:x.title||'Sans titre',thumb:x.thumbnail||x.url,url:x.url,page:x.foreign_landing_url||x.url,by:x.creator||'inconnu',lic:(x.license||'').toUpperCase()+(x.license_version?' '+x.license_version:''),w:x.width,h:x.height,src:x.source||x.provider||'Openverse',type:'img',att:x.attribution};})};
+  });
+}
+function commons(kind){
+  var ft=kind==='video'?'video':'drawing',off=M.next||0;
+  var u='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=24&gsroffset='+off+'&gsrsearch='+encodeURIComponent((M.q||'nature')+' filetype:'+ft)+'&prop=imageinfo&iiprop=url|mime|size|extmetadata&iiurlwidth=420&iiextmetadatafilter=LicenseShortName|Artist';
+  return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    var ps=d.query?Object.keys(d.query.pages).map(function(k){return d.query.pages[k];}):[];
+    ps.sort(function(a,b){return (a.index||0)-(b.index||0);});
+    var nx=d.continue&&d.continue.gsroffset;
+    return {total:0,more:nx!=null,next:nx||0,list:ps.filter(function(p){return p.imageinfo&&p.imageinfo[0];}).map(function(p){var i=p.imageinfo[0],m=i.extmetadata||{};
+      return {id:'cm'+p.pageid,title:p.title.replace(/^File:/,'').replace(/\.[^.]+$/,'').replace(/_/g,' '),thumb:i.thumburl||i.url,url:i.url,page:i.descriptionurl,by:strip(m.Artist&&m.Artist.value)||'inconnu',lic:(m.LicenseShortName&&m.LicenseShortName.value)||'voir la source',w:i.width,h:i.height,src:'Wikimedia Commons',type:kind==='video'?'video':'img',mime:i.mime};})};
+  });
+}
+function pixabay(kind){
+  var k=getKey();if(!k)return Promise.reject('nokey');
+  var base='https://pixabay.com/api/'+(kind==='video'?'videos/':''),pg=M.next||1;
+  var u=base+'?key='+encodeURIComponent(k)+'&q='+encodeURIComponent(M.q||'nature')+'&per_page=24&page='+pg+'&safesearch=true'+(kind==='vector'?'&image_type=vector':kind==='illus'?'&image_type=illustration':'');
+  return fetch(u).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    return {total:d.totalHits||0,more:pg*24<(d.totalHits||0),next:pg+1,list:(d.hits||[]).map(function(x){
+      if(kind==='video'){var v=x.videos||{},f=v.medium||v.small||v.tiny||v.large||{};return {id:'px'+x.id,title:x.tags||'Vidéo',thumb:'https://i.vimeocdn.com/video/'+x.picture_id+'_640x360.jpg',url:f.url,page:x.pageURL,by:x.user,lic:'Licence Pixabay',w:f.width,h:f.height,src:'Pixabay',type:'video'};}
+      return {id:'px'+x.id,title:x.tags||'Image',thumb:x.webformatURL||x.previewURL,url:x.largeImageURL||x.webformatURL,page:x.pageURL,by:x.user,lic:'Licence Pixabay',w:x.imageWidth,h:x.imageHeight,src:'Pixabay',type:'img'};})};
+  });
+}
+/* ---------- Affichage ---------- */
+function setTab(tab){
+  M.tab=tab;M.q='';$('#md-q').value='';
+  $$('[data-mtab]').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-mtab')===tab);});
+  var media=SRC[tab],isIc=tab==='icons',isPsd=tab==='psd'||tab==='own';
+  $('#md-grid').hidden=!media;$('#md-ic').hidden=!isIc;$('#md-links').hidden=!isPsd;
+  $('#md-tools').hidden=isPsd;$('#md-srcf').hidden=!media;$('#md-sets').hidden=!isIc;$('#md-more').hidden=true;
+  $('#md-keyrow').hidden=true;$('#md-note').textContent='';
+  if(media){M.src=media[0][0];$('#md-src').innerHTML=media.map(function(s){return '<option value="'+s[0]+'">'+esc(s[1])+'</option>';}).join('');run(false);}
+  else if(isIc){icTabs();icRun();}
+  else{$('#md-count').textContent='';if(tab==='own')paintOwn();else paintLinks();}
+}
+function run(more){
+  if(M.busy)return;M.busy=true;
+  if(!more){M.next=0;$('#md-grid').innerHTML='';}
+  $('#md-count').textContent='Chargement…';$('#md-keyrow').hidden=M.src!=='pixabay'||!!getKey();
+  var f=M.src==='pixabay'?pixabay:M.src==='commons'?commons:openverse;
+  f(M.tab).then(function(r){
+    r.list.forEach(function(x){M.items[x.id]=x;});
+    $('#md-grid').insertAdjacentHTML('beforeend',r.list.map(function(x){return '<button class="ph-card" type="button" data-mid="'+esc(x.id)+'"><img loading="lazy" src="'+esc(x.thumb)+'" alt="'+esc(x.title)+'"><span class="n"><b>'+(x.type==='video'?'▶ ':'')+esc(x.title)+'</b><span>'+esc(String(x.lic).slice(0,14))+'</span></span></button>';}).join(''));
+    var n=$('#md-grid').children.length;
+    $('#md-count').textContent=n?(r.total?r.total.toLocaleString('fr-FR')+' résultats':n+' résultats affichés')+(M.q?' pour « '+M.q+' »':''):'Aucun résultat. Essayez un mot en anglais.';
+    $('#md-more').hidden=!(r.more&&n);M.next=r.next;M.busy=false;
+    $('#md-note').textContent=M.src==='pixabay'?'Source : Pixabay. Les contenus sont publiés sous la licence de contenu Pixabay.':M.src==='commons'?'Source : Wikimedia Commons. Les licences varient d\'un fichier à l\'autre : respectez la mention de l\'auteur quand elle est demandée.':'Source : Openverse, images utilisables commercialement. Respectez la mention de l\'auteur quand la licence l\'exige.';
+  }).catch(function(e){M.busy=false;$('#md-more').hidden=true;
+    $('#md-count').innerHTML=e==='nokey'?'Ajoutez votre clé Pixabay ci-dessus pour utiliser cette source, ou choisissez une autre source.':'Impossible de charger ce contenu (connexion ou limite du service). <button class="chip-link" type="button" id="md-retry">Réessayer</button>';});
+}
+function detail(id){
+  var x=M.items[id];if(!x)return;
+  var media=x.type==='video'?'<video controls playsinline preload="metadata" poster="'+esc(x.thumb)+'" src="'+esc(x.url)+'" style="width:100%;max-height:60vh;border-radius:12px;background:#000"></video>':'<img src="'+esc(x.thumb)+'" alt="'+esc(x.title)+'">';
+  showDlg('<div class="det"><div class="lib-big" style="flex-direction:column">'+media+'</div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+(x.type==='video'?'Vidéo':M.tab==='vector'?'Vecteur':'Illustration')+'</span><h2>'+esc(x.title)+'</h2></div>'
+   +'<p class="lead" style="font-size:14px">Auteur : '+esc(x.by)+' · Licence : '+esc(lic(x))+(x.w?' · '+x.w+' × '+x.h+' px':'')+' · Source : '+esc(x.src)+'</p>'
+   +'<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" target="_blank" rel="noopener" href="'+esc(x.url)+'">Fichier original</a><a class="btn ghost" target="_blank" rel="noopener" href="'+esc(x.page||x.url)+'">Page source</a><button class="btn ghost" type="button" data-mact="'+esc(x.id)+'">Copier la mention</button></div></div></div>');
+}
+/* ---------- Icônes et logos supplémentaires (Iconify) ---------- */
+function icTabs(){
+  var l=ICSETS.icons.concat([]),b=ICSETS.brands;
+  $('#md-sets').innerHTML='<button class="chip" type="button" data-mkind="icons" aria-pressed="'+(M.isets==='icons')+'">Icônes</button><button class="chip" type="button" data-mkind="brands" aria-pressed="'+(M.isets==='brands')+'">Logos de marques</button>';
+}
+function icRun(){
+  var pre=ICSETS[M.isets].map(function(s){return s[0];}).join(','),q=M.q.trim()||(M.isets==='brands'?'google':'home');
+  $('#md-count').textContent='Chargement…';
+  fetch(ICO+'search?query='+encodeURIComponent(q)+'&prefixes='+pre+'&limit=96').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    var l=d.icons||[];
+    $('#md-ic').innerHTML=l.map(function(id){var i=id.indexOf(':'),p=id.slice(0,i),n=id.slice(i+1);return '<button class="lib-card" type="button" data-mic="'+esc(id)+'" style="--u:url('+ICO+p+'/'+n+'.svg)"><i class="gl" aria-hidden="true"></i><span class="n">'+esc(n.replace(/-/g,' '))+'</span></button>';}).join('');
+    $('#md-count').textContent=l.length?l.length+' résultats pour « '+q+' »':'Aucun résultat. Essayez un mot en anglais.';
+    $('#md-note').textContent='Collections : '+ICSETS[M.isets].map(function(s){return s[1];}).join(', ')+'. Chaque fiche indique la licence ; les logos de marques restent la propriété de leurs détenteurs.';
+  }).catch(function(){$('#md-count').textContent='Impossible de charger les icônes (connexion).';});
+}
+function icDetail(id){
+  var i=id.indexOf(':'),p=id.slice(0,i),n=id.slice(i+1),url=ICO+p+'/'+n+'.svg',brand=M.isets==='brands';
+  showDlg('<div class="det"><div class="lib-big" style="--u:url('+url+')"><i class="gl" aria-hidden="true"></i></div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+(brand?'Logo de marque':'Icône')+'</span><h2>'+esc(n.replace(/-/g,' '))+'</h2></div><p class="lead" style="font-size:14px" id="mi-lic">Format : SVG · Collection : '+esc(p)+' · Licence : chargement…</p>'
+   +(brand?'<p class="lead" style="font-size:13.5px">Marque déposée de son propriétaire : utilisez-la seulement pour désigner la marque.</p>':'')
+   +'<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-micopy="'+esc(url)+'">Copier le SVG</button><a class="btn ghost" target="_blank" rel="noopener" href="'+esc(url)+'" download="'+esc(n)+'.svg">Ouvrir le SVG</a><a class="btn ghost" target="_blank" rel="noopener" href="https://icon-sets.iconify.design/'+esc(p)+'/'+esc(n)+'/">Source</a></div></div></div>');
+  fetch(ICO+'collection?prefix='+p+'&info=true').then(function(r){return r.json();}).then(function(d){var inf=d.info||{};var e=$('#mi-lic');if(e)e.textContent='Format : SVG · Collection : '+(inf.name||p)+' · Licence : '+((inf.license&&inf.license.title)||'voir la source')+(inf.author&&inf.author.name?' · Auteur : '+inf.author.name:'');}).catch(function(){});
+}
+/* ---------- Sources (PSD, mockups, etc.) ---------- */
+function paintLinks(){
+  $('#md-links').innerHTML=SOURCES.map(function(g){return '<h3 style="font-weight:500;margin:22px 0 10px;font-size:1.05rem">'+esc(g[0])+'</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">'+g[1].map(function(s){return '<a class="pr-card" target="_blank" rel="noopener noreferrer" href="'+esc(s[1])+'" style="text-decoration:none;color:inherit"><h3>'+esc(s[0])+'</h3><small>'+esc(s[2])+'</small></a>';}).join('')+'</div>';}).join('');
+  $('#md-note').textContent='Ces sites sont indépendants de Palezza Studios et chacun a sa propre licence : lisez-la avant tout usage commercial. Les fichiers PSD ne peuvent pas être aperçus dans le navigateur, d\'où ces liens directs.';
+}
+/* ---------- Événements ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if((b=t.closest('[data-mtab]'))){setTab(b.getAttribute('data-mtab'));return;}
+  if((b=t.closest('[data-mkind]'))){M.isets=b.getAttribute('data-mkind');M.q='';$('#md-q').value='';icTabs();icRun();return;}
+  if((b=t.closest('[data-mid]'))){detail(b.getAttribute('data-mid'));return;}
+  if((b=t.closest('[data-mic]'))){icDetail(b.getAttribute('data-mic'));return;}
+  if((b=t.closest('[data-micopy]'))){fetch(b.getAttribute('data-micopy')).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){return copy(s);}).then(function(ok){toast(ok?'Code SVG copié':'Copie impossible ici');}).catch(function(){toast('Chargement impossible, réessayez');});return;}
+  if((b=t.closest('[data-mact]'))){var x=M.items[b.getAttribute('data-mact')];if(x)copy(x.att||('« '+x.title+' » par '+x.by+', licence '+x.lic+', source : '+x.src+' ('+(x.page||x.url)+')')).then(function(ok){toast(ok?'Mention copiée':'Copie impossible ici');});return;}
+  if(t.id==='md-more'){run(true);return;}
+  if(t.id==='md-retry'){run(false);return;}
+});
+$('#md-form').addEventListener('submit',function(e){e.preventDefault();M.q=$('#md-q').value.trim();if(M.tab==='icons')icRun();else if(SRC[M.tab])run(false);});
+$('#md-src').addEventListener('change',function(e){M.src=e.target.value;run(false);});
+$('#md-keyrow').addEventListener('submit',function(e){e.preventDefault();var v=$('#md-key').value.trim();if(!v)return;try{localStorage.setItem('ps_pixabay_key',v);}catch(x){}$('#md-key').value='';run(false);});
+/* Chargement paresseux */
+var el=$('#medias'),go=function(){if(go.d)return;go.d=1;setTab('vector');};
+if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();go();}},{rootMargin:'400px'});o.observe(el);}else go();
+})();
+</script>
+
+<script src="config.js"></script>
+<script>
+(function(){
+'use strict';
+var $=function(q){return document.querySelector(q);};
+var CFG=window.PALEZZA_CONFIG||{},sb=null,user=null,projects=[],tt;
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},2600);}
+var ready=!!(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY);
+function body(h){$('#pr-body').innerHTML=h;}
+function view(){
+  var b=$('#acc-btn');b.textContent=user?(user.email||'Compte').split('@')[0]:'Compte';
+  if(!ready){body('<p class="lead" style="font-size:15px">Les comptes et les projets seront actifs dès que la base Supabase sera reliée : renseignez <code>config.js</code> après avoir appliqué <code>supabase/001_palezza_studios.sql</code>.</p>');return;}
+  if(!sb){body('<p class="lead" style="font-size:15px">Chargement…</p>');return;}
+  if(!user){body('<p class="lead" style="font-size:15px">Connectez-vous pour retrouver vos projets sur tous vos appareils.</p><button class="btn" type="button" data-auth="open">Se connecter</button>');return;}
+  body('<form class="pr-new" id="pr-form"><label class="field"><span class="sr">Nom du projet</span><input id="pr-name" type="text" maxlength="80" placeholder="Nom du nouveau projet" required style="width:100%"></label><button class="btn" type="submit">Créer</button><button class="btn ghost" type="button" data-auth="out">Se déconnecter</button></form>'
+   +(projects.length?'<div class="pr-list">'+projects.map(function(p){var it=p.ps_project_items||[];
+     return '<article class="pr-card"><h3>'+esc(p.name)+'</h3><small>'+it.length+' ressource'+(it.length>1?'s':'')+'</small><ul>'+it.map(function(x){return '<li><span><small>'+esc(x.kind)+'</small> '+(x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.title)+'</a>':esc(x.title))+'</span><button class="pr-x" type="button" data-itdel="'+x.id+'" aria-label="Retirer">×</button></li>';}).join('')+'</ul><button class="btn ghost sm" type="button" data-prdel="'+p.id+'">Supprimer le projet</button></article>';}).join('')+'</div>':'<p class="lead" style="font-size:15px">Aucun projet pour l\'instant. Créez le premier ci-dessus.</p>'));
+}
+function fetchProjects(){
+  if(!sb||!user){projects=[];view();return Promise.resolve();}
+  return sb.from('ps_projects').select('id,name,created_at,ps_project_items(id,kind,title,url)').order('created_at',{ascending:false}).then(function(r){if(r.error){toast('Chargement des projets impossible');return;}projects=r.data||[];view();});
+}
+function boot(){
+  view();if(!ready)return;
+  var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';
+  sc.onload=function(){sb=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY);
+    sb.auth.getSession().then(function(r){user=r.data.session?r.data.session.user:null;fetchProjects();});
+    sb.auth.onAuthStateChange(function(ev,ses){user=ses?ses.user:null;fetchProjects();});};
+  sc.onerror=function(){body('<p class="lead" style="font-size:15px">Le service de comptes n\'a pas pu se charger. Vérifiez votre connexion.</p>');};
+  document.head.appendChild(sc);
+}
+function auth(kind){
+  var m=$('#au-mail').value.trim(),pw=$('#au-pass').value,msg=$('#au-msg');
+  if(!ready||!sb){msg.textContent='Les comptes ne sont pas encore activés sur ce site.';return;}
+  msg.textContent='Un instant…';
+  var p=kind==='up'?sb.auth.signUp({email:m,password:pw}):sb.auth.signInWithPassword({email:m,password:pw});
+  p.then(function(r){if(r.error){msg.textContent=kind==='up'?'Création impossible : '+r.error.message:'Connexion impossible : e-mail ou mot de passe incorrect.';return;}
+    if(kind==='up'&&!r.data.session){msg.textContent='Compte créé. Vérifiez votre boîte e-mail pour confirmer, puis connectez-vous.';return;}
+    $('#auth-dlg').close();$('#au-pass').value='';toast('Connecté');});
+}
+function addUI(){
+  var info=document.querySelector('#lib-detail-body .det-info');if(!info||info.querySelector('#proj-add')||!ready)return;
+  var d=document.createElement('div');d.id='proj-add';d.className='pr-add';
+  if(!user){d.innerHTML='<button class="btn ghost sm" type="button" data-auth="open">Se connecter pour l\'ajouter à un projet</button>';}
+  else if(!projects.length){d.innerHTML='<a class="btn ghost sm" href="#projets" data-close>Créer d\'abord un projet</a>';}
+  else{d.innerHTML='<label class="field"><span class="sr">Projet</span><select id="proj-sel">'+projects.map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>';}).join('')+'</select></label><button class="btn sm" type="button" data-padd="1">Ajouter au projet</button>';}
+  info.appendChild(d);
+}
+new MutationObserver(addUI).observe($('#lib-detail-body'),{childList:true});
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if(t.closest('#acc-btn')){if(user){$('#projets').scrollIntoView({behavior:'smooth'});}else if(!ready){$('#projets').scrollIntoView({behavior:'smooth'});toast('Comptes bientôt activés');}else $('#au-msg').textContent='',$('#auth-dlg').showModal();return;}
+  if((b=t.closest('[data-auth]'))){var a=b.getAttribute('data-auth');if(a==='open'){var d=$('#lib-detail');if(d.open)d.close();$('#au-msg').textContent='';$('#auth-dlg').showModal();}else if(sb)sb.auth.signOut().then(function(){toast('Déconnecté');});return;}
+  if(t.id==='au-up'){auth('up');return;}
+  if((b=t.closest('[data-prdel]'))){if(confirm('Supprimer ce projet et les ressources qu\'il contient ?'))sb.from('ps_projects').delete().eq('id',b.getAttribute('data-prdel')).then(function(r){if(r.error)toast('Suppression impossible');fetchProjects();});return;}
+  if((b=t.closest('[data-itdel]'))){sb.from('ps_project_items').delete().eq('id',b.getAttribute('data-itdel')).then(function(){fetchProjects();});return;}
+  if(t.closest('[data-padd]')){
+    var body=$('#lib-detail-body'),kind=(body.querySelector('.eyebrow')||{}).textContent||'Ressource',title=(body.querySelector('h2')||{}).textContent||'Sans titre';
+    var a1=body.querySelector('.det-info a[href^="http"]'),u=a1?a1.href:(body.querySelector('[data-u]')||{getAttribute:function(){return null;}}).getAttribute('data-u');
+    sb.from('ps_project_items').insert({project_id:$('#proj-sel').value,kind:kind,title:title,url:u}).then(function(r){toast(r.error?'Ajout impossible':'Ajouté au projet');fetchProjects();});return;}
+});
+$('#auth-form').addEventListener('submit',function(e){e.preventDefault();auth('in');});
+$('#auth-dlg').addEventListener('click',function(e){if(e.target===this)this.close();});
+document.addEventListener('submit',function(e){if(e.target.id==='pr-form'){e.preventDefault();var n=$('#pr-name').value.trim();if(!n)return;sb.from('ps_projects').insert({name:n}).then(function(r){toast(r.error?'Création impossible':'Projet créé');fetchProjects();});}});
+boot();
+})();
+</script>
+<script>
+(function(){
+'use strict';
+var $=function(q){return document.querySelector(q);};
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on');},2600);}
+var B='assets/library/',PAGE=60,PACK='Palezza Digital Library — Expanded Pack v0.2',PACK2='Palezza Digital Library — Second Pack v0.1';
+var LIC='Ressource originale Palezza, usage libre dans vos projets (voir le fichier de licence du pack). Aucune marque tierce.';
+var TABS=[['icons','Icônes'],['logos','Concepts de logos'],['illus','Illustrations'],['patterns','Motifs'],['anims','Animations SVG'],['videos','Vidéos (MP4)'],['psd','Modèles PSD'],['fonts','Polices'],['favs','Favoris'],['hist','Historique']];
+var CAT=null,P={tab:'icons',q:'',c1:'',c2:'',n:PAGE},busy=false;
+function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var FAV=ls('ps_lib_favs',[]),HIST=ls('ps_lib_hist',[]);
+function norm(tab,r){
+  var o={tab:tab,id:r[0],title:r[1],key:tab+':'+r[0],c1:'',c2:''};
+  if(tab==='icons'){o.file=B+'icons/svg/'+r[0]+'.svg';o.png=B+'icons/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.rc=1;o.kind='Icône';}
+  if(tab==='logos'){o.file=B+'logos/svg/'+r[0]+'.svg';o.png=B+'logos/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.c1=r[2];o.c2=r[3];o.kind='Concept de logo';}
+  if(tab==='illus'){o.file=B+'illustrations/'+r[0]+'.svg';o.fmt='SVG';o.c1=r[2];o.kind='Illustration';}
+  if(tab==='patterns'){o.file=B+'patterns/'+r[0]+'.svg';o.fmt='SVG';o.kind='Motif';}
+  if(tab==='anims'){o.file=B+'animations/'+r[0]+'.svg';o.fmt='SVG animé';o.kind='Animation';}
+  if(tab==='videos'){o.file=B+'videos/'+r[0]+'.mp4';o.fmt='MP4 · 160 × 90 · 1 s';o.kind='Vidéo';o.pk=2;}
+  if(tab==='psd'){o.file=B+'psd/'+r[0]+'.psd';o.fmt='PSD';o.kind='Modèle PSD';o.pk=2;}
+  if(tab==='fonts'){o.file=B+'fonts/'+r[0]+'.ttf';o.fmt='TTF';o.fam=r[2];o.kind='Police';o.pk=2;o.lic=r[3]||'DejaVu : Bitstream Vera, modifications du domaine public';}
+  return o;
+}
+function all(tab){
+  if(tab==='favs'||tab==='hist'){var keys=tab==='favs'?FAV:HIST.map(function(h){return h.k;}),seen={},out=[];
+    keys.forEach(function(k){if(seen[k])return;seen[k]=1;var t=k.split(':')[0],id=k.slice(t.length+1),src=CAT[t],r;if(!src)return;for(var i=0;i<src.length;i++)if(src[i][0]===id){r=src[i];break;}if(r)out.push(norm(t,r));});return out;}
+  return (CAT[tab]||[]).map(function(r){return norm(tab,r);});
+}
+function uniq(a){var s={};a.forEach(function(x){if(x)s[x]=1;});return Object.keys(s).sort(function(x,y){return x.localeCompare(y,'fr');});}
+function fill(sel,wrap,label,vals,cur){var s=$(sel);wrap=$(wrap);if(!vals.length){wrap.hidden=true;s.innerHTML='';return;}wrap.hidden=false;s.innerHTML='<option value="">'+esc(label)+'</option>'+vals.map(function(v){return '<option'+(v===cur?' selected':'')+'>'+esc(v)+'</option>';}).join('');}
+function tabs(){
+  $('#pl-tabs').innerHTML=TABS.map(function(t){var n=t[0]==='favs'?FAV.length:t[0]==='hist'?HIST.length:(CAT[t[0]]||[]).length;return '<button class="chip" type="button" data-pltab="'+t[0]+'" aria-pressed="'+(P.tab===t[0])+'">'+t[1]+' <small>'+n+'</small></button>';}).join('');
+}
+function card(x){
+  var fav=FAV.indexOf(x.key)>-1?'<span aria-label="Favori" style="position:absolute;top:6px;right:8px;color:var(--gold)">★</span>':'',pv;
+  if(x.tab==='videos'||x.tab==='psd')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:600;color:var(--brand);height:70px">'+(x.tab==='videos'?'▶ MP4':'PSD')+'</i>';
+  else if(x.tab==='fonts')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:34px;height:70px;font-family:\'PL '+esc(x.id)+'\'">Aa</i>';
+  else pv='<img src="'+esc(x.file)+'" alt="" loading="lazy" decoding="async" style="height:'+(x.tab==='icons'?'64':'80')+'px;width:100%;object-fit:contain">';
+  return '<button class="lib-card" type="button" data-plk="'+esc(x.key)+'" style="position:relative">'+fav+pv+'<span class="n">'+esc(x.title)+'</span></button>';
+}
+function render(more){
+  if(!CAT)return;
+  var list=all(P.tab),q=P.q.toLowerCase();
+  if(!more){
+    tabs();
+    var lt=P.tab==='logos';
+    fill('#pl-c1','#pl-c1f',lt?'Toutes les régions':'Toutes les catégories',(P.tab==='logos'||P.tab==='illus')?uniq(list.map(function(x){return x.c1;})):[],P.c1);
+    fill('#pl-c2','#pl-c2f','Tous les secteurs',lt?uniq(list.map(function(x){return x.c2;})):[],P.c2);
+    P.n=PAGE;
+  }
+  var f=list.filter(function(x){return (!P.c1||x.c1===P.c1)&&(!P.c2||x.c2===P.c2)&&(!q||(x.title+' '+x.c1+' '+x.c2+' '+x.id).toLowerCase().indexOf(q)>-1);});
+  var shown=f.slice(0,P.n);
+  $('#pl-grid').innerHTML=shown.map(card).join('');
+  $('#pl-count').textContent=f.length+' ressource'+(f.length>1?'s':'')+(P.q?' pour « '+P.q+' »':'');
+  $('#pl-empty').hidden=!!f.length;
+  $('#pl-empty').textContent=P.tab==='favs'?'Aucun favori pour le moment : ouvrez une fiche et choisissez « Ajouter aux favoris ».':P.tab==='hist'?'Aucun téléchargement enregistré sur cet appareil.':'Aucun résultat. Essayez un autre mot ou retirez un filtre.';
+  $('#pl-more').hidden=f.length<=P.n;
+  $('#pl-note').textContent=P.tab==='fonts'?'Polices DejaVu (licence Bitstream Vera, conservée dans le dossier des polices). Pour plus de familles, voir l\'onglet Polices du site (Google Fonts).':P.tab==='psd'?'Fichiers PSD à ouvrir dans Photoshop, GIMP ou Photopea. Aucun aperçu navigateur possible.':'';
+}
+function dl(x,url,name){
+  var a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  HIST=HIST.filter(function(h){return h.k!==x.key;});HIST.unshift({k:x.key,d:new Date().toISOString()});HIST=HIST.slice(0,200);sv('ps_lib_hist',HIST);tabs();
+}
+function open(key){
+  var t=key.split(':')[0],id=key.slice(t.length+1),r,x;
+  for(var i=0;i<CAT[t].length;i++)if(CAT[t][i][0]===id){r=CAT[t][i];break;}
+  if(!r)return;x=norm(t,r);
+  var big;
+  if(t==='videos')big='<video controls loop muted playsinline autoplay src="'+esc(x.file)+'" style="width:100%;max-height:60vh;border-radius:12px;background:#000"></video>';
+  else if(t==='psd')big='<div style="display:grid;place-items:center;height:200px;font-size:28px;font-weight:600;color:var(--brand)">PSD</div>';
+  else if(t==='fonts')big='<div style="padding:24px;font-family:\'PL '+esc(x.id)+'\';font-size:26px;line-height:1.4;overflow-wrap:anywhere">Palezza Studios<br>ABCDEFGHIJKLM<br>abcdefghijklm 0123456789</div>';
+  else big='<img id="pl-big" src="'+esc(x.file)+'" alt="'+esc(x.title)+'" style="max-width:100%;max-height:60vh;background:#fff;border-radius:12px;padding:8px">';
+  var isFav=FAV.indexOf(key)>-1,rows=[['Type',x.kind],['Format',x.fmt],['Catégorie',[x.c1,x.c2].filter(Boolean).join(' · ')||'—'],['Dimensions','<span id="pl-dim">'+(t==='videos'?'160 × 90 px':t==='fonts'||t==='psd'?'—':'vectoriel')+'</span>'],['Accès','Gratuit'],['Licence',esc(x.lic||LIC)],['Source',x.pk===2?PACK2:PACK]];
+  var html='<div class="det"><div class="lib-big" style="flex-direction:column;overflow:auto">'+big+'</div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+esc(x.kind)+'</span><h2>'+esc(x.title)+'</h2></div>'
+   +'<dl style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0">'+rows.map(function(r){return '<dt style="color:var(--muted)">'+r[0]+'</dt><dd style="margin:0">'+(r[0]==='Dimensions'?r[1]:esc(r[1]))+'</dd>';}).join('')+'</dl>';
+  if(x.rc)html+='<label style="display:flex;align-items:center;gap:10px;font-size:14px">Couleur <input type="color" id="pl-col" value="#247C78" aria-label="Couleur de l\'icône"></label>';
+  html+='<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-plact="dl">Télécharger '+(t==='fonts'?'TTF':t==='videos'?'MP4':t==='psd'?'PSD':'SVG')+'</button>'
+   +(x.png?'<button class="btn ghost" type="button" data-plact="png">Télécharger PNG</button>':'')
+   +(x.rc?'<button class="btn ghost" type="button" data-plact="rc">SVG recoloré</button>':'')
+   +'<button class="btn ghost" type="button" data-plact="fav">'+(isFav?'Retirer des favoris':'Ajouter aux favoris')+'</button>'
+   +(t==='fonts'?'<a class="btn ghost" href="'+B+'fonts/LICENSE_DejaVu.txt" target="_blank" rel="noopener">Licence</a>':'')+'</div></div></div>';
+  var d=$('#lib-detail');$('#lib-detail-body').innerHTML=html;d.dataset.plk=key;if(!d.open)d.showModal();
+  var im=$('#pl-big');if(im){im.onload=function(){var e=$('#pl-dim');if(e&&im.naturalWidth&&(t==='icons'||t==='logos'))e.textContent='vectoriel · PNG '+im.naturalWidth*(t==='icons'?1:1)+' × '+im.naturalHeight+' px (SVG de base)';};}
+  if(x.png){var pi=new Image();pi.onload=function(){var e=$('#pl-dim');if(e)e.textContent='vectoriel · PNG '+pi.naturalWidth+' × '+pi.naturalHeight+' px';};pi.src=x.png;}
+}
+function cur(){var k=$('#lib-detail').dataset.plk;if(!k)return null;var t=k.split(':')[0],id=k.slice(t.length+1);for(var i=0;i<CAT[t].length;i++)if(CAT[t][i][0]===id)return norm(t,CAT[t][i]);return null;}
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if((b=t.closest('[data-pltab]'))){P.tab=b.getAttribute('data-pltab');P.q='';P.c1='';P.c2='';$('#pl-q').value='';render(false);return;}
+  if((b=t.closest('[data-plk]'))&&b.closest('#pl-grid')){open(b.getAttribute('data-plk'));return;}
+  if(t.id==='pl-more'){P.n+=PAGE;render(true);return;}
+  if((b=t.closest('[data-plact]'))&&$('#lib-detail').dataset.plk){
+    var x=cur(),a=b.getAttribute('data-plact');if(!x)return;
+    var ext=x.file.split('.').pop();
+    if(a==='dl'){dl(x,x.file,x.id+'.'+ext);return;}
+    if(a==='png'){dl(x,x.png,x.id+'.png');return;}
+    if(a==='fav'){var i=FAV.indexOf(x.key);if(i>-1)FAV.splice(i,1);else FAV.push(x.key);sv('ps_lib_favs',FAV);b.textContent=i>-1?'Ajouter aux favoris':'Retirer des favoris';toast(i>-1?'Retiré des favoris':'Ajouté aux favoris');render(true);return;}
+    if(a==='rc'){var col=$('#pl-col').value;fetch(x.file).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){
+      s=s.replace(/#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g,function(m){var h=m.slice(1).toLowerCase();return (h==='ffffff'||h==='fff')?m:col;});
+      var u=URL.createObjectURL(new Blob([s],{type:'image/svg+xml'}));dl(x,u,x.id+'-'+col.slice(1)+'.svg');setTimeout(function(){URL.revokeObjectURL(u);},4000);}).catch(function(){toast('Recoloration impossible ici, réessayez depuis le site en ligne');});return;}
+  }
+});
+$('#pl-form').addEventListener('submit',function(e){e.preventDefault();P.q=$('#pl-q').value.trim();render(false);});
+$('#pl-q').addEventListener('input',function(){clearTimeout(render.t);render.t=setTimeout(function(){P.q=$('#pl-q').value.trim();render(false);},200);});
+$('#pl-c1').addEventListener('change',function(e){P.c1=e.target.value;render(false);});
+$('#pl-c2').addEventListener('change',function(e){P.c2=e.target.value;render(false);});
+var hs=$('#hsearch');if(hs)hs.addEventListener('submit',function(){var v=($('#hq')||{}).value||'';if(CAT&&P.tab!=='favs'&&P.tab!=='hist'){P.q=v.trim();$('#pl-q').value=P.q;render(false);}});
+function load(){
+  if(CAT||busy)return;busy=true;
+  fetch(B+'catalog.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){
+    CAT=d;
+    var css=d.fonts.map(function(f){return '@font-face{font-family:\'PL '+f[0]+'\';src:url('+B+'fonts/'+f[0]+'.ttf);font-display:swap}';}).join('');
+    var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+    render(false);
+  }).catch(function(){busy=false;$('#pl-count').innerHTML='Impossible de charger la collection (ouvrez le site depuis son hébergement). <button class="chip-link" type="button" id="pl-retry">Réessayer</button>';});
+}
+document.addEventListener('click',function(e){if(e.target.id==='pl-retry')load();});
+var el=$('#collection');
+if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();load();}},{rootMargin:'400px'});o.observe(el);}else load();
+})();
+</script>
+</body>
+</html>

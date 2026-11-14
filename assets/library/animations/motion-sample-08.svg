@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<rect width="640" height="360" fill="#F8FAFC"/>
+<circle cx="320" cy="180" r="48" fill="#B45309">
+<animate attributeName="r" values="35;75;35" dur="5s" repeatCount="indefinite"/>
+<animate attributeName="opacity" values=".55;1;.55" dur="5s" repeatCount="indefinite"/>
+</circle>
+<text x="320" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#334155">PALEZZA MOTION SAMPLE 08</text></svg>
