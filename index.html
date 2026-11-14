@@ -304,13 +304,50 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
 .pr-card li a{color:var(--link);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pr-x{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1}
 .pr-add{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+
+/* ---- Refonte : bibliothèque unifiée et mobile ---- */
+.lib-zone .sec-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:0}
+.lib-zone.js>section{display:none}
+.lib-zone.js>section.hub-on{display:block}
+.lib-zone .band{padding-block:20px 56px}
+.libhub{position:sticky;top:calc(var(--hh,0px) + env(safe-area-inset-top,0px));z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+.libhub-in{display:flex;gap:8px;overflow-x:auto;padding:10px max(16px,env(safe-area-inset-left,0px));scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.libhub-in::-webkit-scrollbar{display:none}
+.libhub .chip{flex:none;min-height:42px;padding:0 16px;font-size:14.5px;font-weight:600;white-space:nowrap}
+.lib-zone[data-hub]:not([data-hub="pack"]) #pl-tabs{display:none}
+.lib-zone.js #bibliotheque .toolbar>.chips,.lib-zone.js #medias .toolbar>.chips{display:none}
+@media (max-width:720px){
+  html{scroll-padding-top:56px}
+  .top{position:relative}
+  .nav{display:none}
+  .top-in{min-height:0;gap:8px 12px;padding-block:8px}
+  .top-in .brand,.top-in .brand img{height:38px}
+  .top-actions{gap:8px}
+  .top-actions .icon-btn{min-height:36px;padding:0 12px}
+  .top-actions .btn.sm{min-height:36px;padding:0 14px}
+  .lib-zone .toolbar{flex-direction:column;align-items:stretch;gap:10px;margin-bottom:12px}
+  .lib-zone .tools{width:100%;flex-wrap:nowrap}
+  .lib-zone .tools .field{flex:1;min-width:0}
+  .lib-zone .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}
+  .lib-zone .chips::-webkit-scrollbar{display:none}
+  .lib-zone .chip{flex:none;white-space:nowrap}
+  #pl-grid,#lib-grid,#md-ic{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px}
+  #pl-grid[data-tab="anims"],#pl-grid[data-tab="videos"],#pl-grid[data-tab="psd"],#pl-grid[data-tab="fonts"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .lib-card{padding:12px 4px 8px;gap:6px;border-radius:12px}
+  .lib-card span.n{font-size:11.5px}
+  .count{margin-bottom:10px}
+  dialog#lib-detail,dialog#detail{width:100%;max-width:none;margin:auto 0 0;max-height:90dvh;border-radius:20px 20px 0 0;animation:sheet .25s ease-out}
+  #lib-detail .det-info .btn,#detail .det-info .btn{flex:1 1 calc(50% - 10px);min-height:48px}
+  #lib-detail .lib-big{min-height:160px;padding:16px}
+}
+@keyframes sheet{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
 </style>
 
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#top" aria-label="Palezza Studios, retour en haut"><img class="lg lg-light" src="logos/svg/obturateur_horizontal_clair_transparent.svg" alt="Palezza Studios" width="1493" height="716"><img class="lg lg-dark" src="logos/svg/obturateur_horizontal_sombre_transparent.svg" alt="Palezza Studios" width="1493" height="716"></a>
     <nav class="nav" aria-label="Navigation principale">
-      <a href="#bibliotheque">Bibliothèque</a>
+      <a href="#biblio">Bibliothèque</a>
       <a href="#polices">Polices</a>
       <a href="#photos">Photos</a>
       <a href="#medias">Médias</a>
@@ -382,6 +419,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   </div>
 </section>
 
+<div class="lib-zone" id="biblio">
 <section class="band" id="bibliotheque" aria-labelledby="h-lib">
   <div class="wrap">
     <div class="sec-head"><div>
@@ -468,6 +506,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   <p class="lib-note" id="md-note"></p>
   <div style="text-align:center;margin-top:20px"><button class="btn ghost" id="md-more" type="button" hidden>Voir plus</button></div>
 </div></section>
+</div><!-- /lib-zone -->
 
 <section class="band alt" id="outils" aria-labelledby="h-out"><div class="wrap">
   <div class="sec-head"><div><h2 id="h-out">Les outils</h2><p>Ils fonctionnent dans votre navigateur : vos images ne sont envoyées nulle part.</p></div>
@@ -1001,7 +1040,7 @@ renderPlans();fxInit();render();
 
 <nav class="bnav" aria-label="Navigation mobile">
   <a href="#top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8v10H3z"/></svg> Accueil</a>
-  <a href="#bibliotheque"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Biblio</a>
+  <a href="#biblio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Biblio</a>
   <a href="#photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg> Photos</a>
   <a href="#outils"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.5 2.5-2.2-.7-.7-2.2z"/></svg> Outils</a>
   <a href="#ressources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Catalogue</a>
@@ -1542,6 +1581,7 @@ function render(more){
   }
   var f=list.filter(function(x){return (!P.c1||x.c1===P.c1)&&(!P.c2||x.c2===P.c2)&&(!q||(x.title+' '+x.c1+' '+x.c2+' '+x.id).toLowerCase().indexOf(q)>-1);});
   var shown=f.slice(0,P.n);
+  $('#pl-grid').setAttribute('data-tab',P.tab);
   $('#pl-grid').innerHTML=shown.map(card).join('');
   $('#pl-count').textContent=f.length+' ressource'+(f.length>1?'s':'')+(P.q?' pour « '+P.q+' »':'');
   $('#pl-empty').hidden=!!f.length;
@@ -1615,8 +1655,41 @@ function load(){
   }).catch(function(){busy=false;$('#pl-count').innerHTML='Impossible de charger la collection (ouvrez le site depuis son hébergement). <button class="chip-link" type="button" id="pl-retry">Réessayer</button>';});
 }
 document.addEventListener('click',function(e){if(e.target.id==='pl-retry')load();});
+window.PL_setTab=function(t,keepQ){P.tab=t;if(!keepQ){P.q='';var q0=$('#pl-q');if(q0)q0.value='';}else{var q1=$('#pl-q');if(q1)q1.value=P.q;}P.c1='';P.c2='';render(false);};
 var el=$('#collection');
 if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();load();}},{rootMargin:'400px'});o.observe(el);}else load();
+})();
+</script>
+<script>
+/* Bibliothèque unifiée : une seule barre d'onglets, défilement infini */
+(function(){
+var Z=document.getElementById('biblio');if(!Z)return;
+var H=[['brands','Logos','collection','[data-pltab="brands"]'],['icons','Icônes','bibliotheque','[data-libtab="icons"]'],['photos','Photos','photos',''],['vector','Vecteurs','medias','[data-mtab="vector"]'],['illus','Illustrations','medias','[data-mtab="illus"]'],['video','Vidéos','medias','[data-mtab="video"]'],['fonts','Polices','polices',''],['psd','PSD','medias','[data-mtab="psd"]'],['own','Modèles Palezza','medias','[data-mtab="own"]'],['pack','Packs Palezza','collection','']];
+var bar=document.createElement('nav');bar.className='libhub';bar.setAttribute('aria-label','Types de ressources');
+bar.innerHTML='<div class="libhub-in" role="group">'+H.map(function(x){return '<button class="chip" type="button" data-hub="'+x[0]+'" aria-pressed="false">'+x[1]+'</button>';}).join('')+'</div>';
+Z.insertBefore(bar,Z.firstChild);Z.classList.add('js');
+var root=document.documentElement;
+function hh(){var t=document.querySelector('header.top'),v=0;if(t&&getComputedStyle(t).position==='sticky')v=t.offsetHeight;root.style.setProperty('--hh',v+'px');return v;}
+function goZone(){var v=hh(),top=Z.getBoundingClientRect().top+window.pageYOffset-v;if(Math.abs(window.pageYOffset-top)>4)window.scrollTo({top:Math.max(0,top),behavior:'smooth'});}
+function hub(k,keepQ){
+  var h=H.filter(function(x){return x[0]===k;})[0]||H[0];Z.setAttribute('data-hub',h[0]);
+  Array.prototype.forEach.call(Z.children,function(s){if(s.tagName==='SECTION')s.classList.toggle('hub-on',s.id===h[2]);});
+  var inn=bar.firstChild;
+  Array.prototype.forEach.call(bar.querySelectorAll('[data-hub]'),function(b){var on=b.getAttribute('data-hub')===h[0];b.setAttribute('aria-pressed',on?'true':'false');if(on)inn.scrollTo({left:b.offsetLeft-(inn.clientWidth-b.offsetWidth)/2,behavior:'smooth'});});
+  if(h[2]==='collection'&&window.PL_setTab)window.PL_setTab(h[0]==='pack'?'icons':'brands',keepQ);
+  else if(h[3]){var e=Z.querySelector(h[3]);if(e)e.click();}
+  window.dispatchEvent(new Event('scroll'));
+}
+bar.addEventListener('click',function(e){var b=e.target.closest('[data-hub]');if(!b)return;hub(b.getAttribute('data-hub'));if(Z.getBoundingClientRect().top<0)goZone();});
+var MAP={'#bibliotheque':'icons','#collection':'brands','#polices':'fonts','#photos':'photos','#medias':'vector','#biblio':''};
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var m=MAP[a.getAttribute('href')];if(m===undefined)return;e.preventDefault();if(m)hub(m);goZone();},true);
+var hs=document.getElementById('hsearch');
+if(hs)hs.addEventListener('submit',function(){var c=Z.getAttribute('data-hub');if(c!=='brands'&&c!=='pack')hub('brands',true);goZone();});
+var start=MAP[location.hash];hub(start||'brands');if(start!==undefined&&location.hash)setTimeout(goZone,300);
+window.addEventListener('resize',hh);hh();
+/* défilement infini : charge la suite quand le bouton « Voir plus » approche */
+var MORE=['pl-more','lib-more','font-more','ph-more','md-more'],last={};
+setInterval(function(){if(document.hidden)return;MORE.forEach(function(id){var b=document.getElementById(id);if(!b||b.hidden||b.offsetParent===null)return;var r=b.getBoundingClientRect();if(r.top<window.innerHeight+600&&r.bottom>-200&&(!last[id]||Date.now()-last[id]>2500)){last[id]=Date.now();b.click();}});},600);
 })();
 </script>
 </body>
