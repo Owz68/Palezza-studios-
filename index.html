@@ -322,7 +322,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
     </nav>
     <form class="hsearch" id="hsearch" role="search">
       <label class="sr" for="hq">Rechercher dans tout le site</label>
-      <input id="hq" type="search" placeholder="Rechercher icônes, logos, flyers, motifs…" autocomplete="off">
+      <input id="hq" type="search" placeholder="Rechercher icônes, logos de marques, flyers…" autocomplete="off">
       <button class="hbtn" id="hmic" type="button" aria-label="Recherche vocale" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
       <button class="hbtn" type="submit" aria-label="Rechercher"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
     </form>
@@ -406,7 +406,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
 </section>
 
 <section class="band" id="collection" aria-labelledby="h-pl"><div class="wrap">
-  <div class="sec-head"><div><h2 id="h-pl">Collection Palezza</h2><p>Les ressources originales de Palezza Studios : icônes, concepts de logos, illustrations, motifs, animations, boucles vidéo, modèles PSD et polices libres. Chaque fiche indique le format, la licence et la source ; vos favoris et votre historique restent sur cet appareil.</p></div></div>
+  <div class="sec-head"><div><h2 id="h-pl">Collection Palezza</h2><p>Plus de 3 400 logos de marques et d'entreprises, des icônes, des animations, des boucles vidéo, des modèles PSD et des polices libres. Chaque fiche indique le format, la licence et la source ; vos favoris et votre historique restent sur cet appareil.</p></div></div>
   <div class="toolbar">
     <div class="chips" role="group" aria-label="Type de ressource" id="pl-tabs"></div>
     <div class="tools">
@@ -420,7 +420,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   <p class="lib-note" id="pl-empty" hidden>Aucun résultat. Essayez un autre mot ou retirez un filtre.</p>
   <div style="text-align:center;margin-top:18px"><button class="btn ghost" id="pl-more" type="button" hidden>Afficher plus</button></div>
   <p class="lib-note" id="pl-note"></p>
-  <p class="lib-note">Licences : <a href="assets/library/licenses/PACK_EXPANDED_LICENSES.txt" target="_blank" rel="noopener">pack Expanded</a> · <a href="assets/library/licenses/PACK_SECOND_LICENSE_NOTES.txt" target="_blank" rel="noopener">pack Second</a> · <a href="assets/library/licenses/source-and-license-catalogue.csv" target="_blank" rel="noopener">catalogue des sources</a>. Les concepts de logos sont génériques : ils ne représentent aucune entreprise réelle.</p>
+  <p class="lib-note">Licences : <a href="assets/library/licenses/PACK_EXPANDED_LICENSES.txt" target="_blank" rel="noopener">pack Expanded</a> · <a href="assets/library/licenses/PACK_SECOND_LICENSE_NOTES.txt" target="_blank" rel="noopener">pack Second</a> · <a href="assets/library/licenses/source-and-license-catalogue.csv" target="_blank" rel="noopener">catalogue des sources</a> · <a href="assets/library/licenses/SIMPLE_ICONS_LICENSE.md" target="_blank" rel="noopener">Simple Icons (logos de marques)</a> · <a href="assets/library/licenses/SIMPLE_ICONS_DISCLAIMER.md" target="_blank" rel="noopener">avertissement sur les marques</a>. Les logos de marques appartiennent à leurs propriétaires : ils servent à désigner l'entreprise concernée.</p>
 </div></section>
 
 <section class="band alt" id="polices" aria-labelledby="h-pol"><div class="wrap">
@@ -1497,17 +1497,15 @@ function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return
 function toast(m){var t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on');},2600);}
 var B='assets/library/',PAGE=60,PACK='Palezza Digital Library — Expanded Pack v0.2',PACK2='Palezza Digital Library — Second Pack v0.1';
 var LIC='Ressource originale Palezza, usage libre dans vos projets (voir le fichier de licence du pack). Aucune marque tierce.';
-var TABS=[['icons','Icônes'],['logos','Concepts de logos'],['illus','Illustrations'],['patterns','Motifs'],['anims','Animations SVG'],['videos','Vidéos (MP4)'],['psd','Modèles PSD'],['fonts','Polices'],['favs','Favoris'],['hist','Historique']];
-var CAT=null,P={tab:'icons',q:'',c1:'',c2:'',n:PAGE},busy=false;
+var TABS=[['brands','Logos de marques'],['icons','Icônes'],['anims','Animations SVG'],['videos','Vidéos (MP4)'],['psd','Modèles PSD'],['fonts','Polices'],['favs','Favoris'],['hist','Historique']];
+var CAT=null,P={tab:'brands',q:'',c1:'',c2:'',n:PAGE},busy=false;
 function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 var FAV=ls('ps_lib_favs',[]),HIST=ls('ps_lib_hist',[]);
 function norm(tab,r){
   var o={tab:tab,id:r[0],title:r[1],key:tab+':'+r[0],c1:'',c2:''};
   if(tab==='icons'){o.file=B+'icons/svg/'+r[0]+'.svg';o.png=B+'icons/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.rc=1;o.kind='Icône';}
-  if(tab==='logos'){o.file=B+'logos/svg/'+r[0]+'.svg';o.png=B+'logos/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.c1=r[2];o.c2=r[3];o.kind='Concept de logo';}
-  if(tab==='illus'){o.file=B+'illustrations/'+r[0]+'.svg';o.fmt='SVG';o.c1=r[2];o.kind='Illustration';}
-  if(tab==='patterns'){o.file=B+'patterns/'+r[0]+'.svg';o.fmt='SVG';o.kind='Motif';}
+  if(tab==='brands'){o.file=B+'brands/'+r[0]+'.svg';o.fmt='SVG, PNG';o.hex=r[2];o.rc=1;o.pk=3;o.kind='Logo de marque';o.lic='Dessin : CC0 (Simple Icons). Le logo reste une marque de son propriétaire : à utiliser pour désigner cette entreprise, sans laisser croire à un partenariat.';}
   if(tab==='anims'){o.file=B+'animations/'+r[0]+'.svg';o.fmt='SVG animé';o.kind='Animation';}
   if(tab==='videos'){o.file=B+'videos/'+r[0]+'.mp4';o.fmt='MP4 · 160 × 90 · 1 s';o.kind='Vidéo';o.pk=2;}
   if(tab==='psd'){o.file=B+'psd/'+r[0]+'.psd';o.fmt='PSD';o.kind='Modèle PSD';o.pk=2;}
@@ -1527,6 +1525,7 @@ function tabs(){
 function card(x){
   var fav=FAV.indexOf(x.key)>-1?'<span aria-label="Favori" style="position:absolute;top:6px;right:8px;color:var(--gold)">★</span>':'',pv;
   if(x.tab==='videos'||x.tab==='psd')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:600;color:var(--brand);height:70px">'+(x.tab==='videos'?'▶ MP4':'PSD')+'</i>';
+  else if(x.tab==='brands')pv='<i class="gl" style="--u:url('+esc(x.file)+');background:#'+esc(x.hex)+';width:56px;height:56px;margin:6px 0"></i>';
   else if(x.tab==='fonts')pv='<i class="gl" style="background:none;display:grid;place-items:center;font-style:normal;font-size:34px;height:70px;font-family:\'PL '+esc(x.id)+'\'">Aa</i>';
   else pv='<img src="'+esc(x.file)+'" alt="" loading="lazy" decoding="async" style="height:'+(x.tab==='icons'?'64':'80')+'px;width:100%;object-fit:contain">';
   return '<button class="lib-card" type="button" data-plk="'+esc(x.key)+'" style="position:relative">'+fav+pv+'<span class="n">'+esc(x.title)+'</span></button>';
@@ -1562,14 +1561,16 @@ function open(key){
   if(t==='videos')big='<video controls loop muted playsinline autoplay src="'+esc(x.file)+'" style="width:100%;max-height:60vh;border-radius:12px;background:#000"></video>';
   else if(t==='psd')big='<div style="display:grid;place-items:center;height:200px;font-size:28px;font-weight:600;color:var(--brand)">PSD</div>';
   else if(t==='fonts')big='<div style="padding:24px;font-family:\'PL '+esc(x.id)+'\';font-size:26px;line-height:1.4;overflow-wrap:anywhere">Palezza Studios<br>ABCDEFGHIJKLM<br>abcdefghijklm 0123456789</div>';
+  else if(t==='brands')big='<i class="gl" id="pl-bigb" style="--u:url('+esc(x.file)+');background:#'+esc(x.hex)+';width:160px;height:160px;margin:20px auto"></i>';
   else big='<img id="pl-big" src="'+esc(x.file)+'" alt="'+esc(x.title)+'" style="max-width:100%;max-height:60vh;background:#fff;border-radius:12px;padding:8px">';
-  var isFav=FAV.indexOf(key)>-1,rows=[['Type',x.kind],['Format',x.fmt],['Catégorie',[x.c1,x.c2].filter(Boolean).join(' · ')||'—'],['Dimensions','<span id="pl-dim">'+(t==='videos'?'160 × 90 px':t==='fonts'||t==='psd'?'—':'vectoriel')+'</span>'],['Accès','Gratuit'],['Licence',esc(x.lic||LIC)],['Source',x.pk===2?PACK2:PACK]];
+  var isFav=FAV.indexOf(key)>-1,rows=[['Type',x.kind],['Format',x.fmt],['Catégorie',[x.c1,x.c2].filter(Boolean).join(' · ')||'—'],['Dimensions','<span id="pl-dim">'+(t==='videos'?'160 × 90 px':t==='fonts'||t==='psd'?'—':t==='brands'?'vectoriel (PNG 512 × 512)':'vectoriel')+'</span>'],['Accès','Gratuit'],['Licence',esc(x.lic||LIC)],['Source',x.pk===3?'Simple Icons (simpleicons.org), domaine public CC0':x.pk===2?PACK2:PACK]];
+  if(t==='brands')rows.splice(3,0,['Couleur de marque','#'+x.hex]);
   var html='<div class="det"><div class="lib-big" style="flex-direction:column;overflow:auto">'+big+'</div><div class="det-info"><div><span class="eyebrow" style="margin:0">'+esc(x.kind)+'</span><h2>'+esc(x.title)+'</h2></div>'
    +'<dl style="display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0">'+rows.map(function(r){return '<dt style="color:var(--muted)">'+r[0]+'</dt><dd style="margin:0">'+(r[0]==='Dimensions'?r[1]:esc(r[1]))+'</dd>';}).join('')+'</dl>';
-  if(x.rc)html+='<label style="display:flex;align-items:center;gap:10px;font-size:14px">Couleur <input type="color" id="pl-col" value="#247C78" aria-label="Couleur de l\'icône"></label>';
+  if(x.rc)html+='<label style="display:flex;align-items:center;gap:10px;font-size:14px">Couleur <input type="color" id="pl-col" value="'+(x.hex?'#'+x.hex.toLowerCase():'#247C78')+'" aria-label="Couleur de l\'icône"></label>';
   html+='<div style="display:flex;flex-wrap:wrap;gap:10px"><button class="btn" type="button" data-plact="dl">Télécharger '+(t==='fonts'?'TTF':t==='videos'?'MP4':t==='psd'?'PSD':'SVG')+'</button>'
-   +(x.png?'<button class="btn ghost" type="button" data-plact="png">Télécharger PNG</button>':'')
-   +(x.rc?'<button class="btn ghost" type="button" data-plact="rc">SVG recoloré</button>':'')
+   +((x.png||t==='brands')?'<button class="btn ghost" type="button" data-plact="png">Télécharger PNG</button>':'')
+   +(x.rc?'<button class="btn ghost" type="button" data-plact="rc">'+(t==='brands'?'SVG couleur choisie':'SVG recoloré')+'</button>':'')
    +'<button class="btn ghost" type="button" data-plact="fav">'+(isFav?'Retirer des favoris':'Ajouter aux favoris')+'</button>'
    +(t==='fonts'?'<a class="btn ghost" href="'+B+'fonts/LICENSE_DejaVu.txt" target="_blank" rel="noopener">Licence</a>':'')+'</div></div></div>';
   var d=$('#lib-detail');$('#lib-detail-body').innerHTML=html;d.dataset.plk=key;if(!d.open)d.showModal();
@@ -1585,6 +1586,12 @@ document.addEventListener('click',function(e){
   if((b=t.closest('[data-plact]'))&&$('#lib-detail').dataset.plk){
     var x=cur(),a=b.getAttribute('data-plact');if(!x)return;
     var ext=x.file.split('.').pop();
+    if(x.tab==='brands'){
+      var bc=(a==='rc'?$('#pl-col').value:'#'+x.hex);
+      var colored=function(){return fetch(x.file).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(s){return s.replace('<svg ','<svg fill="'+bc+'" ');});};
+      if(a==='dl'||a==='rc'){colored().then(function(s){var u=URL.createObjectURL(new Blob([s],{type:'image/svg+xml'}));dl(x,u,x.id+(a==='rc'?'-'+bc.slice(1):'')+'.svg');setTimeout(function(){URL.revokeObjectURL(u);},4000);}).catch(function(){toast('Téléchargement impossible ici, réessayez depuis le site en ligne');});return;}
+      if(a==='png'){colored().then(function(s){var u=URL.createObjectURL(new Blob([s],{type:'image/svg+xml'})),im=new Image();im.onload=function(){var c=document.createElement('canvas');c.width=c.height=512;c.getContext('2d').drawImage(im,0,0,512,512);c.toBlob(function(b){var pu=URL.createObjectURL(b);dl(x,pu,x.id+'.png');setTimeout(function(){URL.revokeObjectURL(pu);URL.revokeObjectURL(u);},4000);});};im.src=u;}).catch(function(){toast('PNG impossible ici, réessayez depuis le site en ligne');});return;}
+    }
     if(a==='dl'){dl(x,x.file,x.id+'.'+ext);return;}
     if(a==='png'){dl(x,x.png,x.id+'.png');return;}
     if(a==='fav'){var i=FAV.indexOf(x.key);if(i>-1)FAV.splice(i,1);else FAV.push(x.key);sv('ps_lib_favs',FAV);b.textContent=i>-1?'Ajouter aux favoris':'Retirer des favoris';toast(i>-1?'Retiré des favoris':'Ajouté aux favoris');render(true);return;}

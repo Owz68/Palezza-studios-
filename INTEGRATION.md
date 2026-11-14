@@ -12,3 +12,8 @@ config.js, supabase/001_*.sql, authentification, projets, Iconify/Openverse/Comm
 ## Non intégré volontairement (à valider avec vous)
 - Photos et logos officiels de marques : dossiers vides dans le pack ; les marques restent servies par Simple Icons/Iconify (onglet Bibliothèque).
 - Accès réservé aux membres / Premium, quotas, liens signés, tableau de bord admin : exigent un backend (tables, stockage privé, règles serveur). Proposé en phase 2 (migration `002_*.sql`).
+
+## Mise à jour (14 nov. 2026)
+- Supprimés : les onglets et fichiers factices « Concepts de logos », « Illustrations » et « Motifs » (formes génériques sans valeur).
+- Ajouté : onglet « Logos de marques » (3 470 logos Simple Icons v16.37.0, CC0) dans `assets/library/brands/`, avec couleur de marque, SVG recolorable, PNG 512 px, favoris et historique. Licence et avertissement sur les marques dans `assets/library/licenses/`.
+- Photos : Unsplash (clé dans `config.js`), Openverse en secours. Bibliothèque : Pixabay (clé dans `config.js`).
