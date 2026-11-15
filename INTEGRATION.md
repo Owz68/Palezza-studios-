@@ -19,3 +19,9 @@ config.js, supabase/001_*.sql, authentification, projets, Iconify/Openverse/Comm
 - Photos : Unsplash (clé dans `config.js`), Openverse en secours. Bibliothèque : Pixabay (clé dans `config.js`).
 - Refonte mobile : bibliothèque unifiée (`#biblio`) avec une seule barre d'onglets qui défile (Logos, Icônes, Photos, Vecteurs, Illustrations, Vidéos, Polices, PSD, Modèles, Packs), grilles 3 colonnes (logos, icônes) et 2 colonnes (photos, vidéos), chargement automatique en fin de liste, fiches qui s'ouvrent depuis le bas de l'écran, menu du haut masqué sur téléphone (barre du bas conservée).
 - Illustrations : nouvel onglet « Illustrations » (89 images) : 20 scènes originales Palezza Studios, 33 Open Doodles (CC0), 36 figures et scènes Humaaans (CC BY 4.0, mention obligatoire). Couleur d'accent recolorable, export SVG et PNG. Les illustrations unDraw ne sont pas incluses (licence interdisant les bibliothèques). Voir assets/library/licenses/ILLUSTRATIONS_NOTES.txt.
+
+## Mise à jour (15 nov. 2026) — Bibliothèque d'illustrations
+- Ajouté : 1 680 illustrations SVG (800 × 600, ~6 Ko chacune) dans `assets/library/illustrations/bibliotheque/`, classées en 8 domaines (Sport, Informatique, Technologie, Agriculture, Éducation, Cuisine, Santé, Business & finance), 210 par domaine. L'onglet « Illustrations » compte désormais 1 769 images.
+- Catalogue : entrées ajoutées à `assets/library/catalog.json` (jeu « Bibliothèque Palezza », catégorie = domaine, couleur d'accent #6C63FF recolorable, mots-clés de recherche en 6e colonne).
+- `index.html` : seule modification, la recherche des illustrations prend en compte les mots-clés (`o.tags`).
+- Licence : illustrations originales générées par programme pour Palezza Studios, usage libre y compris commercial ; revente en pack interdite.

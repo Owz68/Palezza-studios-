@@ -16,3 +16,10 @@ Illustrations de la bibliothèque Palezza Studios
    Mention obligatoire : « Humaaans par Pablo Stanley, licence CC BY 4.0 ».
 
 Non incluses volontairement : les illustrations unDraw, dont la licence interdit de les redistribuer en bibliothèque ou en packs.
+
+4) Bibliothèque Palezza (1 680 illustrations, dossier illustrations/bibliotheque)
+   Illustrations originales générées par programme pour Palezza Studios (non copiées d'une banque existante).
+   8 domaines x 210 : sport, informatique, technologie, agriculture, éducation, cuisine, santé, business.
+   Utilisation libre, personnelle ou commerciale, y compris modifiée.
+   Interdit : les revendre ou les redistribuer telles quelles comme pack ou collection concurrente.
+   La couleur d'accent (#6C63FF) se change avec le bouton « SVG couleur choisie ».

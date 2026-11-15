@@ -1545,7 +1545,7 @@ function norm(tab,r){
   var o={tab:tab,id:r[0],title:r[1],key:tab+':'+r[0],c1:'',c2:''};
   if(tab==='icons'){o.file=B+'icons/svg/'+r[0]+'.svg';o.png=B+'icons/png/'+r[0]+'.png';o.fmt='SVG, PNG';o.rc=1;o.kind='Icône';}
   if(tab==='brands'){o.file=B+'brands/'+r[0]+'.svg';o.fmt='SVG, PNG';o.hex=r[2];o.rc=1;o.pk=3;o.kind='Logo de marque';o.lic='Dessin : CC0 (Simple Icons). Le logo reste une marque de son propriétaire : à utiliser pour désigner cette entreprise, sans laisser croire à un partenariat.';}
-  if(tab==='illus'){var st=r[0].split('/')[0];o.file=B+'illustrations/'+r[0]+'.svg';o.fmt='SVG, PNG';o.c1=r[3];o.c2=r[2];o.accent=r[4]||'';o.rc=r[4]?1:0;o.kind='Illustration';o.pk=4;
+  if(tab==='illus'){var st=r[0].split('/')[0];o.file=B+'illustrations/'+r[0]+'.svg';o.fmt='SVG, PNG';o.c1=r[3];o.c2=r[2];o.accent=r[4]||'';o.tags=r[5]||'';o.rc=r[4]?1:0;o.kind='Illustration';o.pk=4;
     o.src=st==='doodles'?'Open Doodles par Pablo Stanley (opendoodles.com)':st==='humaaans'?'Humaaans par Pablo Stanley (humaaans.com)':'Création originale Palezza Studios';
     o.lic=st==='doodles'?'CC0 (domaine public), mention non obligatoire':st==='humaaans'?'CC BY 4.0 : mention obligatoire « Humaaans par Pablo Stanley »':'Création Palezza Studios : usage libre, y compris commercial ; revente en pack interdite';}
   if(tab==='anims'){o.file=B+'animations/'+r[0]+'.svg';o.fmt='SVG animé';o.kind='Animation';}
@@ -1582,7 +1582,7 @@ function render(more){
     fill('#pl-c2','#pl-c2f',P.tab==='illus'?'Tous les jeux':'Tous les secteurs',(lt||P.tab==='illus')?uniq(list.map(function(x){return x.c2;})):[],P.c2);
     P.n=PAGE;
   }
-  var f=list.filter(function(x){return (!P.c1||x.c1===P.c1)&&(!P.c2||x.c2===P.c2)&&(!q||(x.title+' '+x.c1+' '+x.c2+' '+x.id).toLowerCase().indexOf(q)>-1);});
+  var f=list.filter(function(x){return (!P.c1||x.c1===P.c1)&&(!P.c2||x.c2===P.c2)&&(!q||(x.title+' '+x.c1+' '+x.c2+' '+x.id+' '+(x.tags||'')).toLowerCase().indexOf(q)>-1);});
   var shown=f.slice(0,P.n);
   $('#pl-grid').setAttribute('data-tab',P.tab);
   $('#pl-grid').innerHTML=shown.map(card).join('');
