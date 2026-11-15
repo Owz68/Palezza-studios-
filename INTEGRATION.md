@@ -26,3 +26,11 @@ config.js, supabase/001_*.sql, authentification, projets, Iconify/Openverse/Comm
 - `index.html` : seule modification, la recherche des illustrations prend en compte les mots-clés (`o.tags`).
 - Licence : illustrations originales générées par programme pour Palezza Studios, usage libre y compris commercial ; revente en pack interdite.
 - PNG des illustrations : le bouton « Télécharger PNG » applique maintenant la couleur d'accent choisie (comme « SVG couleur choisie ») ; le nom du fichier porte le code couleur si elle a changé. Sortie 1 600 px, générée dans le navigateur.
+
+## Mise à jour (15 nov. 2026) — Refonte de l'accueil (v4)
+- En-tête : navigation par type (Logos, Icônes, Illustrations, Photos, Vidéos, Polices) et menu « Plus » ; sur téléphone, la barre du bas et la barre de types de la bibliothèque restent les points d'entrée.
+- Hero : choix du type de recherche (Modèles Palezza, Logos, Illustrations, Icônes, Photos, Polices) et recherches suggérées.
+- Nouvelles sections : « Parcourir par type » (8 tuiles avec compteurs lus dans le catalogue), « À découvrir » (12 illustrations tirées au hasard), « Pourquoi Palezza Studios ? » avec FAQ et bandeau d'appel.
+- Fiches : bloc « Ressources similaires » (illustrations, icônes, logos) dans la fenêtre de détail.
+- Pied de page : colonne « Types ». Couleurs et polices Palezza inchangées (variables CSS existantes).
+- Aucune fonction existante supprimée. Étiquette de sauvegarde avant refonte : v3-avant-refonte-vecteezy.

@@ -183,8 +183,8 @@ section{scroll-margin-top:84px}
 
 /* Pied de page */
 .foot{padding-block:48px 40px;background:var(--bg2);border-top:1px solid var(--line)}
-.foot-in{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
-@media (max-width:760px){.foot-in{grid-template-columns:1fr}}
+.foot-in{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+@media (max-width:760px){.foot-in{grid-template-columns:1fr 1fr}.foot-in>div:first-child{grid-column:1/-1}}
 .foot svg.lg{height:48px;width:auto}
 .foot svg.lg.lg-light{display:var(--show-light)} .foot svg.lg.lg-dark{display:var(--show-dark)}
 .foot h3{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:12px;font-family:var(--f-body)}
@@ -341,21 +341,36 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   #lib-detail .lib-big{min-height:160px;padding:16px}
 }
 @keyframes sheet{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+
+/* Refonte : navigation par type, parcourir, FAQ */
+.more{position:relative}.more-b{border:0;background:none;padding:8px 12px;border-radius:999px;font-weight:500;font-size:15px;cursor:pointer}.more-b:hover,.more.open .more-b{background:var(--bg2)}
+.more-m{display:none;position:absolute;top:100%;left:0;min-width:190px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);z-index:70}
+.more.open .more-m{display:grid}.more-m a{white-space:nowrap}
+@media (max-width:860px){.more{display:contents}.more-b{display:none}.more-m,.more.open .more-m{display:contents;position:static}}
+.ptabs{display:flex;gap:6px;overflow-x:auto;margin:20px 0 12px;padding:2px;scrollbar-width:none}.ptabs::-webkit-scrollbar{display:none}.ptabs .chip{flex:none}
+.tytiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.tyt{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;padding:0;text-align:left;color:var(--ink);font:inherit;transition:transform .15s,box-shadow .15s}
+.tyt:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.tyt .pv{height:116px;display:grid;place-items:center;background:var(--bg2);overflow:hidden}.tyt .pv img{max-width:72%;max-height:84px;object-fit:contain}.tyt .pv img[src$=".jpg"]{max-width:100%;max-height:none;width:100%;height:116px;object-fit:cover}.tyt .pv b{font:500 34px var(--f-display);color:var(--brand)}
+.tyt .tx{padding:12px 14px 14px;display:grid;gap:2px}.tyt strong{font-weight:600}.tyt small{color:var(--muted);font-size:13px}
+.tytiles{--c:4}@media (min-width:900px){.tytiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+@media (max-width:560px){.tytiles,.tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.tgrid .lib-card{padding:12px 10px}.tgrid .lib-card img{height:110px}
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:28px}
+.why>div{padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:16px}.why h3{margin:0 0 6px;font:600 1.05rem var(--f-display);color:var(--brand)}.why p{margin:0;color:var(--muted);font-size:15px}
+.faq{display:grid;gap:8px;max-width:820px;margin-bottom:28px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 16px}.faq summary{cursor:pointer;padding:14px 0;font-weight:600}.faq details[open] summary{color:var(--brand)}.faq p{margin:0 0 14px;color:var(--muted)}
+.endcta{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px;border-radius:20px;background:var(--night);color:#F3EBDD}.endcta h3{margin:0;font:500 1.5rem var(--f-display)}.endcta p{margin:4px 0 0;opacity:.8}.endcta .btn{margin:2px 4px 2px 0}
+.sim{margin-top:18px}.sim h3{margin:0 0 8px;font-size:.95rem}.sim-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.sim-g button{padding:6px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;cursor:pointer}.sim-g img{width:100%;height:60px;object-fit:contain}
 </style>
 
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="#top" aria-label="Palezza Studios, retour en haut"><img class="lg lg-light" src="logos/svg/obturateur_horizontal_clair_transparent.svg" alt="Palezza Studios" width="1493" height="716"><img class="lg lg-dark" src="logos/svg/obturateur_horizontal_sombre_transparent.svg" alt="Palezza Studios" width="1493" height="716"></a>
     <nav class="nav" aria-label="Navigation principale">
-      <a href="#biblio">Bibliothèque</a>
-      <a href="#polices">Polices</a>
-      <a href="#photos">Photos</a>
-      <a href="#medias">Médias</a>
-      <a href="#outils">Outils</a>
-      <a href="#ressources">Ressources</a>
-      <a href="#effets">Effets de texte</a>
-      <a href="#licence">Licence</a>
-      <a href="#offres">Offres</a>
+      <a href="#biblio" data-go="brands">Logos</a><a href="#biblio" data-go="icons">Icônes</a><a href="#biblio" data-go="illus">Illustrations</a><a href="#biblio" data-go="photos">Photos</a><a href="#biblio" data-go="video">Vidéos</a><a href="#biblio" data-go="fonts">Polices</a>
+      <div class="more"><button class="more-b" type="button" aria-expanded="false" aria-haspopup="true">Plus ▾</button><div class="more-m"><a href="#medias">Médias</a><a href="#outils">Outils</a><a href="#ressources">Ressources</a><a href="#effets">Effets de texte</a><a href="#licence">Licence</a><a href="#offres">Offres</a></div></div>
     </nav>
     <form class="hsearch" id="hsearch" role="search">
       <label class="sr" for="hq">Rechercher dans tout le site</label>
@@ -376,8 +391,9 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
   <div class="wrap hero-in">
     <div class="hero-copy">
       <p class="eyebrow">Ressources créatives · Brazzaville</p>
-      <h1>Créez plus vite avec des ressources <em>prêtes à l'emploi</em></h1>
-      <p class="lead">Fonds, motifs, flyers, cartes de visite, bannières et mockups conçus par Palezza Studios. Modifiez-les, utilisez-les dans vos projets commerciaux, payez en Mobile Money.</p>
+      <h1>Des ressources créatives <em>prêtes à télécharger</em></h1>
+      <p class="lead">Logos de marques, icônes, illustrations, photos, vidéos, polices et modèles : cherchez, prévisualisez, changez la couleur puis téléchargez en SVG ou PNG. Paiement en Mobile Money pour les offres.</p>
+      <div class="ptabs" id="ptabs" role="group" aria-label="Type de ressource à chercher"><button class="chip" type="button" data-t="" aria-pressed="true">Modèles Palezza</button><button class="chip" type="button" data-t="brands" aria-pressed="false">Logos</button><button class="chip" type="button" data-t="illus" aria-pressed="false">Illustrations</button><button class="chip" type="button" data-t="icons" aria-pressed="false">Icônes</button><button class="chip" type="button" data-t="photos" aria-pressed="false">Photos</button><button class="chip" type="button" data-t="fonts" aria-pressed="false">Polices</button></div>
       <form class="search" id="hero-search" role="search">
         <span data-icon="search"></span>
         <label class="sr" for="q-hero">Rechercher une ressource</label>
@@ -385,15 +401,40 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
         <button class="btn" type="submit">Rechercher</button>
       </form>
       <p class="quick">Essayez :
+        <button type="button" class="chip-link" data-ty="illus" data-s="santé">santé</button>
+        <button type="button" class="chip-link" data-ty="illus" data-s="agriculture">agriculture</button>
+        <button type="button" class="chip-link" data-ty="illus" data-s="cuisine">cuisine</button>
+        <button type="button" class="chip-link" data-ty="brands" data-s="whatsapp">WhatsApp</button>
         <button type="button" class="chip-link" data-q="promo">promo</button>
-        <button type="button" class="chip-link" data-q="restaurant">restaurant</button>
-        <button type="button" class="chip-link" data-q="réseaux sociaux">réseaux sociaux</button>
-        <button type="button" class="chip-link" data-q="hexagone">hexagone</button>
-       <a class="chip-link" href="#collection" style="text-decoration:none">Collection Palezza (2 000+ fichiers)</a></p>
+        <a class="chip-link" href="#types" style="text-decoration:none">Tous les types (6 000+ fichiers)</a></p>
     </div>
     <div class="collage" id="collage" aria-hidden="true"></div>
   </div>
 </section>
+
+<section class="band" id="types" aria-labelledby="h-ty"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-ty">Parcourir par type</h2><p>Choisissez un type de ressource. Chaque fiche indique le format, la licence et la source.</p></div></div>
+  <div class="tytiles" id="tiles"></div>
+</div></section>
+<section class="band alt" id="decouvrir" aria-labelledby="h-dc"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-dc">À découvrir</h2><p>Une sélection d'illustrations différente à chaque visite.</p></div><button class="chip" id="shuffle" type="button">Autre sélection</button></div>
+  <div class="tgrid" id="tgrid"></div>
+</div></section>
+<section class="band" id="pourquoi" aria-labelledby="h-pq"><div class="wrap">
+  <div class="sec-head"><div><h2 id="h-pq">Pourquoi Palezza Studios ?</h2></div></div>
+  <div class="why">
+    <div><h3>Une grande bibliothèque</h3><p>Plus de 6 000 fichiers : logos de marques, icônes, illustrations, animations, vidéos, PSD et polices.</p></div>
+    <div><h3>Des licences claires</h3><p>Chaque fiche affiche l'auteur, la licence et les conditions d'usage.</p></div>
+    <div><h3>Personnalisable</h3><p>Changez la couleur des icônes, logos et illustrations, puis exportez en SVG ou PNG.</p></div>
+    <div><h3>Mobile Money</h3><p>Payez vos offres avec Mobile Money, depuis votre téléphone.</p></div>
+  </div>
+  <div class="faq" aria-label="Questions fréquentes">
+    <details><summary>Puis-je utiliser les ressources dans un projet commercial ?</summary><p>Souvent oui, mais la licence dépend de la fiche : création Palezza (usage libre, revente en pack interdite), CC0 (domaine public) ou CC BY 4.0 (mention obligatoire, par exemple Humaaans). Les logos de marques restent la propriété de leurs titulaires : utilisez-les pour désigner l'entreprise, sans laisser croire à un partenariat.</p></details>
+    <details><summary>Dans quels formats puis-je télécharger ?</summary><p>SVG pour les illustrations, icônes et logos ; PNG généré dans votre navigateur (1 600 px pour les illustrations) ; MP4, PSD et TTF selon le type.</p></details>
+    <details><summary>Mes favoris sont-ils sauvegardés ?</summary><p>Favoris et historique restent sur votre appareil. Les comptes sont en cours d'activation.</p></details>
+  </div>
+  <div class="endcta"><div><h3>Prêt à créer ?</h3><p>Explorez la bibliothèque ou découvrez les offres.</p></div><div><a class="btn" href="#biblio" data-go="illus">Parcourir les illustrations</a> <a class="btn gold" href="#offres">Voir les offres</a></div></div>
+</div></section>
 
 <section class="band alt" id="ressources" aria-labelledby="h-res">
   <div class="wrap">
@@ -614,6 +655,7 @@ dialog.narrow{width:min(520px,calc(100vw - 24px))}
         <p>Ressources créatives, modèles et outils pour designers, entrepreneurs et studios.</p>
       </div>
       <div><h3>Explorer</h3><ul id="foot-cats"></ul></div>
+      <div><h3>Types</h3><ul><li><a href="#biblio" data-go="brands">Logos de marques</a></li><li><a href="#biblio" data-go="icons">Icônes</a></li><li><a href="#biblio" data-go="illus">Illustrations</a></li><li><a href="#biblio" data-go="photos">Photos</a></li><li><a href="#biblio" data-go="video">Vidéos</a></li><li><a href="#biblio" data-go="fonts">Polices</a></li></ul></div>
       <div><h3>Plateforme</h3><ul><li><a href="#collection">Collection Palezza</a></li><li><a href="#effets">Effets de texte</a></li><li><a href="#licence">Licence</a></li><li><a href="#offres">Offres et paiement</a></li></ul></div>
     </div>
     <div class="legal"><span>Palezza Studios (PS)</span><span>© 2026 Palezza Networks</span></div>
@@ -1697,6 +1739,7 @@ function hub(k,keepQ){
   window.dispatchEvent(new Event('scroll'));
 }
 bar.addEventListener('click',function(e){var b=e.target.closest('[data-hub]');if(!b)return;hub(b.getAttribute('data-hub'));if(Z.getBoundingClientRect().top<0)goZone();});
+window.PL_hub=hub;window.PL_goZone=goZone;
 var MAP={'#bibliotheque':'icons','#collection':'brands','#polices':'fonts','#photos':'photos','#medias':'vector','#biblio':''};
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var m=MAP[a.getAttribute('href')];if(m===undefined)return;e.preventDefault();if(m)hub(m);goZone();},true);
 var hs=document.getElementById('hsearch');
@@ -1706,6 +1749,66 @@ window.addEventListener('resize',hh);hh();
 /* défilement infini : charge la suite quand le bouton « Voir plus » approche */
 var MORE=['pl-more','lib-more','font-more','ph-more','md-more'],last={};
 setInterval(function(){if(document.hidden)return;MORE.forEach(function(id){var b=document.getElementById(id);if(!b||b.hidden||b.offsetParent===null)return;var r=b.getBoundingClientRect();if(r.top<window.innerHeight+600&&r.bottom>-200&&(!last[id]||Date.now()-last[id]>2500)){last[id]=Date.now();b.click();}});},600);
+})();
+</script>
+<script>
+/* Refonte : navigation par type, recherche du hero, parcourir, sélection, similaires */
+(function(){
+var B='assets/library/',$=function(s,r){return (r||document).querySelector(s);},CT=null;
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function src(t,id){return B+(t==='illus'?'illustrations/':t==='icons'?'icons/svg/':'brands/')+id+'.svg';}
+function poll(f,n){var k=0,h=setInterval(function(){if(f()||++k>n)clearInterval(h);},150);}
+function go(t,q,tab){
+  if(!window.PL_hub)return;PL_hub(t);if(window.PL_goZone)PL_goZone();
+  if(tab)setTimeout(function(){var b=$('[data-pltab="'+tab+'"]');if(b)b.click();},80);
+  if(q)setTimeout(function(){var i=$('#biblio .hub-on input[type=search]')||$('#pl-q');if(!i)return;i.value=q;i.dispatchEvent(new Event('input',{bubbles:true}));if(i.form&&t!=='brands'&&t!=='pack'&&t!=='illus')i.form.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));},tab?260:160);
+}
+function openRes(t,id){go(t==='icons'?'pack':t==='brands'?'brands':'illus',id.split('/').pop());poll(function(){var c=$('#pl-grid [data-plk="'+t+':'+id+'"]');if(c){c.click();return 1;}},25);}
+/* Nav, menu Plus, liens data-go */
+document.addEventListener('click',function(e){
+  var t=e.target,b;
+  if((b=t.closest('.more-b'))){var m=b.parentNode,o=m.classList.toggle('open');b.setAttribute('aria-expanded',o);return;}
+  var mo=$('.more.open');if(mo&&!t.closest('.more')){mo.classList.remove('open');}
+  if((b=t.closest('[data-go]'))){go(b.getAttribute('data-go'));return;}
+  if((b=t.closest('[data-ty]'))){go(b.getAttribute('data-ty')==='icons'?'pack':b.getAttribute('data-ty'),b.getAttribute('data-s'));return;}
+  if((b=t.closest('#ptabs [data-t]'))){Array.prototype.forEach.call($('#ptabs').children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});return;}
+  if((b=t.closest('[data-tile]'))){var a=b.getAttribute('data-tile').split(',');go(a[0],'',a[1]);return;}
+  if((b=t.closest('[data-opn]'))){var k=b.getAttribute('data-opn'),c=k.indexOf(':');openRes(k.slice(0,c),k.slice(c+1));return;}
+  if((b=t.closest('[data-sim]'))){var k2=b.getAttribute('data-sim'),c2=k2.indexOf(':'),d=$('#lib-detail');if(d&&d.open)d.close();openRes(k2.slice(0,c2),k2.slice(c2+1));}
+},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var mo=$('.more.open');if(mo)mo.classList.remove('open');}});
+/* Recherche du hero selon le type choisi */
+document.addEventListener('submit',function(e){
+  if(e.target.id!=='hero-search')return;var a=$('#ptabs [aria-pressed="true"]'),t=a?a.getAttribute('data-t'):'';if(!t)return;
+  e.preventDefault();e.stopPropagation();go(t==='icons'?'pack':t,($('#q-hero').value||'').trim());
+},true);
+/* Catalogue : parcourir, sélection, similaires */
+function tiles(){
+  var c=CT,n=function(k){return (c[k]||[]).length.toLocaleString('fr-FR');},T=[
+   ['Logos de marques',n('brands')+' logos','brands','',c.brands[40]&&src('brands',c.brands[40][0])],
+   ['Illustrations',n('illus')+' images','illus','',c.illus[100]&&src('illus',c.illus[100][0])],
+   ['Icônes Palezza',n('icons')+' icônes','pack','',c.icons[10]&&src('icons',c.icons[10][0])],
+   ['Photos','Unsplash et Openverse','photos','','assets/images/fond-degrade-vert.jpg'],
+   ['Vidéos',n('videos')+' boucles MP4','brands','videos','','▶ MP4'],
+   ['Animations SVG',n('anims')+' animations','brands','anims','','SVG ▶'],
+   ['Polices','Google Fonts et DejaVu','fonts','','','Aa'],
+   ['Modèles PSD','Photoshop, GIMP, Photopea','psd','','','PSD']];
+  $('#tiles').innerHTML=T.map(function(x){return '<button class="tyt" type="button" data-tile="'+x[2]+(x[3]?','+x[3]:'')+'"><span class="pv">'+(x[4]?'<img src="'+esc(x[4])+'" alt="" loading="lazy">':'<b aria-hidden="true">'+esc(x[5]||x[0].slice(0,2))+'</b>')+'</span><span class="tx"><strong>'+esc(x[0])+'</strong><small>'+esc(x[1])+'</small></span></button>';}).join('');
+}
+function pick(){
+  var a=CT.illus.slice(89),o=[];while(o.length<12&&a.length){o.push(a.splice(Math.floor(Math.random()*a.length),1)[0]);}
+  $('#tgrid').innerHTML=o.map(function(r){return '<button class="lib-card" type="button" data-opn="illus:'+esc(r[0])+'"><img src="'+esc(src('illus',r[0]))+'" alt="" loading="lazy" decoding="async"><span class="n">'+esc(r[1])+'</span></button>';}).join('');
+}
+function similar(){
+  var d=$('#lib-detail'),body=$('#lib-detail-body'),k=d&&d.dataset.plk;if(!CT||!k||$('.sim',body))return;
+  var c=k.indexOf(':'),t=k.slice(0,c),id=k.slice(c+1),L=CT[t];if(!L||!/^(illus|icons|brands)$/.test(t))return;
+  var me=L.filter(function(r){return r[0]===id;})[0],pool=L.filter(function(r){return r[0]!==id&&(t!=='illus'||!me||r[3]===me[3]);}),o=[];
+  if(t==='illus'){while(o.length<8&&pool.length)o.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}else{var i=L.indexOf(me);o=L.slice(Math.max(0,i-4),i+5).filter(function(r){return r[0]!==id;}).slice(0,8);}
+  if(!o.length)return;
+  var h=document.createElement('div');h.className='sim';h.innerHTML='<h3>Ressources similaires</h3><div class="sim-g">'+o.map(function(r){return '<button type="button" data-sim="'+t+':'+esc(r[0])+'" title="'+esc(r[1])+'"><img src="'+esc(src(t,r[0]))+'" alt="'+esc(r[1])+'" loading="lazy"></button>';}).join('')+'</div>';body.appendChild(h);
+}
+fetch(B+'catalog.json').then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(d){CT=d;tiles();pick();var s=$('#shuffle');if(s)s.addEventListener('click',pick);
+  var b=$('#lib-detail-body');if(b&&window.MutationObserver)new MutationObserver(function(){similar();}).observe(b,{childList:true});}).catch(function(){var t=$('#types');if(t)t.hidden=true;var q=$('#decouvrir');if(q)q.hidden=true;});
 })();
 </script>
 </body>
