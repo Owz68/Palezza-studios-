@@ -25,3 +25,4 @@ config.js, supabase/001_*.sql, authentification, projets, Iconify/Openverse/Comm
 - Catalogue : entrées ajoutées à `assets/library/catalog.json` (jeu « Bibliothèque Palezza », catégorie = domaine, couleur d'accent #6C63FF recolorable, mots-clés de recherche en 6e colonne).
 - `index.html` : seule modification, la recherche des illustrations prend en compte les mots-clés (`o.tags`).
 - Licence : illustrations originales générées par programme pour Palezza Studios, usage libre y compris commercial ; revente en pack interdite.
+- PNG des illustrations : le bouton « Télécharger PNG » applique maintenant la couleur d'accent choisie (comme « SVG couleur choisie ») ; le nom du fichier porte le code couleur si elle a changé. Sortie 1 600 px, générée dans le navigateur.
